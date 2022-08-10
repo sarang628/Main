@@ -47,6 +47,12 @@ class MainFragment : Fragment() {
 
         subScribeUI(binding)
 
+        var badge = binding.bottomNavigationView.getOrCreateBadge(R.id.timeLineFragment)
+        badge.number = 99
+
+        var badge1 = binding.bottomNavigationView.getOrCreateBadge(R.id.alarmFragment)
+        badge1.isVisible = true
+
         Logger.d(locationManager.getLastLatitude())
         Logger.d(locationManager.getLastLongitude())
 
