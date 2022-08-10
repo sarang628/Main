@@ -11,17 +11,26 @@
         android:label="TimeLineFragment"
         tools:layout="@layout/fragment_feeds" />
 
-    <!--<fragment
-        android:id="@+id/termFragment"
-        android:name="com.example.screen_terms.BlankFragment"
-        android:label="TimeLineFragment"
-        tools:layout="@layout/blank_fragment" />
+    <fragment
+        android:id="@+id/findingFragment"
+        android:name="com.example.screen_finding.finding.FindFragment"
+        android:label="@layout/finding_fragment">
+        <action
+            android:id="@+id/action_findFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/alarmFragment"
         android:name="com.sarang.screen_alarm2.AlarmFragment"
         android:label="AlarmFragment"
         tools:layout="@layout/fragment_alarm" />
+
+    <!--<fragment
+        android:id="@+id/termFragment"
+        android:name="com.example.screen_terms.BlankFragment"
+        android:label="TimeLineFragment"
+        tools:layout="@layout/blank_fragment" />
 
     <fragment
         android:id="@+id/profileFragment"
@@ -35,14 +44,6 @@
         android:label="NonLoginProfileFragment"
         tools:layout="@layout/fragment_non_login_profile" />
 
-    <fragment
-        android:id="@+id/findingFragment"
-        android:name="com.example.screen_finding.finding.FindFragment"
-        android:label="@layout/finding_fragment">
-        <action
-            android:id="@+id/action_findFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
-    </fragment>
 
     <fragment
         android:id="@+id/searchFragment"

@@ -29,10 +29,10 @@ class DaoModules {
     }
 
     /** 로컬 데이터베이스의 사용자 관리 DAO 제공 */
-    @Provides
+    /*@Provides
     fun provideSearchDao(appDatabase: AppDatabase): SearchDao {
         return appDatabase.searchDao()
-    }
+    }*/
 
     /** 로컬 데이터베이스의 사용자 관리 DAO 제공 */
     @Provides
@@ -41,10 +41,10 @@ class DaoModules {
     }
 
     /** 로컬 데이터베이스의 사용자 관리 DAO 제공 */
-    @Provides
+    /*@Provides
     fun provideRestaurantDao(appDatabase: AppDatabase): RestaurantDao {
         return appDatabase.restaurantDao()
-    }
+    }*/
 
     /** 로컬 데이터베이스의 사용자 관리 DAO 제공 */
     @Provides

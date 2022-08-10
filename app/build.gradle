@@ -42,10 +42,11 @@ android {
 
 dependencies {
 
-    implementation 'com.github.sarang628:TorangCore:5dd8950a5a'
-    implementation 'com.github.sarang628:TorangRepository:5cdb45b76e'
-    implementation 'com.github.sarang628:Feed:326347adb7'
     implementation project(path: ':library')
+    implementation 'com.github.sarang628:TorangCore:5dd8950a5a'
+    implementation 'com.github.sarang628:TorangRepository:17d108d0e2'
+    implementation 'com.github.sarang628:Feed:326347adb7'
+    implementation 'com.github.sarang628:Alarm:a13e876ecb'
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
