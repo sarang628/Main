@@ -1,4 +1,4 @@
-package com.sarang.torang.di
+package com.sryang.main.di
 
 import android.content.Context
 import com.example.torang_core.data.AppDatabase
@@ -8,7 +8,6 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton

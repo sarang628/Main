@@ -40,7 +40,7 @@ dependencies {
     implementation 'com.github.sarang628:TorangCore:5dd8950a5a'
     implementation 'com.github.sarang628:TorangImageLoader:f4a2359698'
     implementation 'com.github.sarang628:TorangLocationService:b4fbcc626f'
-    implementation 'com.github.sarang628:TorangRepository:17d108d0e2'
+    implementation 'com.github.sarang628:TorangRepository:ed69126daf'
     implementation 'com.github.sarang628:Feed:326347adb7'
     implementation 'com.github.sarang628:Finding:14c03976db'
     implementation 'com.github.sarang628:Alarm:a13e876ecb'
@@ -62,7 +62,6 @@ dependencies {
     implementation project(path: ':torangdialog')
     implementation project(path: ':base_feed')
     implementation project(path: ':torangDeviceManager')
-    implementation project(path: ':TorangRepository')
     implementation project(path: ':screen_picturepage')
     implementation project(path: ':screen_info')
     implementation project(path: ':screen_reviews')
@@ -71,7 +70,6 @@ dependencies {
     implementation project(path: ':torang_core')
     implementation project(path: ':TorangTestRepository')
     implementation project(path: ':screen_myreview')
-    implementation project(path: ':TorangRepository')
     implementation project(path: ':screen_search')
     implementation project(path: ':screen_finding')*/
 
