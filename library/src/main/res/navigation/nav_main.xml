@@ -38,6 +38,13 @@
         android:label="DetailFragment"
         tools:layout="@layout/fragment_profile" />
 
+    <!--<fragment
+        android:id="@+id/termFragment"
+        android:name="com.example.screen_terms.BlankFragment"
+        android:label="TimeLineFragment"
+        tools:layout="@layout/blank_fragment" />
+
+
     <fragment
         android:id="@+id/nonLoginProfileFragment"
         android:name="com.sarang.profile.NonLoginProfileFragment"
