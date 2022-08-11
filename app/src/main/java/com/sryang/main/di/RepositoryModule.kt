@@ -3,7 +3,7 @@ package com.sryang.main.di
 import android.content.Context
 import com.example.torang_core.data.AppDatabase
 import com.example.torang_core.repository.*
-import com.example.torangrepository.*
+import com.example.torangrepository.repository.impl.*
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

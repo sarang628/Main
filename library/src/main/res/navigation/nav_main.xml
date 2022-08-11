@@ -26,7 +26,8 @@
         android:label="AlarmFragment"
         tools:layout="@layout/fragment_alarm" />
 
-    <!--<fragment
+<!--
+    <fragment
         android:id="@+id/termFragment"
         android:name="com.example.screen_terms.BlankFragment"
         android:label="TimeLineFragment"
@@ -38,7 +39,7 @@
         android:label="DetailFragment"
         tools:layout="@layout/fragment_profile" />
 
-    <!--<fragment
+    <fragment
         android:id="@+id/termFragment"
         android:name="com.example.screen_terms.BlankFragment"
         android:label="TimeLineFragment"
