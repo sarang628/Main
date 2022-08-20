@@ -19,8 +19,8 @@ abstract class NavigationModule {
     @Binds
     abstract fun provide(dummyRestaurantDetailNavigation: DummyRestaurantDetailNavigation): RestaurantDetailNavigation
 
-    @Binds
-    abstract fun provideLoginNavigation(testLoginNavigation: TestLoginNavigation): LoginNavigation
+//    @Binds
+//    abstract fun provideLoginNavigation(testLoginNavigation: TestLoginNavigation): LoginNavigation
 
     @Binds
     abstract fun provideMenuBottomSheetNavigation(testMenuBottomSheetNavigation: TestMenuBottomSheetNavigation): MenuBottomSheetNavigation

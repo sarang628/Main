@@ -37,10 +37,10 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentVersion"
     implementation 'androidx.activity:activity-ktx:1.1.0'
 
-    implementation "com.github.sarang628:TorangCore:623ea55be6"
+    implementation "com.github.sarang628:TorangCore:$coreVersion"
+    implementation "com.github.sarang628:TorangRepository:ace8ebf6a5"
     implementation 'com.github.sarang628:TorangImageLoader:f4a2359698'
     implementation 'com.github.sarang628:TorangLocationService:b4fbcc626f'
-    implementation "com.github.sarang628:TorangRepository:ace8ebf6a5"
     implementation 'com.github.sarang628:Feed:326347adb7'
     implementation 'com.github.sarang628:Finding:14c03976db'
     implementation 'com.github.sarang628:Alarm:a13e876ecb'
