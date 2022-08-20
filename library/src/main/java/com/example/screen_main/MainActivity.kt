@@ -6,7 +6,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.screen_main.databinding.ActivityMainBinding
 import com.example.torang_core.util.Logger
-//import com.sarang.toringlogin.LoginManager
+import com.sarang.toringlogin.LoginManager
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     //바인딩
-    //lateinit var loginManager: LoginManager
+    lateinit var loginManager: LoginManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,12 +24,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        //loginManager.onActivityResult(this, requestCode, resultCode, data!!)
+        loginManager.onActivityResult(this, requestCode, resultCode, data!!)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        //loginManager.onDestroy(this)
+        loginManager.onDestroy(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

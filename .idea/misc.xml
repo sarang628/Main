@@ -3,7 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../.gradle/caches/transforms-3/b7c113799e68e55a08da173eaab568cd/transformed/Feed-326347adb7/res/layout/fragment_feeds.xml" value="0.1" />
+        <entry key="../../.gradle/caches/transforms-3/b7c113799e68e55a08da173eaab568cd/transformed/Feed-326347adb7/res/menu/menu_feed_main.xml" value="0.42291666666666666" />
         <entry key="..\:/Users/YANGSARANG/StudioProjects/Main/app/src/main/res/layout/activity_main.xml" value="0.19895833333333332" />
+        <entry key="library/src/main/res/layout/activity_main.xml" value="0.42291666666666666" />
+        <entry key="library/src/main/res/layout/fragment_main.xml" value="0.42291666666666666" />
+        <entry key="library/src/main/res/menu/main_bottom_navigation_menu.xml" value="0.42291666666666666" />
       </map>
     </option>
   </component>

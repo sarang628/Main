@@ -45,7 +45,7 @@ dependencies {
     implementation project(path: ':library')
     implementation "com.github.sarang628:TorangCore:$coreVersion"
     implementation "com.github.sarang628:TorangRepository:$torangRepositoryVersion"
-    implementation 'com.github.sarang628:Feed:326347adb7'
+    implementation "com.github.sarang628:Feed:$feedVersion"
     implementation 'com.github.sarang628:Alarm:a13e876ecb'
     implementation 'com.github.sarang628:Profile:395b381d0d'
     implementation "com.github.sarang628:Login:$loginVersion"
