@@ -37,14 +37,15 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentVersion"
     implementation 'androidx.activity:activity-ktx:1.1.0'
 
-    implementation 'com.github.sarang628:TorangCore:5dd8950a5a'
+    implementation "com.github.sarang628:TorangCore:623ea55be6"
     implementation 'com.github.sarang628:TorangImageLoader:f4a2359698'
     implementation 'com.github.sarang628:TorangLocationService:b4fbcc626f'
-    implementation "com.github.sarang628:TorangRepository:$torangRepositoryVersion"
+    implementation "com.github.sarang628:TorangRepository:ace8ebf6a5"
     implementation 'com.github.sarang628:Feed:326347adb7'
     implementation 'com.github.sarang628:Finding:14c03976db'
     implementation 'com.github.sarang628:Alarm:a13e876ecb'
     implementation 'com.github.sarang628:Profile:395b381d0d'
+    implementation "com.github.sarang628:Login:$loginVersion"
 
     /*implementation project(path: ':TorangTestRepository')
     implementation project(path: ':TorangLocationService')
@@ -53,7 +54,6 @@ dependencies {
     implementation project(path: ':screen_map')
     implementation project(path: ':screen_terms')
     implementation project(path: ':screen_feed')
-    implementation project(path: ':login')
     implementation project(path: ':screen')
     implementation project(path: ':screen_timelinedetail')
     implementation project(path: ':screen_alarm')
@@ -73,15 +73,17 @@ dependencies {
     implementation project(path: ':screen_search')
     implementation project(path: ':screen_finding')*/
 
-    implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
-    implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
-    implementation "com.google.android.material:material:$rootProject.materialVersion"
+    /** common */
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation "androidx.core:core-ktx:$ktxVersion"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "com.google.android.material:material:$materialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-
-    testImplementation "junit:junit:$rootProject.junitVersion"
+    testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$junitTestVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"
+
+
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.archLifecycleVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
