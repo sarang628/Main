@@ -6,7 +6,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.screen_main.databinding.ActivityMainBinding
 import com.example.torang_core.util.Logger
-import com.sarang.toringlogin.LoginManager
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

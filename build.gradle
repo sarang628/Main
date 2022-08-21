@@ -40,10 +40,13 @@ ext {
     recyclerViewVersion = '1.2.1'
     facebookLibraryVersion = '8.1.0'
 
-    torangRepositoryVersion = '623ea55be6'
-    loginVersion = '17662d2b3e'
-    coreVersion = '5dd8950a5a'
-    feedVersion = '96267c9d69'
+    torangRepositoryVersion = '37e74cb9f4'
+    coreVersion = '1a0e406fa3'
+    feedVersion = '0b695c52c0'
+    alarmVersion = '1cab172997'
+    profileVersion = '502c360a68'
+    findingVersion = '41e31829f0'
+    torangLocationServiceVersion = 'a035750f80'
 
 }
 

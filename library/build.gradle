@@ -38,14 +38,13 @@ dependencies {
     implementation 'androidx.activity:activity-ktx:1.1.0'
 
     implementation "com.github.sarang628:TorangCore:$coreVersion"
-    implementation "com.github.sarang628:TorangRepository:ace8ebf6a5"
-    implementation 'com.github.sarang628:TorangImageLoader:f4a2359698'
-    implementation 'com.github.sarang628:TorangLocationService:b4fbcc626f'
+    implementation "com.github.sarang628:TorangRepository:$torangRepositoryVersion"
     implementation "com.github.sarang628:Feed:$feedVersion"
-    implementation 'com.github.sarang628:Finding:14c03976db'
-    implementation 'com.github.sarang628:Alarm:a13e876ecb'
-    implementation 'com.github.sarang628:Profile:395b381d0d'
-    implementation "com.github.sarang628:Login:$loginVersion"
+    implementation "com.github.sarang628:Alarm:$alarmVersion"
+    implementation "com.github.sarang628:Profile:$profileVersion"
+    implementation "com.github.sarang628:Finding:$findingVersion"
+    implementation 'com.github.sarang628:TorangImageLoader:f4a2359698'
+    implementation "com.github.sarang628:TorangLocationService:$torangLocationServiceVersion"
 
     /*implementation project(path: ':TorangTestRepository')
     implementation project(path: ':TorangLocationService')
