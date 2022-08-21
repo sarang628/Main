@@ -42,7 +42,7 @@ ext {
 
     torangRepositoryVersion = '37e74cb9f4'
     coreVersion = '1a0e406fa3'
-    feedVersion = '0b695c52c0'
+    feedVersion = 'be77dbca9a'
     alarmVersion = '1cab172997'
     profileVersion = '502c360a68'
     findingVersion = '41e31829f0'
