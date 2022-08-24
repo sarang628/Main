@@ -26,18 +26,18 @@
         android:label="AlarmFragment"
         tools:layout="@layout/fragment_alarm" />
 
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.sarang.profile.ProfileFragment"
+        android:label="DetailFragment"
+        tools:layout="@layout/fragment_profile" />
+
 <!--
     <fragment
         android:id="@+id/termFragment"
         android:name="com.example.screen_terms.BlankFragment"
         android:label="TimeLineFragment"
         tools:layout="@layout/blank_fragment" />
-
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.sarang.profile.ProfileFragment"
-        android:label="DetailFragment"
-        tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/termFragment"
