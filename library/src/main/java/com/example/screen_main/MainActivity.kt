@@ -5,8 +5,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.screen_main.databinding.ActivityMainBinding
-import com.example.torang_core.login.LoginManager
-import com.example.torang_core.util.Logger
+import com.sryang.torang_core.login.LoginManager
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -33,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Logger.d("onOptionsItemSelected")
+//        Logger.d("onOptionsItemSelected")
         return super.onOptionsItemSelected(item)
     }
 }

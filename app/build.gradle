@@ -38,6 +38,7 @@ android {
         dataBinding true
         viewBinding true
     }
+    namespace 'com.sryang.main'
 }
 
 dependencies {
@@ -45,9 +46,9 @@ dependencies {
     implementation project(path: ':library')
     implementation "com.github.sarang628:TorangCore:$coreVersion"
     implementation "com.github.sarang628:TorangRepository:$torangRepositoryVersion"
-    implementation "com.github.sarang628:Feed:$feedVersion"
-    implementation "com.github.sarang628:Alarm:$alarmVersion"
-    implementation "com.github.sarang628:Profile:$profileVersion"
+//    implementation "com.github.sarang628:Feed:$feedVersion"
+//    implementation "com.github.sarang628:Alarm:$alarmVersion"
+//    implementation "com.github.sarang628:Profile:$profileVersion"
 
     /** common */
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"

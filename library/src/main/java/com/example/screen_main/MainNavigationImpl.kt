@@ -3,7 +3,7 @@ package com.example.screen_main
 import android.content.Context
 import android.content.Intent
 import androidx.fragment.app.FragmentManager
-import com.example.torang_core.navigation.MainNavigation
+import com.sryang.torang_core.navigation.MainNavigation
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

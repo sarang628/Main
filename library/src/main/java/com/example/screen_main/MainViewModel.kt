@@ -7,22 +7,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.torang_core.data.model.Filter
-import com.example.torang_core.data.model.Restaurant
-import com.example.torang_core.repository.LoginRepository
+import com.sryang.torang_core.data.entity.Filter
+import com.sryang.torang_core.data.entity.Restaurant
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(loginRepository: LoginRepository) :
+class MainViewModel @Inject constructor(
+    //loginRepository: LoginRepository
+) :
     ViewModel() {
     val restaurants = MutableLiveData<ArrayList<Restaurant>?>()
     val clickMenu = MutableLiveData<Boolean>()
     val searchQuery = MutableLiveData<String>()
     val currentMenuId = MutableLiveData<Int>()
-    val loggedInUser = loginRepository.getLoginUser()
+//    val loggedInUser = loginRepository.getLoginUser()
     private val _backPressedFlag = MutableLiveData<Boolean>().apply {
         value = false
     }
@@ -48,8 +49,8 @@ class MainViewModel @Inject constructor(loginRepository: LoginRepository) :
     fun loadRestaurant(filter: Filter, location: Location?, progress: View?) {
         if (progress != null) progress.visibility = View.VISIBLE
         if (location != null) {
-            filter.lat = (location.latitude)
-            filter.lon = (location.longitude)
+//            filter.lat = (location.latitude)
+//            filter.lon = (location.longitude)
         }
     }
 
@@ -66,7 +67,7 @@ class MainViewModel @Inject constructor(loginRepository: LoginRepository) :
         if (restaurants.value != null) {
             val list = restaurants.value
             for (i in list!!.indices) {
-                if (list[i].restaurant_name == title) return i
+//                if (list[i].restaurant_name == title) return i
             }
         }
         return position

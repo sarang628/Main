@@ -1,19 +1,16 @@
 package com.example.screen_main
 
+//import com.sarang.toringlogin.LoginManager
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import com.example.screen_main.databinding.FragmentMainBinding
-import com.example.torang_core.util.ITorangLocationManager
-import com.example.torang_core.util.Logger
-//import com.sarang.toringlogin.LoginManager
+import com.sryang.torang_core.util.ITorangLocationManager
+import com.sryang.torang_core.util.Logger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -38,9 +35,9 @@ class MainFragment : Fragment() {
         binding.lifecycleOwner = this
 
         // Sets BottomNavigation
-        val navHostFragment = childFragmentManager.findFragmentById(R.id.fc) as NavHostFragment
+        //val navHostFragment = childFragmentManager.findFragmentById(R.id.fc) as NavHostFragment
         //val navController = navHostFragment.navController
-        binding.bottomNavigationView.setupWithNavController(navHostFragment.navController)
+//        binding.bottomNavigationView.setupWithNavController(navHostFragment.navController)
 
         //init LoginManager
         //loginManager.onCreate(requireActivity() as AppCompatActivity)

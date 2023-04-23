@@ -28,6 +28,7 @@ android {
         dataBinding true
         viewBinding true
     }
+    namespace 'com.example.screen_main'
 }
 
 dependencies {
@@ -39,38 +40,12 @@ dependencies {
 
     implementation "com.github.sarang628:TorangCore:$coreVersion"
     implementation "com.github.sarang628:TorangRepository:$torangRepositoryVersion"
-    implementation "com.github.sarang628:Feed:$feedVersion"
-    implementation "com.github.sarang628:Alarm:$alarmVersion"
-    implementation "com.github.sarang628:Profile:$profileVersion"
-    implementation "com.github.sarang628:Finding:$findingVersion"
+//    implementation "com.github.sarang628:Feed:$feedVersion"
+//    implementation "com.github.sarang628:Alarm:$alarmVersion"
+//    implementation "com.github.sarang628:Profile:$profileVersion"
+//    implementation "com.github.sarang628:Finding:$findingVersion"
     implementation 'com.github.sarang628:TorangImageLoader:f4a2359698'
     implementation "com.github.sarang628:TorangLocationService:$torangLocationServiceVersion"
-
-    /*implementation project(path: ':TorangTestRepository')
-    implementation project(path: ':TorangLocationService')
-    implementation project(path: ':screen_info')
-    implementation project(path: ':screen_pictures')
-    implementation project(path: ':screen_map')
-    implementation project(path: ':screen_terms')
-    implementation project(path: ':screen_feed')
-    implementation project(path: ':screen')
-    implementation project(path: ':screen_timelinedetail')
-    implementation project(path: ':screen_alarm')
-    implementation project(path: ':screen_profile')
-    implementation project(path: ':screen_splash')
-    implementation project(path: ':torangdialog')
-    implementation project(path: ':base_feed')
-    implementation project(path: ':torangDeviceManager')
-    implementation project(path: ':screen_picturepage')
-    implementation project(path: ':screen_info')
-    implementation project(path: ':screen_reviews')
-    implementation project(path: ':screen_myreviews')
-    implementation project(path: ':screen_pictures')
-    implementation project(path: ':torang_core')
-    implementation project(path: ':TorangTestRepository')
-    implementation project(path: ':screen_myreview')
-    implementation project(path: ':screen_search')
-    implementation project(path: ':screen_finding')*/
 
     /** common */
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"

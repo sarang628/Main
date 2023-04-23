@@ -1,35 +1,20 @@
 package com.posco.feedscreentestapp.di
 
-import android.content.Context
-import android.content.Intent
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.LiveData
-import com.example.torang_core.data.model.User
-import com.example.torang_core.login.LoginManager
-import com.example.torang_core.login.OnLoginResultListener
-import com.example.torang_core.login.OnResultLoginListener
-import com.example.torang_core.login.OnResultLogoutListener
-import com.example.torang_core.navigation.LoginNavigation
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import javax.inject.Inject
 import javax.inject.Singleton
 
-@Module
+/*@Module
 @InstallIn(SingletonComponent::class)
 abstract class LoginModule {
     @Binds
     abstract fun provideLoginMudule(torangLoginManager: TorangLoginManager): LoginManager
-}
+}*/
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -56,14 +41,14 @@ abstract fun provideFacebookLoginProviderForView(faceBookLoginProviderForViewImp
 abstract fun provideFacebookLoginProviderForRepository(FacebookLoginProviderImpl: FacebookLoginProviderImpl) : FaceBookLoginProviderForRepository*/
 //}
 
-@Module
-@InstallIn(ActivityComponent::class)
-abstract class LoginNavigationModule {
-    @Binds
-    abstract fun provideLoginNavigation(loginNavigationImpl: LoginNavigationImpl): LoginNavigation
-}
+//@Module
+//@InstallIn(ActivityComponent::class)
+//abstract class LoginNavigationModule {
+//    @Binds
+//    abstract fun provideLoginNavigation(loginNavigationImpl: LoginNavigationImpl): LoginNavigation
+//}
 
-class LoginNavigationImpl @Inject constructor() : LoginNavigation {
+/*class LoginNavigationImpl @Inject constructor() : LoginNavigation {
     override fun goLogin(fragmentManager: FragmentManager?) {
         TODO("Not yet implemented")
     }
@@ -71,8 +56,9 @@ class LoginNavigationImpl @Inject constructor() : LoginNavigation {
     override fun goLogin(context: Context) {
         Toast.makeText(context, "goLogin", Toast.LENGTH_SHORT).show()
     }
-}
+}*/
 
+/*
 class TorangLoginManager : LoginManager{
     override fun isLogin(): LiveData<Boolean> {
         TODO("Not yet implemented")
@@ -122,4 +108,4 @@ class TorangLoginManager : LoginManager{
         TODO("Not yet implemented")
     }
 
-}
+}*/
