@@ -3,45 +3,49 @@ ext {
     compileSdkVersion = 33
     minSdkVersion = 23
     targetSdkVersion = 30
-    buildToolsVersion = '30.0.3'
+    buildToolsVersion = '30.0.2'
 
-    workVersion = '2.7.1'
+    workVersion = '2.7.0'
     coroutinesVersion = "1.4.2"
-    navigationVersion = '2.5.0-alpha03'
+    navigationVersion = '2.4.0-alpha06'
     okhttpLoggingVersion = '4.7.2'
     pagingVersion = '3.0.0-alpha02'
     retrofitVersion = '2.9.0'
-    roomVersion = '2.4.3'
+    roomVersion = '2.2.5'
     runnerVersion = '1.0.1'
     truthVersion = '0.42'
     testExtJunit = '1.1.0'
     uiAutomatorVersion = '2.2.0'
     viewPagerVersion = '1.0.0'
-    ktxVersion = '1.9.0'
-    materialVersion = '1.5.0'
-    appCompatVersion = '1.5.1'
+    materialVersion = '1.9.0-rc01'
+    ktxVersion = '1.10.0'
+    appCompatVersion = '1.6.1'
     junitVersion = '4.13.2'
-    junitTestVersion = '1.1.3'
-    espressoCoreVersion = '3.4.0'
-    fragmentVersion = '1.5.0-alpha03'
-    kotlinVersion = '1.6.0'
-    kotlin_version = '1.5.20'
+    junitTestVersion = '1.1.5'
+    espressoCoreVersion = '3.5.1'
+    fragmentVersion = '1.3.5'
+    roomVersion = '2.3.0'
     coroutinesVersion = "1.3.0-M2"
     lifecycleVersion = '2.2.0'
-    archLifecycleVersion = '2.5.1'
+    archLifecycleVersion = '2.6.1'
     glideVersion = '4.11.0'
-    constraintLayoutVersion = '2.1.3'
+    constraintLayoutVersion = '2.1.4'
     espressoVersion = '3.4.0'
     swipeRefreshLayoutVersion = '1.1.0'
     hiltVersion = '2.38.1'
+    hiltCompilerVersion = '2.38.1'
+    hiltTestVersion = '2.44.2'
+    hiltAndroidVersion = '2.38.1'
     hiltViewModelVersion = '1.0.0-alpha03'
     recyclerViewVersion = '1.2.1'
     facebookLibraryVersion = '8.1.0'
+    fragmentVersion = "1.5.6"
+    kotlinVersion = '1.8.0'
 
     torangRepositoryVersion = '303c641ab7'
-    coreVersion = 'db6525cf4d'
+    coreVersion = '1a0e406fa3'
     feedVersion = '2ca313732c'
-    alarmVersion = '1cab172997'
+    alarmVersion = '59908f0b5b'
     profileVersion = '502c360a68'
     findingVersion = '41e31829f0'
     torangLocationServiceVersion = '83d7409e6a'
@@ -49,17 +53,15 @@ ext {
 }
 
 buildscript {
-    ext.kotlinVersion = '1.6.10'
     ext.navigationVersion = '2.5.0-alpha03'
-    ext.ktlintVersion = '0.33.0'
     ext.hiltVersion = '2.40.1'
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.0'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'
+        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.0'
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
 

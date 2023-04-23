@@ -2,13 +2,12 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
+//    id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs'
-    id 'dagger.hilt.android.plugin'
 }
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion
@@ -32,61 +31,36 @@ android {
 }
 
 dependencies {
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentVersion"
-    implementation 'androidx.activity:activity-ktx:1.1.0'
-
-    implementation "com.github.sarang628:TorangCore:$coreVersion"
-    implementation "com.github.sarang628:TorangRepository:$torangRepositoryVersion"
-//    implementation "com.github.sarang628:Feed:$feedVersion"
-//    implementation "com.github.sarang628:Alarm:$alarmVersion"
-//    implementation "com.github.sarang628:Profile:$profileVersion"
-//    implementation "com.github.sarang628:Finding:$findingVersion"
-    implementation 'com.github.sarang628:TorangImageLoader:f4a2359698'
-    implementation "com.github.sarang628:TorangLocationService:$torangLocationServiceVersion"
-
     /** common */
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation "androidx.core:core-ktx:$ktxVersion"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "com.google.android.material:material:$materialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$junitTestVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$archLifecycleVersion"
+    implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentVersion"
+    implementation 'androidx.activity:activity-ktx:1.7.0'
 
-
-    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.archLifecycleVersion"
-    implementation "com.google.android.material:material:$rootProject.materialVersion"
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
-    kapt "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
-    implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
-    implementation 'androidx.fragment:fragment-ktx:1.1.0'
+    /** HILT */
+//    implementation "com.google.dagger:hilt-android:$hiltAndroidVersion"
+//    kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
+//    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltViewModelVersion"
+//    kapt "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
+//    annotationProcessor "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
 
-    //*********************** Navigation Component ***********************
-    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"
-    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
-
-    /*---------------------------------------------------------------*
-     * GOOGLE MAP                                                    *
-     *---------------------------------------------------------------*/
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
-    implementation 'com.google.android.gms:play-services-location:18.0.0'
-
-
-    /*---------------------------------------------------------------*
-     * GLIDE                                                         *
-     *---------------------------------------------------------------*/
-
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2'
-    kapt "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
-    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+    /** GOOGLE MAP */
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
 
     /** NAVIGATION COMPONENT */
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion" // Kotlin
@@ -98,13 +72,36 @@ dependencies {
     implementation "androidx.navigation:navigation-compose:$navigationVersion"
     // Jetpack Compose Integration
 
-    /** by viewModels() */
-    implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentVersion"
 
-    /** HILT */
-    implementation "com.google.dagger:hilt-android:$hiltVersion"
-    kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltViewModelVersion"
-    kapt "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
-    annotationProcessor "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
+    // For instrumented tests.
+    androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltTestVersion")
+    // ...with Kotlin.
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltCompilerVersion")
+
+    //https://developer.android.com/jetpack/androidx/releases/fragment
+    // Testing Fragments in Isolation
+    debugImplementation("androidx.fragment:fragment-testing:$fragmentVersion")
+
+//    implementation "com.github.sarang628:TorangCore:$coreVersion"
+//    implementation "com.github.sarang628:TorangRepository:$torangRepositoryVersion"
+//    implementation "com.github.sarang628:Feed:$feedVersion"
+//    implementation "com.github.sarang628:Alarm:$alarmVersion"
+//    implementation "com.github.sarang628:Profile:$profileVersion"
+//    implementation "com.github.sarang628:Finding:$findingVersion"
+//    implementation 'com.github.sarang628:TorangImageLoader:f4a2359698'
+//    implementation "com.github.sarang628:TorangLocationService:$torangLocationServiceVersion"
+
+    /*---------------------------------------------------------------*
+     * GLIDE                                                         *
+     *---------------------------------------------------------------*/
+
+//    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+//    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+//    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
+//    kapt "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
+//    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+//    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+//    kapt "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
+//    implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
+//    implementation 'androidx.fragment:fragment-ktx:1.5.6'
 }

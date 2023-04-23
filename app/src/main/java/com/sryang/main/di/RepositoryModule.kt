@@ -1,11 +1,7 @@
 package com.sryang.main.di
 
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-
-@InstallIn(SingletonComponent::class)
-@Module
+//@InstallIn(SingletonComponent::class)
+//@Module
 class DatabaseModule {
 
     /** 로컬 데이터베이스 제공 */
@@ -17,8 +13,8 @@ class DatabaseModule {
 }
 
 
-@Module
-@InstallIn(SingletonComponent::class)
+//@Module
+//@InstallIn(SingletonComponent::class)
 abstract class AppRepositoryModule {
 //    @Binds
 //    abstract fun provideLoginRepository(loginRepositoryImpl: LoginRepositoryImpl): LoginRepository
