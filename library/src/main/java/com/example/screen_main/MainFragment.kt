@@ -8,11 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.example.screen_main.databinding.FragmentMainBinding
-import com.sryang.torang_core.util.ITorangLocationManager
-import com.sryang.torang_core.util.Logger
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 /**
  * [FragmentMainBinding]
@@ -22,7 +21,7 @@ class MainFragment : Fragment() {
 //    @Inject
 //    lateinit var loginManager: LoginManager
 
-    @Inject lateinit var locationManager : ITorangLocationManager
+//    @Inject lateinit var locationManager : ITorangLocationManager
 
     //메인 뷰모델
     private val mainViewModel: MainViewModel by viewModels()
@@ -35,9 +34,9 @@ class MainFragment : Fragment() {
         binding.lifecycleOwner = this
 
         // Sets BottomNavigation
-        //val navHostFragment = childFragmentManager.findFragmentById(R.id.fc) as NavHostFragment
-        //val navController = navHostFragment.navController
-//        binding.bottomNavigationView.setupWithNavController(navHostFragment.navController)
+        val navHostFragment = childFragmentManager.findFragmentById(R.id.fc) as NavHostFragment
+        val navController = navHostFragment.navController
+        binding.bottomNavigationView.setupWithNavController(navHostFragment.navController)
 
         //init LoginManager
         //loginManager.onCreate(requireActivity() as AppCompatActivity)
@@ -50,10 +49,10 @@ class MainFragment : Fragment() {
         var badge1 = binding.bottomNavigationView.getOrCreateBadge(R.id.alarmFragment)
         badge1.isVisible = true
 
-        Logger.d(locationManager.getLastLatitude())
-        Logger.d(locationManager.getLastLongitude())
+//        Logger.d(locationManager.getLastLatitude())
+//        Logger.d(locationManager.getLastLongitude())
 
-        locationManager.requestLocation()
+//        locationManager.requestLocation()
 
         return binding.root
     }

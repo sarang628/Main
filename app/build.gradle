@@ -3,7 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs'
-//    id 'dagger.hilt.android.plugin'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -62,11 +62,11 @@ dependencies {
 
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     /** HILT */
-//    implementation "com.google.dagger:hilt-android:$hiltAndroidVersion"
-//    kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
-//    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltViewModelVersion"
-//    kapt "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
-//    annotationProcessor "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
+    implementation "com.google.dagger:hilt-android:$hiltAndroidVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltViewModelVersion"
+    kapt "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
+    annotationProcessor "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
 
     /** NAVIGATION COMPONENT */
 //    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion" // Kotlin
@@ -77,10 +77,10 @@ dependencies {
     // Testing Navigation
 //    implementation "androidx.navigation:navigation-compose:$navigationVersion"
 
-//    implementation project(path: ':library')
+    implementation project(path: ':library')
 //    implementation "com.github.sarang628:TorangCore:$coreVersion"
 //    implementation "com.github.sarang628:TorangRepository:$torangRepositoryVersion"
 //    implementation "com.github.sarang628:Feed:$feedVersion"
-//    implementation "com.github.sarang628:Alarm:$alarmVersion"
+    implementation "com.github.sarang628:Alarm:$alarmVersion"
 //    implementation "com.github.sarang628:Profile:$profileVersion"
 }

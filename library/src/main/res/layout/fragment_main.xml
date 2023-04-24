@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+<!--    android:background="@color/colorSecondaryLight"-->
+<!--    android:background="@color/colorSecondaryLight"-->
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorSecondaryLight"
         android:fitsSystemWindows="true"
         tools:openDrawer="start">
 
@@ -20,13 +21,12 @@
                 android:id="@+id/bottomNavigationView"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:background="@color/colorSecondaryLight"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:menu="@menu/main_bottom_navigation_menu" />
 
-            <!--<androidx.fragment.app.FragmentContainerView
+            <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/fc"
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="0dp"
@@ -36,7 +36,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:navGraph="@navigation/nav_main" />-->
+                app:navGraph="@navigation/nav_main" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

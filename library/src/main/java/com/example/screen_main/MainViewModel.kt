@@ -7,8 +7,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sryang.torang_core.data.entity.Filter
-import com.sryang.torang_core.data.entity.Restaurant
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -19,7 +17,7 @@ class MainViewModel @Inject constructor(
     //loginRepository: LoginRepository
 ) :
     ViewModel() {
-    val restaurants = MutableLiveData<ArrayList<Restaurant>?>()
+//    val restaurants = MutableLiveData<ArrayList<Restaurant>?>()
     val clickMenu = MutableLiveData<Boolean>()
     val searchQuery = MutableLiveData<String>()
     val currentMenuId = MutableLiveData<Int>()
@@ -46,16 +44,20 @@ class MainViewModel @Inject constructor(
         this.clickMenu.value = clickMenu
     }
 
-    fun loadRestaurant(filter: Filter, location: Location?, progress: View?) {
-        if (progress != null) progress.visibility = View.VISIBLE
-        if (location != null) {
+    fun loadRestaurant(
+        //filter: Filter, location: Location?, progress: View?
+    ) {
+//        if (progress != null) progress.visibility = View.VISIBLE
+//        if (location != null) {
 //            filter.lat = (location.latitude)
 //            filter.lon = (location.longitude)
-        }
+//        }
     }
 
-    fun setRestaurants(restaurants: ArrayList<Restaurant>?) {
-        this.restaurants.value = restaurants
+    fun setRestaurants(
+        //restaurants: ArrayList<Restaurant>?
+    ) {
+//        this.restaurants.value = restaurants
     }
 
     fun setSearchQuery(searchQuery: String) {
@@ -64,12 +66,12 @@ class MainViewModel @Inject constructor(
 
     fun getPositionByRestaurantName(title: String): Int {
         val position = 0
-        if (restaurants.value != null) {
-            val list = restaurants.value
-            for (i in list!!.indices) {
+//        if (restaurants.value != null) {
+//            val list = restaurants.value
+//            for (i in list!!.indices) {
 //                if (list[i].restaurant_name == title) return i
-            }
-        }
+//            }
+//        }
         return position
     }
 
@@ -84,10 +86,10 @@ class MainViewModel @Inject constructor(
 
     private fun emptyCheck() {
         //TODO::통신실패하거나 리스트 비어있을 시 빈화면 처리하기
-        if (restaurants.value == null || restaurants.value!!.size <= 0) {
+        /*if (restaurants.value == null || restaurants.value!!.size <= 0) {
             empty.setValue(true)
         } else {
             empty.setValue(false)
-        }
+        }*/
     }
 }
