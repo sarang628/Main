@@ -90,6 +90,7 @@ dependencies {
 //    implementation "com.github.sarang628:Finding:$findingVersion"
 //    implementation 'com.github.sarang628:TorangImageLoader:f4a2359698'
 //    implementation "com.github.sarang628:TorangLocationService:$torangLocationServiceVersion"
+    implementation "com.github.sarang628:Theme:$themeVersion"
 
     /*---------------------------------------------------------------*
      * GLIDE                                                         *

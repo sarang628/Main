@@ -1,7 +1,7 @@
 ext {
     // Sdk and tools
     compileSdkVersion = 33
-    minSdkVersion = 23
+    minSdkVersion = 24
     targetSdkVersion = 30
     buildToolsVersion = '30.0.2'
 
@@ -49,6 +49,7 @@ ext {
     profileVersion = '502c360a68'
     findingVersion = '41e31829f0'
     torangLocationServiceVersion = '83d7409e6a'
+    themeVersion = '6f8e2a7a08'
 
 }
 
