@@ -66,29 +66,15 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion" // Kotlin
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion" // Kotlin
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$navigationVersion"
-    // Feature module Support
     androidTestImplementation "androidx.navigation:navigation-testing:$navigationVersion"
-    // Testing Navigation
     implementation "androidx.navigation:navigation-compose:$navigationVersion"
-    // Jetpack Compose Integration
 
-    // For instrumented tests.
-    androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltTestVersion")
-    // ...with Kotlin.
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltCompilerVersion")
-
-    //https://developer.android.com/jetpack/androidx/releases/fragment
     // Testing Fragments in Isolation
     debugImplementation("androidx.fragment:fragment-testing:$fragmentVersion")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltTestVersion")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltCompilerVersion")
 
-//    implementation "com.github.sarang628:TorangCore:$coreVersion"
-//    implementation "com.github.sarang628:TorangRepository:$torangRepositoryVersion"
     implementation "com.github.sarang628:Feed:$feedVersion"
     implementation "com.github.sarang628:Alarm:$alarmVersion"
-//    implementation "com.github.sarang628:Profile:$profileVersion"
-//    implementation "com.github.sarang628:Finding:$findingVersion"
-//    implementation 'com.github.sarang628:TorangImageLoader:f4a2359698'
-//    implementation "com.github.sarang628:TorangLocationService:$torangLocationServiceVersion"
     implementation "com.github.sarang628:Theme:$themeVersion"
-
 }

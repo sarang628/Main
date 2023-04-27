@@ -3,11 +3,10 @@ ext {
     compileSdkVersion = 33
     minSdkVersion = 24
     targetSdkVersion = 30
-    buildToolsVersion = '30.0.2'
+    buildToolsVersion = '30.0.3'
 
     workVersion = '2.7.0'
     coroutinesVersion = "1.4.2"
-    navigationVersion = '2.4.0-alpha06'
     okhttpLoggingVersion = '4.7.2'
     pagingVersion = '3.0.0-alpha02'
     retrofitVersion = '2.9.0'
@@ -32,11 +31,14 @@ ext {
     constraintLayoutVersion = '2.1.4'
     espressoVersion = '3.4.0'
     swipeRefreshLayoutVersion = '1.1.0'
-    hiltVersion = '2.38.1'
-    hiltCompilerVersion = '2.38.1'
-    hiltTestVersion = '2.44.2'
-    hiltAndroidVersion = '2.38.1'
+    //hilt
+    hiltVersion = '2.45'
+    hiltCompilerVersion = '2.45'
+    hiltTestVersion = '2.45'
+    hiltAndroidVersion = '2.45'
     hiltViewModelVersion = '1.0.0-alpha03'
+    //navigation
+    navigationVersion = '2.4.0-alpha06'
     recyclerViewVersion = '1.2.1'
     facebookLibraryVersion = '8.1.0'
     fragmentVersion = "1.5.6"
