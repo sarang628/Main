@@ -44,7 +44,7 @@ ext {
 
     torangRepositoryVersion = '303c641ab7'
     coreVersion = '1a0e406fa3'
-    feedVersion = '2ca313732c'
+    feedVersion = 'b093aad776'
     alarmVersion = '59908f0b5b'
     profileVersion = '502c360a68'
     findingVersion = '41e31829f0'
@@ -65,10 +65,6 @@ buildscript {
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.0'
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
-
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 
@@ -78,19 +74,9 @@ allprojects {
         jcenter()
         maven { url 'https://jitpack.io' }
         maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
-        //maven { url 'http://devrepo.kakao.com:8088/nexus/content/groups/public/' }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-//    /** HILT */
-//    implementation "com.google.dagger:hilt-android:$hiltVersion"
-//    kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
-//    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltViewModelVersion"
-//    kapt "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
-//    annotationProcessor "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
-//    id 'kotlin-kapt'
-//    id 'dagger.hilt.android.plugin'

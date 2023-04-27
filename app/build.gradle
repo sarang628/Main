@@ -80,7 +80,6 @@ dependencies {
     implementation project(path: ':library')
 //    implementation "com.github.sarang628:TorangCore:$coreVersion"
 //    implementation "com.github.sarang628:TorangRepository:$torangRepositoryVersion"
-//    implementation "com.github.sarang628:Feed:$feedVersion"
-    implementation "com.github.sarang628:Alarm:$alarmVersion"
+//    implementation "com.github.sarang628:Alarm:$alarmVersion"
 //    implementation "com.github.sarang628:Profile:$profileVersion"
 }
