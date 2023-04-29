@@ -46,10 +46,10 @@ ext {
 
     torangRepositoryVersion = '303c641ab7'
     coreVersion = '1a0e406fa3'
-    feedVersion = 'b093aad776'
+    feedVersion = 'c407ee8e2a'
     alarmVersion = '59908f0b5b'
-    profileVersion = '502c360a68'
-    findingVersion = '41e31829f0'
+    profileVersion = 'b81b17f85e'
+    findingVersion = '02891963b1'
     torangLocationServiceVersion = '83d7409e6a'
     themeVersion = '6f8e2a7a08'
 

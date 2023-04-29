@@ -77,4 +77,6 @@ dependencies {
     implementation "com.github.sarang628:Feed:$feedVersion"
     implementation "com.github.sarang628:Alarm:$alarmVersion"
     implementation "com.github.sarang628:Theme:$themeVersion"
+    implementation "com.github.sarang628:Profile:$profileVersion"
+    implementation "com.github.sarang628:finding:$findingVersion"
 }

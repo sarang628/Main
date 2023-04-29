@@ -11,7 +11,6 @@
         android:label="TimeLineFragment"
         tools:layout="@layout/fragment_feeds" />
 
-    <!--
     <fragment
         android:id="@+id/findingFragment"
         android:name="com.example.screen_finding.finding.FindFragment"
@@ -21,12 +20,17 @@
             app:destination="@id/searchFragment" />
     </fragment>
 
-    -->
 
     <fragment
         android:id="@+id/alarmFragment"
         android:name="com.sarang.alarm.fragment.AlarmListFragment"
         android:label="AlarmFragment"
         tools:layout="@layout/fragment_alarm_list" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.sarang.profile.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile" />
 
 </navigation>
