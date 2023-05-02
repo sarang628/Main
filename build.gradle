@@ -49,7 +49,7 @@ ext {
     feedVersion = '1431c2e245'
     alarmVersion = '59908f0b5b'
     profileVersion = 'b81b17f85e'
-    findingVersion = '02891963b1'
+    findingVersion = '37ac346f9a'
     torangLocationServiceVersion = '83d7409e6a'
     themeVersion = '6f8e2a7a08'
 

@@ -15,9 +15,6 @@
         android:id="@+id/findingFragment"
         android:name="com.example.screen_finding.finding.FindFragment"
         android:label="@layout/finding_fragment">
-        <action
-            android:id="@+id/action_findFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
     </fragment>
 
 
