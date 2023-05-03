@@ -1,8 +1,8 @@
 ext {
     // Sdk and tools
-    compileSdkVersion = 33
-    minSdkVersion = 24
-    targetSdkVersion = 30
+    compileSdk = 33
+    minSdk = 24
+    targetSdk = 30
     buildToolsVersion = '30.0.3'
 
     workVersion = '2.7.0'
@@ -44,12 +44,10 @@ ext {
     fragmentVersion = "1.5.6"
     kotlinVersion = '1.8.0'
 
-    torangRepositoryVersion = '303c641ab7'
-    coreVersion = '1a0e406fa3'
     feedVersion = '1431c2e245'
     alarmVersion = '59908f0b5b'
     profileVersion = 'b81b17f85e'
-    findingVersion = '37ac346f9a'
+    findingVersion = 'fd29f76538'
     torangLocationServiceVersion = '83d7409e6a'
     themeVersion = '6f8e2a7a08'
 
