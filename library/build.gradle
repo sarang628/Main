@@ -61,4 +61,5 @@ dependencies {
     implementation "com.github.sarang628:Theme:$themeVersion"
     implementation "com.github.sarang628:Profile:$profileVersion"
     implementation "com.github.sarang628:finding:$findingVersion"
+    implementation "com.github.sarang628:MyReview:$myReviewVersion"
 }

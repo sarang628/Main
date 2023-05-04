@@ -50,6 +50,7 @@ ext {
     findingVersion = 'fd29f76538'
     torangLocationServiceVersion = '83d7409e6a'
     themeVersion = '6f8e2a7a08'
+    myReviewVersion = 'd11b6ae428'
 
 }
 

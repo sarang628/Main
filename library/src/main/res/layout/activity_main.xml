@@ -7,7 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fc"
             android:name="androidx.navigation.fragment.NavHostFragment"
@@ -18,12 +17,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navGraph="@navigation/nav_feed" />
+            app:navGraph="@navigation/nav_root_main" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="AA"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
