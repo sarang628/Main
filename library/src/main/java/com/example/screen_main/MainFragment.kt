@@ -1,6 +1,5 @@
 package com.example.screen_main
 
-//import com.sarang.toringlogin.LoginManager
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -18,10 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 class MainFragment : Fragment() {
-//    @Inject
-//    lateinit var loginManager: LoginManager
-
-//    @Inject lateinit var locationManager : ITorangLocationManager
 
     //메인 뷰모델
     private val mainViewModel: MainViewModel by viewModels()
@@ -48,11 +43,6 @@ class MainFragment : Fragment() {
 
         var badge1 = binding.bottomNavigationView.getOrCreateBadge(R.id.alarmFragment)
         badge1.isVisible = true
-
-//        Logger.d(locationManager.getLastLatitude())
-//        Logger.d(locationManager.getLastLongitude())
-
-//        locationManager.requestLocation()
 
         return binding.root
     }

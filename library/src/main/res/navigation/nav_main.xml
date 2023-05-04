@@ -30,4 +30,12 @@
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile" />
 
+    <fragment
+        android:id="@+id/myReviewFragment"
+        android:name="com.sarang.myreview.ui.MyReviewFragment"
+        android:label="MyReviewFragment"
+        tools:layout="@layout/fragment_add_review">
+        <deepLink app:uri="android-app://example.google.app/settings_fragment_two" />
+    </fragment>
+
 </navigation>

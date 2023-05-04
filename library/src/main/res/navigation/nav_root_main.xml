@@ -11,11 +11,5 @@
         android:label="MainFragment"
         tools:layout="@layout/fragment_main" />
 
-    <fragment
-        android:id="@+id/myReviewFragment"
-        android:name="com.sarang.myreview.ui.MyReviewFragment"
-        android:label="MyReviewFragment"
-        tools:layout="@layout/fragment_add_review" />
-
 
 </navigation>
