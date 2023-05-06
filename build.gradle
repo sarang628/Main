@@ -50,10 +50,10 @@ ext {
     kotlinVersion = '1.8.21'
 
     feedVersion = '6d324e3b4b'
-    alarmVersion = 'f449a13c9a'
+    alarmVersion = 'a9dae27fa1'
     profileVersion = 'ac707d1980'
     findingVersion = '6e35ffde9e'
     themeVersion = '6f8e2a7a08'
-    myReviewVersion = 'd11b6ae428'
+    myReviewVersion = '4616d836d8'
 
 }
