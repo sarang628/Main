@@ -6,6 +6,13 @@
     app:startDestination="@id/timeLineFragment">
 
     <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.screen_main.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main" />
+
+
+    <fragment
         android:id="@+id/timeLineFragment"
         android:name="com.example.screen_feed.FeedsFragment"
         android:label="TimeLineFragment"
@@ -29,13 +36,5 @@
         android:name="com.sarang.profile.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile" />
-
-    <fragment
-        android:id="@+id/myReviewFragment"
-        android:name="com.sarang.myreview.ui.MyReviewFragment"
-        android:label="MyReviewFragment"
-        tools:layout="@layout/fragment_add_review">
-        <deepLink app:uri="android-app://example.google.app/settings_fragment_two" />
-    </fragment>
 
 </navigation>

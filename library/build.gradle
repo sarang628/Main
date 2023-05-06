@@ -3,15 +3,14 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
-    id 'androidx.navigation.safeargs'
 }
 
 android {
-    compileSdkVersion rootProject.compileSdk
+    compileSdk rootProject.compileSdk
 
     defaultConfig {
-        minSdkVersion rootProject.minSdk
-        targetSdkVersion rootProject.targetSdk
+        minSdk rootProject.minSdk
+        targetSdk rootProject.targetSdk
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -21,6 +20,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_17
     }
 
     buildFeatures {
@@ -34,11 +38,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     /** HILT */
-    implementation "com.google.dagger:hilt-android:$hiltAndroidVersion"
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltViewModelVersion"
-    kapt "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
-    annotationProcessor "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
 
     /** GOOGLE MAP */
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
@@ -51,15 +52,12 @@ dependencies {
     androidTestImplementation "androidx.navigation:navigation-testing:$navigationVersion"
     implementation "androidx.navigation:navigation-compose:$navigationVersion"
 
-    // Testing Fragments in Isolation
-    debugImplementation("androidx.fragment:fragment-testing:$fragmentVersion")
-    androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltTestVersion")
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltCompilerVersion")
-
     implementation "com.github.sarang628:Feed:$feedVersion"
     implementation "com.github.sarang628:Alarm:$alarmVersion"
     implementation "com.github.sarang628:Theme:$themeVersion"
     implementation "com.github.sarang628:Profile:$profileVersion"
     implementation "com.github.sarang628:finding:$findingVersion"
     implementation "com.github.sarang628:MyReview:$myReviewVersion"
+
+    implementation 'com.github.sarang628:Navigation:6753fbf16b'
 }

@@ -9,7 +9,18 @@
         android:id="@+id/mainFragment"
         android:name="com.example.screen_main.MainFragment"
         android:label="MainFragment"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_myReviewFragment"
+            app:destination="@id/myReviewFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/myReviewFragment"
+        android:name="com.sarang.myreview.ui.MyReviewFragment"
+        android:label="MyReviewFragment">
+        <deepLink app:uri="android-app://example.google.app/settings_fragment_two" />
+    </fragment>
 
 
 </navigation>
