@@ -58,6 +58,5 @@ dependencies {
     implementation "com.github.sarang628:Profile:$profileVersion"
     implementation "com.github.sarang628:finding:$findingVersion"
     implementation "com.github.sarang628:MyReview:$myReviewVersion"
-
-    implementation 'com.github.sarang628:Navigation:6753fbf16b'
+    implementation "com.github.sarang628:Navigation:$navigationModuleVersion"
 }
