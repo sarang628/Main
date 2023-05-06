@@ -49,7 +49,7 @@ ext {
     fragmentVersion = "1.5.6"
     kotlinVersion = '1.8.21'
 
-    feedVersion = '82d3a82138'
+    feedVersion = '6d324e3b4b'
     alarmVersion = 'f449a13c9a'
     profileVersion = 'ac707d1980'
     findingVersion = '6e35ffde9e'
