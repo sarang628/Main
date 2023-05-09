@@ -1,4 +1,4 @@
-package com.sryang.main.di
+package com.example.screen_main.di
 
 import android.content.Context
 import android.view.View
