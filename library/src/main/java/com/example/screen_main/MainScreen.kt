@@ -48,9 +48,10 @@ fun MainScreen(uiState: FeedsScreenUiState) {
 fun BottomNavigationComponent(navController: NavController) {
     var selectedIndex by remember { mutableStateOf(0) }
     val tabContents = listOf(
-        "Home" to Icons.Filled.Home,
+        "Feed" to Icons.Filled.Home,
         "Map" to Icons.Filled.AddCircle,
-        "Settings" to Icons.Filled.Settings
+        "Alarm" to Icons.Filled.Settings,
+        "Profile" to Icons.Filled.Settings
     )
 
     BottomNavigation(
