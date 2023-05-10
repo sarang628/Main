@@ -24,7 +24,7 @@ ext {
     kotlinVersion = '1.8.21'
 
     //feedVersion = '6bd8e20cbf'
-    feedVersion = 'bad50d49dd'
+    feedVersion = 'ad7c1548c7'
     alarmVersion = 'f9c01e5745'
     profileVersion = '89e89501f8'
     findingVersion = '6e35ffde9e'

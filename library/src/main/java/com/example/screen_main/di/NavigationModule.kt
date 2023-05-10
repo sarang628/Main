@@ -17,7 +17,7 @@ class NavigationModule {
     fun navigate(): AddReviewNavigation {
         return object : AddReviewNavigation {
             override fun navigate(fragment: Fragment) {
-                fragment.requireActivity().findNavController(R.id.fc).navigate(R.id.action_mainFragment_to_myReviewFragment)
+
             }
         }
     }

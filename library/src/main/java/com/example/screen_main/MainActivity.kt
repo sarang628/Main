@@ -3,43 +3,21 @@ package com.example.screen_main
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
-import androidx.compose.runtime.Composable
+import androidx.lifecycle.lifecycleScope
+import com.example.screen_feed.uistate.getTestSenarioFeedFragmentUIstate
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        /*setContent {
-            val widthSizeClass = calculateWindowSizeClass(this).widthSizeClass
-            TorangApp(
-                //appContainer,
-                widthSizeClass
-            )
-        }*/
+        lifecycleScope.launch {
+            val uiState =
+                getTestSenarioFeedFragmentUIstate(this@MainActivity, this@MainActivity)
+            uiState.collect { uiState ->
+                setContent { MainScreen(uiState) }
+            }
+        }
     }
-}
-
-
-@Composable
-fun TorangApp(
-    //appContainer: AppContainer,
-    widthSizeClass: WindowWidthSizeClass
-) {
-    TorangTheme {
-
-    }
-}
-
-@Composable
-fun TorangTheme(
-    content: @Composable () -> Unit
-) {
-
 }
