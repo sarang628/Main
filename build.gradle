@@ -18,15 +18,11 @@ ext {
 
     //navigation
     navigationVersion = '2.4.0-alpha06'
-    recyclerViewVersion = '1.2.1'
-    facebookLibraryVersion = '8.1.0'
-    fragmentVersion = "1.5.6"
-    kotlinVersion = '1.8.21'
 
     //feedVersion = '6bd8e20cbf'
-    feedVersion = 'ad7c1548c7'
+    feedVersion = 'abf5c0e3d2'
     alarmVersion = 'f9c01e5745'
-    profileVersion = '89e89501f8'
+    profileVersion = 'ec3354ecc1'
     findingVersion = '6e35ffde9e'
     themeVersion = '6f8e2a7a08'
     myReviewVersion = '4616d836d8'

@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,9 +25,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.screen_feed.FeedsScreen
 import com.example.screen_feed.uistate.FeedsScreenUiState
+import com.sarang.profile.ProfileScreen
+import com.sarang.profile.uistate.ProfileUiState
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
-fun MainScreen(uiState: FeedsScreenUiState) {
+fun MainScreen(
+    feedUiState: StateFlow<FeedsScreenUiState>,
+    profileUiState: StateFlow<ProfileUiState>
+) {
     val navController = rememberNavController()
     Column {
         NavHost(
@@ -34,10 +41,12 @@ fun MainScreen(uiState: FeedsScreenUiState) {
             modifier = Modifier.weight(1f)
         ) {
             composable("profile") {
-                FeedsScreen(uiState = uiState)
+                val u by feedUiState.collectAsState()
+                FeedsScreen(uiState = u)
             }
             composable("friendslist") {
-                Text(text = "friendslist")
+                val p by profileUiState.collectAsState()
+                ProfileScreen(uiState = p)
             }
         }
         BottomNavigationComponent(navController = navController)
