@@ -1,5 +1,6 @@
 package com.example.screen_main
 
+import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -24,6 +25,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.screen_feed.FeedsScreen
+import com.example.screen_feed.FeedsViewModel
 import com.example.screen_feed.uistate.FeedsScreenUiState
 import com.sarang.profile.ProfileScreen
 import com.sarang.profile.uistate.ProfileUiState
@@ -32,7 +34,8 @@ import kotlinx.coroutines.flow.StateFlow
 @Composable
 fun MainScreen(
     feedUiState: StateFlow<FeedsScreenUiState>,
-    profileUiState: StateFlow<ProfileUiState>
+    profileUiState: StateFlow<ProfileUiState>,
+    context : Context
 ) {
     val navController = rememberNavController()
     Column {
@@ -42,7 +45,7 @@ fun MainScreen(
         ) {
             composable("profile") {
                 val u by feedUiState.collectAsState()
-                FeedsScreen(uiState = u)
+                FeedsScreen(feedsViewModel = FeedsViewModel(context))
             }
             composable("friendslist") {
                 val p by profileUiState.collectAsState()

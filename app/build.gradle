@@ -33,13 +33,6 @@ android {
 }
 
 dependencies {
-    /** common */
-//    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-//    implementation "androidx.core:core-ktx:$ktxVersion"
-//    implementation "androidx.appcompat:appcompat:$appCompatVersion"
-//    implementation "com.google.android.material:material:$materialVersion"
-//    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
-
     /** HILT */
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
@@ -58,16 +51,7 @@ dependencies {
     //JetNews Main 따라하기
     implementation 'androidx.compose.material3:material3'
     implementation "androidx.compose.material3:material3-window-size-class"
-
-    /** NAVIGATION COMPONENT */
-    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion" // Kotlin
-    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion" // Kotlin
-    implementation "androidx.navigation:navigation-dynamic-features-fragment:$navigationVersion"
-    androidTestImplementation "androidx.navigation:navigation-testing:$navigationVersion"
-    implementation "androidx.navigation:navigation-compose:$navigationVersion"
-
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation "androidx.navigation:navigation-compose"
 
     implementation project(path: ':library')
     implementation "com.github.sarang628:Theme:$themeVersion"
