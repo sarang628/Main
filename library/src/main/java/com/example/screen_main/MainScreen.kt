@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -67,7 +68,7 @@ fun BottomNavigationComponent(navController: NavController) {
     )
 
     BottomNavigation(
-        backgroundColor = MaterialTheme.colors.surface,
+        backgroundColor = colorResource(id = R.color.colorSecondaryLight),
         contentColor = MaterialTheme.colors.onSurface,
         elevation = 2.dp
     ) {

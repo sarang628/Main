@@ -6,5 +6,25 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
+    <color name="colorPrimary">#356859</color>
+    <color name="colorPrimaryLight">#37966F</color>
+    <color name="colorPrimarySuperLight">#B9E4C9</color>
+    <color name="colorPrimaryDark">#88000000</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorSecondary">#FD5523</color>
+    <color name="colorSecondaryLight">#FFFBE6</color>
+
+
+    <color name="facebook">#3b5998</color>
+    <color name="kakao">#FFFF00</color>
+    <color name="naver">#1EC800</color>
+
+
+    <color name="orange">#ff7f00</color>
+    <color name="gray">#AEAEAE</color>
+    <color name="light_gray">#EEEEEE</color>
+    <color name="med_gray">#DEDEDE</color>
+    <color name="white">#FFFFFF</color>
 </resources>

@@ -20,7 +20,7 @@ ext {
     navigationVersion = '2.4.0-alpha06'
 
     //feedVersion = '6bd8e20cbf'
-    feedVersion = '1b467d2697'
+    feedVersion = '023617f48e'
     alarmVersion = 'f9c01e5745'
     profileVersion = 'ec3354ecc1'
     findingVersion = '6e35ffde9e'
