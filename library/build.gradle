@@ -67,7 +67,9 @@ dependencies {
     implementation 'androidx.compose.material3:material3'
     implementation "androidx.compose.material3:material3-window-size-class"
     implementation "androidx.lifecycle:lifecycle-runtime-compose"
-    implementation "androidx.navigation:navigation-compose"
+    def nav_version = "2.5.3"
+
+    implementation "androidx.navigation:navigation-compose:$nav_version"
 
     implementation "com.github.sarang628:Feed:$feedVersion"
     implementation "com.github.sarang628:Alarm:$alarmVersion"

@@ -28,6 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.screen_feed.FeedsScreen
 import com.example.screen_feed.FeedsViewModel
 import com.example.screen_feed.uistate.FeedsScreenUiState
+import com.example.screen_finding.finding.FindScreen
 import com.sarang.profile.ProfileScreen
 import com.sarang.profile.uistate.ProfileUiState
 import kotlinx.coroutines.flow.StateFlow
@@ -51,6 +52,9 @@ fun MainScreen(
             composable("friendslist") {
                 val p by profileUiState.collectAsState()
                 ProfileScreen(uiState = p)
+            }
+            composable("finding"){
+                FindScreen()
             }
         }
         BottomNavigationComponent(navController = navController)
@@ -82,7 +86,10 @@ fun BottomNavigationComponent(navController: NavController) {
                     selectedIndex = index
                     if (index == 0) {
                         navController.navigate("profile")
-                    } else {
+                    } else if(index == 1) {
+                        navController.navigate("finding")
+                    }
+                    else{
                         navController.navigate("friendslist")
                     }
                 }

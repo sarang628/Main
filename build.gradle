@@ -23,7 +23,7 @@ ext {
     feedVersion = '023617f48e'
     alarmVersion = 'f9c01e5745'
     profileVersion = 'ec3354ecc1'
-    findingVersion = '6e35ffde9e'
+    findingVersion = 'ca9203ce30'
     themeVersion = '6f8e2a7a08'
     myReviewVersion = '4616d836d8'
     navigationModuleVersion = 'd98f57435d'
