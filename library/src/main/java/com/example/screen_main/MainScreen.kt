@@ -29,6 +29,9 @@ import com.example.screen_feed.FeedsScreen
 import com.example.screen_feed.FeedsViewModel
 import com.example.screen_feed.uistate.FeedsScreenUiState
 import com.example.screen_finding.finding.FindScreen
+import com.sarang.alarm.fragment.test
+import com.sarang.alarm.recyclerview.Alarm
+import com.sarang.alarm.uistate.AlarmUiState
 import com.sarang.profile.ProfileScreen
 import com.sarang.profile.uistate.ProfileUiState
 import kotlinx.coroutines.flow.StateFlow
@@ -37,7 +40,8 @@ import kotlinx.coroutines.flow.StateFlow
 fun MainScreen(
     feedUiState: StateFlow<FeedsScreenUiState>,
     profileUiState: StateFlow<ProfileUiState>,
-    context : Context
+    alarmUiState: StateFlow<AlarmUiState>,
+    context: Context
 ) {
     val navController = rememberNavController()
     Column {
@@ -53,8 +57,11 @@ fun MainScreen(
                 val p by profileUiState.collectAsState()
                 ProfileScreen(uiState = p)
             }
-            composable("finding"){
+            composable("finding") {
                 FindScreen()
+            }
+            composable("alarm") {
+                test(alarmUiState)
             }
         }
         BottomNavigationComponent(navController = navController)
@@ -86,10 +93,11 @@ fun BottomNavigationComponent(navController: NavController) {
                     selectedIndex = index
                     if (index == 0) {
                         navController.navigate("profile")
-                    } else if(index == 1) {
+                    } else if (index == 1) {
                         navController.navigate("finding")
-                    }
-                    else{
+                    } else if (index == 2) {
+                        navController.navigate("alarm")
+                    } else {
                         navController.navigate("friendslist")
                     }
                 }
