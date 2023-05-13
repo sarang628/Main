@@ -3,25 +3,37 @@ package com.example.screen_main
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.lifecycle.lifecycleScope
-import com.example.screen_feed.uistate.getTestSenarioFeedFragmentUIstate
-import com.sarang.alarm.uistate.testAlarmUiState
-import com.sarang.profile.uistate.testProfileUiState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        lifecycleScope.launch {
-            val uiState = getTestSenarioFeedFragmentUIstate(this@MainActivity, this@MainActivity)
-            val uiS = testProfileUiState(this@MainActivity)
-            val test = testAlarmUiState(this@MainActivity, this@MainActivity)
-            setContent {
-                MainScreen(feedUiState = uiState, profileUiState = uiS, alarmUiState = test, this@MainActivity)
-            }
 
+        val navigation = MutableStateFlow<String>(MainNavigation.MAIN)
+
+        setContent {
+            val nav by navigation.collectAsState()
+            MainScreen(
+                context = this@MainActivity,
+                lifecycleOwner = this@MainActivity,
+                nav,
+                clickAddReview = {
+                    lifecycleScope.launch {
+                        navigation.emit(MainNavigation.ADD_REVIEW)
+                    }
+                }
+            )
         }
     }
+}
+
+object MainNavigation {
+    const val MAIN = "main"
+    const val ADD_REVIEW = "addReview"
 }
