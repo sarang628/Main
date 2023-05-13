@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -41,56 +42,80 @@ import com.sarang.profile.uistate.testProfileUiState
 fun MainScreen(
     context: Context,
     lifecycleOwner: LifecycleOwner,
-    mainNavigation: String,
     clickAddReview: ((Int) -> Unit)? = null,
-
-    ) {
-    val navController = rememberNavController()
+    navController: NavHostController
+) {
     val profileUiState = testProfileUiState(lifecycleOwner)
     val alarmUiState = testAlarmUiState(context = context, lifecycleOwner)
 
-    if (mainNavigation == MainNavigation.ADD_REVIEW)
-        Column() {
-            Text(text = "addReview")
-        }
-
-    if (mainNavigation == MainNavigation.MAIN)
-        Column {
-            NavHost(
-                navController = navController, startDestination = "profile",
-                modifier = Modifier.weight(1f)
-            ) {
-                composable("profile") {
-                    val viewModel = FeedsViewModel(context)
-                    FeedsScreen(
-                        feedsViewModel = viewModel,
-                        onRefresh = { viewModel.refresh() },
-                        clickProfile = { viewModel.clickProfile() },
-                        clickAddReview = clickAddReview,
-                        clickImage = { viewModel.clickImage() },
-                        clickRestaurant = { viewModel.clickRestaurant() },
-                        onMenuClickListener = { viewModel.clickMenu() },
-                        onClickFavoriteListener = { viewModel.clickFavorite() },
-                        onShareClickListener = { viewModel.clickShare() },
-                        onCommentClickListener = { viewModel.clickComment() },
-                        onLikeClickListener = { viewModel.clickLike() },
-                        onRestaurantClickListener = { viewModel.clickRestaurant() },
-                        onNameClickListener = { viewModel.clickName() }
-                    )
-                }
-                composable("friendslist") {
-                    val p by profileUiState.collectAsState()
-                    ProfileScreen(uiState = p)
-                }
-                composable("finding") {
-                    TextFindScreen(context)
-                }
-                composable("alarm") {
-                    test(alarmUiState)
-                }
+    Column {
+        NavHost(
+            navController = navController, startDestination = "main",
+            modifier = Modifier.weight(1f)
+        ) {
+            composable("main") {
+                MainScreen1(
+                    context = context,
+                    lifecycleOwner = lifecycleOwner,
+                    clickAddReview = clickAddReview
+                )
             }
-            BottomNavigationComponent(navController = navController)
+            composable("addReview") {
+                Text(text = "addReview")
+            }
         }
+    }
+}
+
+
+@Composable
+fun MainScreen1(
+    context: Context,
+    lifecycleOwner: LifecycleOwner,
+    clickAddReview: ((Int) -> Unit)? = null
+) {
+    val profileUiState = testProfileUiState(lifecycleOwner)
+    val alarmUiState = testAlarmUiState(context = context, lifecycleOwner)
+    Column {
+        val navController = rememberNavController()
+        NavHost(
+            navController = navController, startDestination = "profile",
+            modifier = Modifier.weight(1f)
+        ) {
+            composable("profile") {
+                val viewModel = FeedsViewModel(context)
+                FeedsScreen(
+                    feedsViewModel = viewModel,
+                    onRefresh = { viewModel.refresh() },
+                    clickProfile = { viewModel.clickProfile() },
+                    clickAddReview = clickAddReview,
+                    clickImage = { viewModel.clickImage() },
+                    clickRestaurant = { viewModel.clickRestaurant() },
+                    onMenuClickListener = { viewModel.clickMenu() },
+                    onClickFavoriteListener = { viewModel.clickFavorite() },
+                    onShareClickListener = { viewModel.clickShare() },
+                    onCommentClickListener = { viewModel.clickComment() },
+                    onLikeClickListener = { viewModel.clickLike() },
+                    onRestaurantClickListener = { viewModel.clickRestaurant() },
+                    onNameClickListener = { viewModel.clickName() }
+                )
+            }
+            composable("friendslist") {
+                val p by profileUiState.collectAsState()
+                ProfileScreen(uiState = p)
+            }
+            composable("finding") {
+                TextFindScreen(context)
+            }
+            composable("alarm") {
+                test(alarmUiState)
+            }
+            composable("addReview") {
+                Text(text = "addReview")
+            }
+        }
+        BottomNavigationComponent(navController = navController)
+    }
 }
 
 @Composable
