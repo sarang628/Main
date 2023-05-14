@@ -57,7 +57,11 @@ fun MainScreen(
                 MainScreen1(
                     context = context,
                     lifecycleOwner = lifecycleOwner,
-                    clickAddReview = clickAddReview
+                    clickAddReview = clickAddReview,
+                    clickProfile = clickAddReview,
+                    clickComment = clickAddReview,
+                    clickShare = clickAddReview,
+                    clickImage = clickAddReview
                 )
             }
             composable("addReview") {
@@ -72,7 +76,11 @@ fun MainScreen(
 fun MainScreen1(
     context: Context,
     lifecycleOwner: LifecycleOwner,
-    clickAddReview: ((Int) -> Unit)? = null
+    clickAddReview: ((Int) -> Unit)? = null,
+    clickProfile: ((Int) -> Unit)? = null,
+    clickComment: ((Int) -> Unit)? = null,
+    clickShare: ((Int) -> Unit)? = null,
+    clickImage: ((Int) -> Unit)? = null
 ) {
     val profileUiState = testProfileUiState(lifecycleOwner)
     val alarmUiState = testAlarmUiState(context = context, lifecycleOwner)
@@ -87,14 +95,14 @@ fun MainScreen1(
                 FeedsScreen(
                     feedsViewModel = viewModel,
                     onRefresh = { viewModel.refresh() },
-                    clickProfile = { viewModel.clickProfile() },
+                    clickProfile = clickProfile,
                     clickAddReview = clickAddReview,
-                    clickImage = { viewModel.clickImage() },
+                    clickImage = clickImage,
                     clickRestaurant = { viewModel.clickRestaurant() },
                     onMenuClickListener = { viewModel.clickMenu() },
                     onClickFavoriteListener = { viewModel.clickFavorite() },
-                    onShareClickListener = { viewModel.clickShare() },
-                    onCommentClickListener = { viewModel.clickComment() },
+                    onShareClickListener = clickShare,
+                    onCommentClickListener = clickComment,
                     onLikeClickListener = { viewModel.clickLike() },
                     onRestaurantClickListener = { viewModel.clickRestaurant() },
                     onNameClickListener = { viewModel.clickName() }
