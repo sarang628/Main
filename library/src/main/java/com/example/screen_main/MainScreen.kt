@@ -1,7 +1,13 @@
 package com.example.screen_main
 
 import android.content.Context
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -61,11 +67,21 @@ fun MainScreen(
                     clickProfile = clickAddReview,
                     clickComment = clickAddReview,
                     clickShare = clickAddReview,
-                    clickImage = clickAddReview
+                    clickImage = clickAddReview,
+                    clickRestaurant = clickAddReview
                 )
             }
             composable("addReview") {
-                Text(text = "addReview")
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(colorResource(id = R.color.colorSecondaryLight))
+                ) {
+                    Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
+                        Text(text = "준비중입니다.")
+                    }
+                }
             }
         }
     }
@@ -80,7 +96,8 @@ fun MainScreen1(
     clickProfile: ((Int) -> Unit)? = null,
     clickComment: ((Int) -> Unit)? = null,
     clickShare: ((Int) -> Unit)? = null,
-    clickImage: ((Int) -> Unit)? = null
+    clickImage: ((Int) -> Unit)? = null,
+    clickRestaurant: ((Int) -> Unit)? = null
 ) {
     val profileUiState = testProfileUiState(lifecycleOwner)
     val alarmUiState = testAlarmUiState(context = context, lifecycleOwner)
@@ -104,7 +121,7 @@ fun MainScreen1(
                     onShareClickListener = clickShare,
                     onCommentClickListener = clickComment,
                     onLikeClickListener = { viewModel.clickLike() },
-                    onRestaurantClickListener = { viewModel.clickRestaurant() },
+                    onRestaurantClickListener = clickRestaurant,
                     onNameClickListener = { viewModel.clickName() }
                 )
             }
@@ -113,7 +130,7 @@ fun MainScreen1(
                 ProfileScreen(uiState = p)
             }
             composable("finding") {
-                TextFindScreen(context)
+                TextFindScreen()
             }
             composable("alarm") {
                 test(alarmUiState)
