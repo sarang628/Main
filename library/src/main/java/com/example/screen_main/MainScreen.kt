@@ -78,7 +78,10 @@ fun MainScreen(
                         .fillMaxSize()
                         .background(colorResource(id = R.color.colorSecondaryLight))
                 ) {
-                    Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
                         Text(text = "준비중입니다.")
                     }
                 }
@@ -110,19 +113,18 @@ fun MainScreen1(
             composable("profile") {
                 val viewModel = FeedsViewModel(context)
                 FeedsScreen(
-                    feedsViewModel = viewModel,
+                    uiStateFlow = viewModel.uiState,
                     onRefresh = { viewModel.refresh() },
-                    clickProfile = clickProfile,
-                    clickAddReview = clickAddReview,
-                    clickImage = clickImage,
-                    clickRestaurant = { viewModel.clickRestaurant() },
-                    onMenuClickListener = { viewModel.clickMenu() },
-                    onClickFavoriteListener = { viewModel.clickFavorite() },
-                    onShareClickListener = clickShare,
-                    onCommentClickListener = clickComment,
-                    onLikeClickListener = { viewModel.clickLike() },
-                    onRestaurantClickListener = clickRestaurant,
-                    onNameClickListener = { viewModel.clickName() }
+                    onProfile = clickProfile,
+                    onAddReview = clickAddReview,
+                    onImage = clickImage,
+                    onRestaurant = { viewModel.clickRestaurant() },
+                    onMenu = { viewModel.clickMenu() },
+                    onFavorite = { viewModel.clickFavorite(it) },
+                    onShare = clickShare,
+                    onComment = clickComment,
+                    onLike = { viewModel.clickLike(it) },
+                    onName = { viewModel.clickName() }
                 )
             }
             composable("friendslist") {

@@ -19,10 +19,10 @@ ext {
     //navigation
     navigationVersion = '2.4.0-alpha06'
 
-    feedVersion = '3c79fba7f7'
+    feedVersion = '7500834a4c'
     alarmVersion = '5ef79ca25c'
     profileVersion = 'e48200b89a'
-    findingVersion = '0e033a3241'
+    findingVersion = 'df158fa819'
     themeVersion = '6f8e2a7a08'
     myReviewVersion = '4616d836d8'
     navigationModuleVersion = 'd98f57435d'
