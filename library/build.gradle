@@ -27,16 +27,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
     }
 
-    buildFeatures {
-        dataBinding true
-        viewBinding true
-        compose true
-    }
+    buildFeatures { compose true }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.6"
-    }
-
+    composeOptions { kotlinCompilerExtensionVersion = "1.4.6" }
+    
     namespace 'com.example.screen_main'
 }
 
@@ -79,4 +73,5 @@ dependencies {
     implementation "com.github.sarang628:MyReview:$myReviewVersion"
     implementation "com.github.sarang628:Navigation:$navigationModuleVersion"
     implementation 'com.github.sarang628:JsonToObjectGenerator:ab416a13e2'
+    implementation "com.github.sarang628:TorangDetail:$restaurantVersion"
 }

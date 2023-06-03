@@ -1,9 +1,9 @@
 package com.example.screen_main
 
+import RestaurantScreen
 import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -42,6 +42,7 @@ import com.example.screen_finding.finding.TextFindScreen
 import com.sarang.alarm.fragment.test
 import com.sarang.alarm.uistate.testAlarmUiState
 import com.sarang.profile.ProfileScreen
+import com.sarang.profile.uistate.ProfileUiState
 import com.sarang.profile.uistate.testProfileUiState
 
 @Composable
@@ -64,11 +65,15 @@ fun MainScreen(
                     context = context,
                     lifecycleOwner = lifecycleOwner,
                     clickAddReview = clickAddReview,
-                    clickProfile = clickAddReview,
+                    clickProfile = {
+                        navController.navigate("profile")
+                    },
                     clickComment = clickAddReview,
                     clickShare = clickAddReview,
                     clickImage = clickAddReview,
-                    clickRestaurant = clickAddReview
+                    clickRestaurant = {
+                        navController.navigate("restaurant")
+                    }
                 )
             }
             composable("addReview") {
@@ -85,6 +90,13 @@ fun MainScreen(
                         Text(text = "준비중입니다.")
                     }
                 }
+            }
+            composable("restaurant") {
+                RestaurantScreen()
+            }
+
+            composable("profile") {
+                ProfileScreen(uiState = ProfileUiState())
             }
         }
     }
@@ -118,13 +130,13 @@ fun MainScreen1(
                     onProfile = clickProfile,
                     onAddReview = clickAddReview,
                     onImage = clickImage,
-                    onRestaurant = { viewModel.clickRestaurant() },
+                    onRestaurant = clickRestaurant,
                     onMenu = { viewModel.clickMenu() },
                     onFavorite = { viewModel.clickFavorite(it) },
                     onShare = clickShare,
                     onComment = clickComment,
                     onLike = { viewModel.clickLike(it) },
-                    onName = { viewModel.clickName() }
+                    onName = clickProfile
                 )
             }
             composable("friendslist") {
@@ -185,7 +197,7 @@ fun BottomNavigationComponent(navController: NavController) {
 
 @Composable
 @Preview
-fun preView() {
+fun PreView() {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = { BottomNavigationComponent(navController = navController) }
