@@ -37,6 +37,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.screen_feed.FeedsScreen
+import com.example.screen_feed.FeedsScreenInputEvents
 import com.example.screen_feed.FeedsViewModel
 import com.example.screen_finding.finding.TextFindScreen
 import com.sarang.alarm.fragment.test
@@ -112,7 +113,8 @@ fun MainScreen1(
     clickComment: ((Int) -> Unit)? = null,
     clickShare: ((Int) -> Unit)? = null,
     clickImage: ((Int) -> Unit)? = null,
-    clickRestaurant: ((Int) -> Unit)? = null
+    clickRestaurant: ((Int) -> Unit)? = null,
+    viewModel: FeedsViewModel? = null
 ) {
     val profileUiState = testProfileUiState(lifecycleOwner)
     val alarmUiState = testAlarmUiState(context = context, lifecycleOwner)
@@ -123,21 +125,24 @@ fun MainScreen1(
             modifier = Modifier.weight(1f)
         ) {
             composable("profile") {
-                val viewModel = FeedsViewModel(context)
-                FeedsScreen(
-                    uiStateFlow = viewModel.uiState,
-                    onRefresh = { viewModel.refresh() },
-                    onProfile = clickProfile,
-                    onAddReview = clickAddReview,
-                    onImage = clickImage,
-                    onRestaurant = clickRestaurant,
-                    onMenu = { viewModel.clickMenu() },
-                    onFavorite = { viewModel.clickFavorite(it) },
-                    onShare = clickShare,
-                    onComment = clickComment,
-                    onLike = { viewModel.clickLike(it) },
-                    onName = clickProfile
-                )
+                viewModel?.let {
+                    FeedsScreen(
+                        uiStateFlow = viewModel.uiState,
+                        inputEvents = FeedsScreenInputEvents(
+                            onRefresh = { /*viewModel.refresh()*/ },
+                            onProfile = clickProfile,
+                            onAddReview = clickAddReview,
+                            onImage = clickImage,
+                            onRestaurant = clickRestaurant,
+                            onMenu = { /*viewModel.clickMenu()*/ },
+                            onFavorite = { viewModel.clickFavorite(it) },
+                            onShare = clickShare,
+                            onComment = clickComment,
+                            onLike = { viewModel.clickLike(it) },
+                            onName = clickProfile
+                        ),
+                    )
+                }
             }
             composable("friendslist") {
                 val p by profileUiState.collectAsState()
