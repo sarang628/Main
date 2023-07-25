@@ -39,6 +39,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.screen_feed.FeedsScreen
 import com.example.screen_feed.FeedsScreenInputEvents
 import com.example.screen_feed.FeedsViewModel
+import com.example.screen_feed.test.PreviewFeedScreenByFile
 import com.example.screen_finding.finding.TextFindScreen
 import com.sarang.alarm.fragment.test
 import com.sarang.alarm.uistate.testAlarmUiState
@@ -125,16 +126,17 @@ fun MainScreen1(
             modifier = Modifier.weight(1f)
         ) {
             composable("profile") {
-                viewModel?.let {
+                PreviewFeedScreenByFile()
+                /*viewModel?.let {
                     FeedsScreen(
                         uiStateFlow = viewModel.uiState,
                         inputEvents = FeedsScreenInputEvents(
-                            onRefresh = { /*viewModel.refresh()*/ },
+                            onRefresh = { *//*viewModel.refresh()*//* },
                             onProfile = clickProfile,
                             onAddReview = clickAddReview,
                             onImage = clickImage,
                             onRestaurant = clickRestaurant,
-                            onMenu = { /*viewModel.clickMenu()*/ },
+                            onMenu = { *//*viewModel.clickMenu()*//* },
                             onFavorite = { viewModel.clickFavorite(it) },
                             onShare = clickShare,
                             onComment = clickComment,
@@ -142,7 +144,7 @@ fun MainScreen1(
                             onName = clickProfile
                         ),
                     )
-                }
+                }*/
             }
             composable("friendslist") {
                 val p by profileUiState.collectAsState()
