@@ -17,9 +17,21 @@
 [![Video Label](https://i9.ytimg.com/vi/la73aBBfSik/mq2.jpg?sqp=CPT8xpcG&rs=AOn4CLDFKFPsgwJYXTxN7d3ewBDgfu8DTQ)](https://youtu.be/la73aBBfSik)
 
 ## 특징
+
+### BottomNavigationView와 NavigationComponent 사용
 BottomNavigationView와 NavigationComponent를 연결하면 자동으로 최적의 탐색과 백스택 기능이 적용됩니다.
 위 기능을 구현하는데에는 설정해야하는 사항이 많으므로 충분히 여유를 가지고 하나씩 문서를 확인해야합니다.
 
-## 요구사항
+### 각 화면 모듈을 취합하여 실제 서비스를 제공 하는 모듈
+```
+implementation "com.github.sarang628:Feed:$feedVersion"
+implementation "com.github.sarang628:Alarm:$alarmVersion"
+implementation "com.github.sarang628:Theme:$themeVersion"
+implementation "com.github.sarang628:Profile:$profileVersion"
+implementation "com.github.sarang628:finding:$findingVersion"
+implementation "com.github.sarang628:MyReview:$myReviewVersion"
+implementation "com.github.sarang628:Navigation:$navigationModuleVersion"
+implementation "com.github.sarang628:TorangDetail:$restaurantVersion"
+implementation 'com.github.sarang628:JsonToObjectGenerator:960fe9fece
+```
 
-### Jitpack
