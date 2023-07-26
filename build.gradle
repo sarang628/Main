@@ -19,7 +19,7 @@ ext {
     //navigation
     navigationVersion = '2.4.0-alpha06'
 
-    feedVersion = '99b0376482'
+    feedVersion = 'd50beab950'
     alarmVersion = '5ef79ca25c'
     profileVersion = '1b24228422'
     findingVersion = 'df158fa819'
@@ -27,5 +27,6 @@ ext {
     myReviewVersion = '4616d836d8'
     navigationModuleVersion = 'd98f57435d'
     restaurantVersion = "d3e0f38d0c"
+    addReviewVersion = '5abbbf45e2'
 
 }

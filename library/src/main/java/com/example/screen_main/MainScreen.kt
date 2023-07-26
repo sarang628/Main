@@ -39,6 +39,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.screen_feed.FeedsScreen
 import com.example.screen_feed.FeedsScreenInputEvents
 import com.example.screen_feed.FeedsViewModel
+import com.example.screen_feed.test.FeedScreenByFile
 import com.example.screen_feed.test.PreviewFeedScreenByFile
 import com.example.screen_finding.finding.TextFindScreen
 import com.sarang.alarm.fragment.test
@@ -46,6 +47,7 @@ import com.sarang.alarm.uistate.testAlarmUiState
 import com.sarang.profile.ProfileScreen
 import com.sarang.profile.uistate.ProfileUiState
 import com.sarang.profile.uistate.testProfileUiState
+import com.sryang.library.AddReview
 
 @Composable
 fun MainScreen(
@@ -79,7 +81,7 @@ fun MainScreen(
                 )
             }
             composable("addReview") {
-                Column(
+                /*Column(
                     verticalArrangement = Arrangement.Center,
                     modifier = Modifier
                         .fillMaxSize()
@@ -91,7 +93,8 @@ fun MainScreen(
                     ) {
                         Text(text = "준비중입니다.")
                     }
-                }
+                }*/
+                AddReview()
             }
             composable("restaurant") {
                 RestaurantScreen()
@@ -126,7 +129,7 @@ fun MainScreen1(
             modifier = Modifier.weight(1f)
         ) {
             composable("profile") {
-                PreviewFeedScreenByFile()
+                FeedScreenByFile(onAddReview = clickAddReview)
                 /*viewModel?.let {
                     FeedsScreen(
                         uiStateFlow = viewModel.uiState,
