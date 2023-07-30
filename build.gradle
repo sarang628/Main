@@ -27,6 +27,6 @@ ext {
     myReviewVersion = '4616d836d8'
     navigationModuleVersion = 'd98f57435d'
     restaurantVersion = "d3e0f38d0c"
-    addReviewVersion = '5abbbf45e2'
+    addReviewVersion = '23636f310a'
 
 }
