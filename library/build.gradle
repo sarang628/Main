@@ -74,5 +74,6 @@ dependencies {
     implementation "com.github.sarang628:Navigation:$navigationModuleVersion"
     implementation "com.github.sarang628:TorangDetail:$restaurantVersion"
     implementation "com.github.sarang628:AddReview:$addReviewVersion"
+    implementation "com.github.sarang628:Design:$designVersion"
     implementation 'com.github.sarang628:JsonToObjectGenerator:960fe9fece'
 }

@@ -28,5 +28,6 @@ ext {
     navigationModuleVersion = 'd98f57435d'
     restaurantVersion = "d3e0f38d0c"
     addReviewVersion = '23636f310a'
+    designVersion = 'b8a73a7e78'
 
 }
