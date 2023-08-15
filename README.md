@@ -35,3 +35,9 @@ implementation "com.github.sarang628:TorangDetail:$restaurantVersion"
 implementation 'com.github.sarang628:JsonToObjectGenerator:960fe9fece
 ```
 
+## 메인 시작 로직 요청
+
+
+## 로그인 기능 요청
+로그인 로직 : Design 모듈 LoginLogic
+로그인 로직 구현 : Login 모듈

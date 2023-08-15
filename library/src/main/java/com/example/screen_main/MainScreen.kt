@@ -2,12 +2,7 @@ package com.example.screen_main
 
 import RestaurantScreen
 import android.content.Context
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -36,11 +31,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.screen_feed.FeedsScreen
-import com.example.screen_feed.FeedsScreenInputEvents
 import com.example.screen_feed.FeedsViewModel
 import com.example.screen_feed.test.FeedScreenByFile
-import com.example.screen_feed.test.PreviewFeedScreenByFile
 import com.example.screen_finding.finding.TextFindScreen
 import com.sarang.alarm.fragment.test
 import com.sarang.alarm.uistate.testAlarmUiState
@@ -48,16 +40,20 @@ import com.sarang.profile.ProfileScreen
 import com.sarang.profile.uistate.ProfileUiState
 import com.sarang.profile.uistate.testProfileUiState
 import com.sryang.library.AddReview
+import com.sryang.library.MainLogic
 
 @Composable
 fun MainScreen(
     context: Context,
     lifecycleOwner: LifecycleOwner,
     clickAddReview: ((Int) -> Unit)? = null,
-    navController: NavHostController
+    navController: NavHostController,
+    mainLogic: MainLogic
 ) {
     val profileUiState = testProfileUiState(lifecycleOwner)
     val alarmUiState = testAlarmUiState(context = context, lifecycleOwner)
+
+    mainLogic.start()
 
     Column {
         NavHost(
@@ -81,19 +77,6 @@ fun MainScreen(
                 )
             }
             composable("addReview") {
-                /*Column(
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(colorResource(id = R.color.colorSecondaryLight))
-                ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(text = "준비중입니다.")
-                    }
-                }*/
                 AddReview()
             }
             composable("restaurant") {

@@ -23,7 +23,8 @@ class MainActivity : ComponentActivity() {
                 navController = navController,
                 clickAddReview = {
                     navController.navigate("addReview")
-                }
+                },
+                mainLogic = MainLogicImpl()
             )
         }
     }
