@@ -1,5 +1,6 @@
 package com.sryang.main
 
+import androidx.compose.runtime.Composable
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.sryang.library.LoginLogic
 import com.sryang.library.LoginResult
@@ -14,6 +15,11 @@ class LoginTest {
     @Test
     fun loginTest() {
         val logicLogic = object : LoginLogic {
+            @Composable
+            override fun LoginScreen() {
+                TODO("Not yet implemented")
+            }
+
             override suspend fun requestLogin(
                 email: String,
                 password: String,

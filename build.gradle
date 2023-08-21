@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    id 'com.android.application' version '8.0.1' apply false
-    id 'com.android.library' version '8.0.1' apply false
+    id 'com.android.application' version '8.1.0' apply false
+    id 'com.android.library' version '8.1.0' apply false
     id 'org.jetbrains.kotlin.android' version '1.8.20' apply false
     id 'com.google.dagger.hilt.android' version '2.44' apply false
 }
@@ -19,7 +19,7 @@ ext {
     //navigation
     navigationVersion = '2.4.0-alpha06'
 
-    feedVersion = 'd50beab950'
+    feedVersion = '6dbbb40070'
     alarmVersion = '5ef79ca25c'
     profileVersion = '1b24228422'
     findingVersion = 'df158fa819'
@@ -28,6 +28,7 @@ ext {
     navigationModuleVersion = 'd98f57435d'
     restaurantVersion = "d3e0f38d0c"
     addReviewVersion = '23636f310a'
-    designVersion = 'a4c26a6a1e'
+    designVersion = 'df442fbb8c'
+    loginVersion = 'af986b327d'
 
 }

@@ -39,7 +39,9 @@ import com.sarang.alarm.uistate.testAlarmUiState
 import com.sarang.profile.ProfileScreen
 import com.sarang.profile.uistate.ProfileUiState
 import com.sarang.profile.uistate.testProfileUiState
+import com.sarang.toringlogin.login.LoginLogicImpl
 import com.sryang.library.AddReview
+import com.sryang.library.LoginLogic
 import com.sryang.library.MainLogic
 
 @Composable
@@ -53,7 +55,7 @@ fun MainScreen(
     val profileUiState = testProfileUiState(lifecycleOwner)
     val alarmUiState = testAlarmUiState(context = context, lifecycleOwner)
 
-    mainLogic.start()
+    //mainLogic.start()
 
     Column {
         NavHost(
@@ -211,4 +213,13 @@ fun PreView() {
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun Test(){
+    val loginLogic : LoginLogic = LoginLogicImpl()
+
+    loginLogic.LoginScreen()
+
 }
