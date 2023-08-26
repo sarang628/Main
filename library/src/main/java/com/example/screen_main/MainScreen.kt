@@ -39,6 +39,7 @@ import com.sarang.alarm.uistate.testAlarmUiState
 import com.sarang.profile.ProfileScreen
 import com.sarang.profile.uistate.ProfileUiState
 import com.sarang.profile.uistate.testProfileUiState
+import com.sarang.screen_splash.SplashScreen
 import com.sarang.toringlogin.login.LoginLogicImpl
 import com.sryang.library.AddReview
 import com.sryang.library.LoginLogic
@@ -59,7 +60,7 @@ fun MainScreen(
 
     Column {
         NavHost(
-            navController = navController, startDestination = "main",
+            navController = navController, startDestination = "splash",
             modifier = Modifier.weight(1f)
         ) {
             composable("main") {
@@ -87,6 +88,11 @@ fun MainScreen(
 
             composable("profile") {
                 ProfileScreen(uiState = ProfileUiState())
+            }
+            composable("splash") {
+                SplashScreen(onSuccess = {
+                    navController.navigate("main")
+                })
             }
         }
     }
@@ -217,8 +223,8 @@ fun PreView() {
 
 @Preview
 @Composable
-fun Test(){
-    val loginLogic : LoginLogic = LoginLogicImpl()
+fun Test() {
+    val loginLogic: LoginLogic = LoginLogicImpl()
 
     loginLogic.LoginScreen()
 

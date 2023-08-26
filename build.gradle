@@ -30,5 +30,6 @@ ext {
     addReviewVersion = '23636f310a'
     designVersion = 'df442fbb8c'
     loginVersion = 'af986b327d'
+    splashVersion = '4c370a1633'
 
 }

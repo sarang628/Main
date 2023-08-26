@@ -84,4 +84,5 @@ dependencies {
     implementation "com.github.sarang628:Design:$designVersion"
     implementation "com.github.sarang628:Login:$loginVersion"
     implementation "com.github.sarang628:JsonToObjectGenerator:960fe9fece"
+    implementation "com.github.sarang628:Splash:$splashVersion"
 }
