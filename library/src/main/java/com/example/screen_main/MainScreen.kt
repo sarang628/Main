@@ -3,6 +3,7 @@ package com.example.screen_main
 import RestaurantScreen
 import SettingsScreen
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
@@ -20,6 +21,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -47,6 +49,7 @@ import com.sryang.library.AddReview
 import com.sryang.library.MainLogic
 import com.sryang.torang_repository.services.impl.getLoginService
 import com.sryang.torang_repository.session.SessionService
+import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(
@@ -60,6 +63,7 @@ fun MainScreen(
     val alarmUiState = testAlarmUiState(context = context, lifecycleOwner)
     val context = LocalContext.current
     //mainLogic.start()
+    val coroutine = rememberCoroutineScope()
 
     Column {
         NavHost(
@@ -79,7 +83,9 @@ fun MainScreen(
                     clickImage = clickAddReview,
                     clickRestaurant = {
                         navController.navigate("restaurant")
-                    }
+                    },
+                    navController1 = navController
+
                 )
             }
             composable("addReview") {
@@ -90,7 +96,15 @@ fun MainScreen(
             }
 
             composable("profile") {
-                ProfileScreen(uiState = ProfileUiState())
+                ProfileScreen(uiState = ProfileUiState(), onLogout =
+                {
+                    coroutine.launch {
+                        Log.d("MainScreen", "!!!!!")
+                        SessionService(context).removeToken()
+                        navController.navigate("splash")
+                    }
+                }
+                )
             }
             composable("splash") {
                 Column {
@@ -104,7 +118,9 @@ fun MainScreen(
             }
             composable("login") {
                 val loginService = getLoginService(LocalContext.current)
-                LoginScreen(loginService = loginService)
+                LoginScreen(loginService = loginService, onSuccessLogin = {
+                    navController.navigate("main")
+                })
             }
             composable("settings") {
                 SettingsScreen {
@@ -126,10 +142,13 @@ fun MainScreen1(
     clickShare: ((Int) -> Unit)? = null,
     clickImage: ((Int) -> Unit)? = null,
     clickRestaurant: ((Int) -> Unit)? = null,
-    viewModel: FeedsViewModel? = null
+    viewModel: FeedsViewModel? = null,
+    navController1: NavController
 ) {
     val profileUiState = testProfileUiState(lifecycleOwner)
     val alarmUiState = testAlarmUiState(context = context, lifecycleOwner)
+    val sessionService = SessionService(LocalContext.current)
+    val coroutine = rememberCoroutineScope()
     Column {
         val navController = rememberNavController()
         NavHost(
@@ -159,7 +178,12 @@ fun MainScreen1(
             }
             composable("friendslist") {
                 val p by profileUiState.collectAsState()
-                ProfileScreen(uiState = p)
+                ProfileScreen(uiState = p, onLogout = {
+                    coroutine.launch {
+                        sessionService.removeToken()
+                        navController1.navigate("splash")
+                    }
+                })
             }
             composable("finding") {
                 TextFindScreen()
