@@ -1,6 +1,7 @@
 package com.example.screen_main
 
 import RestaurantScreen
+import SettingsScreen
 import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -22,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,10 +42,11 @@ import com.sarang.profile.ProfileScreen
 import com.sarang.profile.uistate.ProfileUiState
 import com.sarang.profile.uistate.testProfileUiState
 import com.sarang.screen_splash.SplashScreen
-import com.sarang.toringlogin.login.LoginLogicImpl
+import com.sarang.toringlogin.login.LoginScreen
 import com.sryang.library.AddReview
-import com.sryang.library.LoginLogic
 import com.sryang.library.MainLogic
+import com.sryang.torang_repository.services.impl.getLoginService
+import com.sryang.torang_repository.session.SessionService
 
 @Composable
 fun MainScreen(
@@ -55,7 +58,7 @@ fun MainScreen(
 ) {
     val profileUiState = testProfileUiState(lifecycleOwner)
     val alarmUiState = testAlarmUiState(context = context, lifecycleOwner)
-
+    val context = LocalContext.current
     //mainLogic.start()
 
     Column {
@@ -90,9 +93,23 @@ fun MainScreen(
                 ProfileScreen(uiState = ProfileUiState())
             }
             composable("splash") {
-                SplashScreen(onSuccess = {
-                    navController.navigate("main")
-                })
+                Column {
+                    SplashScreen(onSuccess = {
+                        if (SessionService(context).isLogin.value)
+                            navController.navigate("main")
+                        else
+                            navController.navigate("login")
+                    })
+                }
+            }
+            composable("login") {
+                val loginService = getLoginService(LocalContext.current)
+                LoginScreen(loginService = loginService)
+            }
+            composable("settings") {
+                SettingsScreen {
+
+                }
             }
         }
     }
@@ -219,13 +236,4 @@ fun PreView() {
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun Test() {
-    val loginLogic: LoginLogic = LoginLogicImpl()
-
-    loginLogic.LoginScreen()
-
 }

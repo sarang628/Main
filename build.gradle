@@ -19,17 +19,19 @@ ext {
     //navigation
     navigationVersion = '2.4.0-alpha06'
 
-    feedVersion = '6dbbb40070'
+    feedVersion = 'c98bbf3341'
     alarmVersion = '5ef79ca25c'
     profileVersion = '1b24228422'
     findingVersion = 'df158fa819'
     themeVersion = '6f8e2a7a08'
     myReviewVersion = '4616d836d8'
     navigationModuleVersion = 'd98f57435d'
-    restaurantVersion = "d3e0f38d0c"
-    addReviewVersion = '23636f310a'
+    torangDetailVersion = "d3e0f38d0c"
+    addReviewVersion = 'a37cfa9c7c'
     designVersion = 'df442fbb8c'
-    loginVersion = 'af986b327d'
-    splashVersion = '4c370a1633'
+    loginVersion = '7122d71a4d'
+    splashVersion = '06e84123ca'
+    torangRepositoryVersion = 'b9731af80c'
+    settingsVersion = 'bc5bb552d5'
 
 }
