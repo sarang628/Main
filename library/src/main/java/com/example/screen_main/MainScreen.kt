@@ -35,6 +35,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.screen_feed.FeedsScreen
 import com.example.screen_feed.FeedsScreenInputEvents
 import com.example.screen_feed.FeedsViewModel
 import com.example.screen_feed.TestFeedsScreen
@@ -163,7 +164,7 @@ fun MainScreen1(
             modifier = Modifier.weight(1f)
         ) {
             composable("profile") {
-                TestFeedsScreen(
+                /*TestFeedsScreen(
                     feedsViewModel = feedsViewModel, feedsScreenInputEvents = FeedsScreenInputEvents(
                         onRefresh = {
                             //feedsViewModel.refreshFeed()
@@ -171,26 +172,30 @@ fun MainScreen1(
                     ),
                     imageServerUrl = "http://sarang628.iptime.org:89/review_images/",
                     profileImageServerUrl = "http://sarang628.iptime.org:89/"
-                )
+                )*/
                 //FeedScreenByFile(onAddReview = clickAddReview)
-                /*viewModel?.let {
                     FeedsScreen(
-                        uiStateFlow = viewModel.uiState,
+                        uiStateFlow = feedsViewModel.uiState,
                         inputEvents = FeedsScreenInputEvents(
-                            onRefresh = { *//*viewModel.refresh()*//* },
+                            onRefresh = {
+                                //feedsViewModel.refresh()
+                                        },
                             onProfile = clickProfile,
                             onAddReview = clickAddReview,
                             onImage = clickImage,
                             onRestaurant = clickRestaurant,
-                            onMenu = { *//*viewModel.clickMenu()*//* },
-                            onFavorite = { viewModel.clickFavorite(it) },
+                            onMenu = {
+                                //feedsViewModel.clickMenu()
+                                     },
+                            onFavorite = { feedsViewModel.clickFavorite(it) },
                             onShare = clickShare,
                             onComment = clickComment,
-                            onLike = { viewModel.clickLike(it) },
+                            onLike = { feedsViewModel.clickLike(it) },
                             onName = clickProfile
                         ),
+                        imageServerUrl = "http://sarang628.iptime.org:89/review_images/",
+                        profileImageServerUrl = ""
                     )
-                }*/
             }
             composable("friendslist") {
                 val p by profileUiState.collectAsState()
