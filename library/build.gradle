@@ -87,4 +87,5 @@ dependencies {
     implementation "com.github.sarang628:Splash:$splashVersion"
     implementation "com.github.sarang628:TorangRepository:$torangRepositoryVersion"
     implementation "com.github.sarang628:Settings:$settingsVersion"
+    implementation "com.github.sarang628:BaseFeed:$baseFeedVersion"
 }

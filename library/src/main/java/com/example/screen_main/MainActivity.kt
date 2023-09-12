@@ -4,10 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
+import com.example.screen_feed.FeedsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject
+    lateinit var feedsViewModel: FeedsViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -19,7 +23,8 @@ class MainActivity : ComponentActivity() {
                 clickAddReview = {
                     navController.navigate("addReview")
                 },
-                mainLogic = MainLogicImpl()
+                mainLogic = MainLogicImpl(),
+                feedsViewModel = feedsViewModel
             )
         }
     }

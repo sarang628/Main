@@ -35,7 +35,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.screen_feed.FeedsScreenInputEvents
 import com.example.screen_feed.FeedsViewModel
+import com.example.screen_feed.TestFeedsScreen
 import com.example.screen_feed.test.FeedScreenByFile
 import com.example.screen_finding.finding.TextFindScreen
 import com.sarang.alarm.fragment.test
@@ -45,8 +47,8 @@ import com.sarang.profile.uistate.ProfileUiState
 import com.sarang.profile.uistate.testProfileUiState
 import com.sarang.screen_splash.SplashScreen
 import com.sarang.toringlogin.login.LoginScreen
-import com.sryang.library.AddReview
 import com.sryang.library.MainLogic
+import com.sryang.library.SelectPictureAndAddReview
 import com.sryang.torang_repository.services.impl.getLoginService
 import com.sryang.torang_repository.session.SessionService
 import kotlinx.coroutines.launch
@@ -57,7 +59,8 @@ fun MainScreen(
     lifecycleOwner: LifecycleOwner,
     clickAddReview: ((Int) -> Unit)? = null,
     navController: NavHostController,
-    mainLogic: MainLogic
+    mainLogic: MainLogic,
+    feedsViewModel: FeedsViewModel
 ) {
     val profileUiState = testProfileUiState(lifecycleOwner)
     val alarmUiState = testAlarmUiState(context = context, lifecycleOwner)
@@ -85,11 +88,15 @@ fun MainScreen(
                         navController.navigate("restaurant")
                     },
                     navController1 = navController
-
+                    , feedsViewModel = feedsViewModel
                 )
             }
             composable("addReview") {
-                AddReview()
+                //AddReview(0xFFFFFBE6)
+                SelectPictureAndAddReview(onShare = {
+
+                    navController.navigate("main")
+                })
             }
             composable("restaurant") {
                 RestaurantScreen()
@@ -142,7 +149,7 @@ fun MainScreen1(
     clickShare: ((Int) -> Unit)? = null,
     clickImage: ((Int) -> Unit)? = null,
     clickRestaurant: ((Int) -> Unit)? = null,
-    viewModel: FeedsViewModel? = null,
+    feedsViewModel: FeedsViewModel,
     navController1: NavController
 ) {
     val profileUiState = testProfileUiState(lifecycleOwner)
@@ -156,7 +163,16 @@ fun MainScreen1(
             modifier = Modifier.weight(1f)
         ) {
             composable("profile") {
-                FeedScreenByFile(onAddReview = clickAddReview)
+                TestFeedsScreen(
+                    feedsViewModel = feedsViewModel, feedsScreenInputEvents = FeedsScreenInputEvents(
+                        onRefresh = {
+                            //feedsViewModel.refreshFeed()
+                        }
+                    ),
+                    imageServerUrl = "http://sarang628.iptime.org:89/review_images/",
+                    profileImageServerUrl = "http://sarang628.iptime.org:89/"
+                )
+                //FeedScreenByFile(onAddReview = clickAddReview)
                 /*viewModel?.let {
                     FeedsScreen(
                         uiStateFlow = viewModel.uiState,
