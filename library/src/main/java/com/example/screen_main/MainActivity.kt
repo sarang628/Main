@@ -32,16 +32,10 @@ class MainActivity : ComponentActivity() {
                 clickAddReview = {
                     navController.navigate("addReview")
                 },
-                mainLogic = MainLogicImpl(),
                 feedsViewModel = feedsViewModel,
                 remoteReviewService = remoteReviewService,
                 loginViewModel = loginViewModel
             )
         }
     }
-}
-
-object MainNavigation {
-    const val MAIN = "main"
-    const val ADD_REVIEW = "addReview"
 }
