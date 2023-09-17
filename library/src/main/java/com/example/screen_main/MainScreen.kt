@@ -4,10 +4,12 @@ import RestaurantScreen
 import SettingsScreen
 import android.content.Context
 import android.util.Log
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -23,6 +25,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -30,6 +33,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -38,8 +42,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.screen_feed.FeedsScreen
 import com.example.screen_feed.FeedsScreenInputEvents
 import com.example.screen_feed.FeedsViewModel
-import com.example.screen_feed.TestFeedsScreen
-import com.example.screen_feed.test.FeedScreenByFile
 import com.example.screen_finding.finding.TextFindScreen
 import com.sarang.alarm.fragment.test
 import com.sarang.alarm.uistate.testAlarmUiState
@@ -48,11 +50,21 @@ import com.sarang.profile.uistate.ProfileUiState
 import com.sarang.profile.uistate.testProfileUiState
 import com.sarang.screen_splash.SplashScreen
 import com.sarang.toringlogin.login.LoginScreen
+import com.sarang.toringlogin.login.LoginViewModel
 import com.sryang.library.MainLogic
 import com.sryang.library.SelectPictureAndAddReview
+import com.sryang.torang_repository.services.RemoteReviewService
 import com.sryang.torang_repository.services.impl.getLoginService
 import com.sryang.torang_repository.session.SessionService
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
+import kotlin.streams.toList
 
 @Composable
 fun MainScreen(
@@ -61,13 +73,16 @@ fun MainScreen(
     clickAddReview: ((Int) -> Unit)? = null,
     navController: NavHostController,
     mainLogic: MainLogic,
-    feedsViewModel: FeedsViewModel
+    feedsViewModel: FeedsViewModel,
+    remoteReviewService: RemoteReviewService,
+    loginViewModel: LoginViewModel
 ) {
     val profileUiState = testProfileUiState(lifecycleOwner)
     val alarmUiState = testAlarmUiState(context = context, lifecycleOwner)
     val context = LocalContext.current
     //mainLogic.start()
     val coroutine = rememberCoroutineScope()
+    var isProgress by remember { mutableStateOf(false) }
 
     Column {
         NavHost(
@@ -82,22 +97,46 @@ fun MainScreen(
                     clickProfile = {
                         navController.navigate("profile")
                     },
-                    clickComment = clickAddReview,
                     clickShare = clickAddReview,
                     clickImage = clickAddReview,
                     clickRestaurant = {
                         navController.navigate("restaurant")
                     },
-                    navController1 = navController
-                    , feedsViewModel = feedsViewModel
+                    navController1 = navController, feedsViewModel = feedsViewModel
                 )
             }
             composable("addReview") {
                 //AddReview(0xFFFFFBE6)
-                SelectPictureAndAddReview(onShare = {
+                Box {
+                    SelectPictureAndAddReview(
+                        color = 0xFFFFFBE6,
+                        onShare = {
+                            //TODO viewmodel로 옮겨야 함.
+                            coroutine.launch {
+                                try {
+                                    isProgress = true
+                                    remoteReviewService.addReview(
+                                        params = HashMap<String, RequestBody>().apply {
+                                            put(
+                                                "contents",
+                                                it.contents.toRequestBody("text/plain".toMediaTypeOrNull())
+                                            )
+                                        },
+                                        file = filesToMultipart(it.pictures)
+                                    )
+                                    isProgress = false
+                                    navController.navigate("main")
+                                } catch (e: Exception) {
+                                    Log.d("MainActivity", e.toString())
+                                    isProgress = false
+                                }
+                            }
+                        })
 
-                    navController.navigate("main")
-                })
+                    if (isProgress) {
+                        CircularProgressIndicator(Modifier.align(Alignment.Center))
+                    }
+                }
             }
             composable("restaurant") {
                 RestaurantScreen()
@@ -125,9 +164,12 @@ fun MainScreen(
                 }
             }
             composable("login") {
-                val loginService = getLoginService(LocalContext.current)
-                LoginScreen(loginService = loginService, onSuccessLogin = {
+                val flow = loginViewModel.uiState.collectAsState()
+                LoginScreen(isLogin = flow.value.isLogin, onLogin = {
+                    loginViewModel.login(it)
                     navController.navigate("main")
+                }, onLogout = {
+                    loginViewModel.logout()
                 })
             }
             composable("settings") {
@@ -146,7 +188,6 @@ fun MainScreen1(
     lifecycleOwner: LifecycleOwner,
     clickAddReview: ((Int) -> Unit)? = null,
     clickProfile: ((Int) -> Unit)? = null,
-    clickComment: ((Int) -> Unit)? = null,
     clickShare: ((Int) -> Unit)? = null,
     clickImage: ((Int) -> Unit)? = null,
     clickRestaurant: ((Int) -> Unit)? = null,
@@ -156,6 +197,8 @@ fun MainScreen1(
     val profileUiState = testProfileUiState(lifecycleOwner)
     val alarmUiState = testAlarmUiState(context = context, lifecycleOwner)
     val sessionService = SessionService(LocalContext.current)
+    var isExpandMenuBottomSheet by remember { mutableStateOf(false) }
+    var isExpandCommentBottomSheet by remember { mutableStateOf(false) }
     val coroutine = rememberCoroutineScope()
     Column {
         val navController = rememberNavController()
@@ -164,38 +207,32 @@ fun MainScreen1(
             modifier = Modifier.weight(1f)
         ) {
             composable("profile") {
-                /*TestFeedsScreen(
-                    feedsViewModel = feedsViewModel, feedsScreenInputEvents = FeedsScreenInputEvents(
+                FeedsScreen(
+                    uiStateFlow = feedsViewModel.uiState,
+                    inputEvents = FeedsScreenInputEvents(
                         onRefresh = {
-                            //feedsViewModel.refreshFeed()
-                        }
+                            feedsViewModel.refreshFeed()
+                        },
+                        onProfile = clickProfile,
+                        onAddReview = clickAddReview,
+                        onImage = clickImage,
+                        onRestaurant = clickRestaurant,
+                        onMenu = {
+                            isExpandMenuBottomSheet = !isExpandMenuBottomSheet
+                        },
+                        onFavorite = { feedsViewModel.clickFavorite(it) },
+                        onShare = clickShare,
+                        onComment = {
+                            isExpandCommentBottomSheet = !isExpandCommentBottomSheet
+                        },
+                        onLike = { feedsViewModel.clickLike(it) },
+                        onName = clickProfile,
                     ),
                     imageServerUrl = "http://sarang628.iptime.org:89/review_images/",
-                    profileImageServerUrl = "http://sarang628.iptime.org:89/"
-                )*/
-                //FeedScreenByFile(onAddReview = clickAddReview)
-                    FeedsScreen(
-                        uiStateFlow = feedsViewModel.uiState,
-                        inputEvents = FeedsScreenInputEvents(
-                            onRefresh = {
-                                //feedsViewModel.refresh()
-                                        },
-                            onProfile = clickProfile,
-                            onAddReview = clickAddReview,
-                            onImage = clickImage,
-                            onRestaurant = clickRestaurant,
-                            onMenu = {
-                                //feedsViewModel.clickMenu()
-                                     },
-                            onFavorite = { feedsViewModel.clickFavorite(it) },
-                            onShare = clickShare,
-                            onComment = clickComment,
-                            onLike = { feedsViewModel.clickLike(it) },
-                            onName = clickProfile
-                        ),
-                        imageServerUrl = "http://sarang628.iptime.org:89/review_images/",
-                        profileImageServerUrl = ""
-                    )
+                    profileImageServerUrl = "http://sarang628.iptime.org:89/profile_images/",
+                    isExpandMenuBottomSheet = isExpandMenuBottomSheet,
+                    isExpandCommentBottomSheet = isExpandCommentBottomSheet
+                )
             }
             composable("friendslist") {
                 val p by profileUiState.collectAsState()
@@ -281,4 +318,21 @@ fun PreView() {
             }
         }
     }
+}
+
+fun filesToMultipart(file: List<String>): ArrayList<MultipartBody.Part> {
+    val list = ArrayList<MultipartBody.Part>()
+        .apply {
+            addAll(
+                file.stream().map {
+                    val file = File(it)
+                    MultipartBody.Part.createFormData(
+                        name = "file",
+                        filename = file.name,
+                        body = file.asRequestBody()
+                    )
+                }.toList()
+            )
+        }
+    return list
 }

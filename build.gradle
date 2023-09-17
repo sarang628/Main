@@ -19,7 +19,7 @@ ext {
     //navigation
     navigationVersion = '2.4.0-alpha06'
 
-    feedVersion = '9a0a166745'
+    feedVersion = 'd07d890de6'
     alarmVersion = '5ef79ca25c'
     profileVersion = '51c8b7abe9'
     findingVersion = 'df158fa819'
@@ -27,11 +27,11 @@ ext {
     myReviewVersion = '4616d836d8'
     navigationModuleVersion = 'd98f57435d'
     torangDetailVersion = "d3e0f38d0c"
-    addReviewVersion = 'bdbb3e32dd'
+    addReviewVersion = '5e0860445e'
     designVersion = 'df442fbb8c'
-    loginVersion = '7c0856a7f5'
+    loginVersion = 'c02d638591'
     splashVersion = '06e84123ca'
-    torangRepositoryVersion = '8f3283c116'
+    torangRepositoryVersion = '9966840671'
     settingsVersion = 'bc5bb552d5'
     baseFeedVersion = '8850dfce6f'
 
