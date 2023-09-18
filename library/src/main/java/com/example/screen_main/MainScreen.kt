@@ -2,7 +2,6 @@ package com.example.screen_main
 
 import RestaurantScreen
 import SettingsScreen
-import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,20 +21,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.LifecycleOwner
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.screen_feed.FeedsScreen
-import com.example.screen_feed.FeedsScreenInputEvents
+import androidx.navigation.navArgument
 import com.example.screen_feed.FeedsViewModel
-import com.example.screen_finding.finding.TextFindScreen
-import com.sarang.alarm.fragment.test
-import com.sarang.alarm.uistate.testAlarmUiState
 import com.sarang.profile.ProfileScreen
 import com.sarang.profile.uistate.ProfileUiState
-import com.sarang.profile.uistate.testProfileUiState
 import com.sarang.screen_splash.SplashScreen
 import com.sarang.toringlogin.login.LoginScreen
 import com.sarang.toringlogin.login.LoginViewModel
@@ -44,28 +38,19 @@ import com.sryang.torang_repository.services.RemoteReviewService
 import com.sryang.torang_repository.session.SessionService
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.File
-import kotlin.streams.toList
 
 @Composable
-fun MainScreen(
-    context: Context,
+fun TorangScreen(
     lifecycleOwner: LifecycleOwner,
-    clickAddReview: ((Int) -> Unit)? = null,
-    navController: NavHostController,
     feedsViewModel: FeedsViewModel,
     remoteReviewService: RemoteReviewService,
     loginViewModel: LoginViewModel
 ) {
-    val profileUiState = testProfileUiState(lifecycleOwner)
-    val alarmUiState = testAlarmUiState(context = context, lifecycleOwner)
     val context = LocalContext.current
     val coroutine = rememberCoroutineScope()
-    var isProgress by remember { mutableStateOf(false) }
+    val navController = rememberNavController()
 
     Column {
         NavHost(
@@ -73,63 +58,33 @@ fun MainScreen(
             modifier = Modifier.weight(1f)
         ) {
             composable("main") {
-                MainScreen1(
+                MainScreen(
                     context = context,
                     lifecycleOwner = lifecycleOwner,
-                    clickAddReview = clickAddReview,
-                    clickProfile = {
-                        navController.navigate("profile")
-                    },
-                    clickShare = clickAddReview,
-                    clickImage = clickAddReview,
-                    clickRestaurant = {
-                        navController.navigate("restaurant")
-                    },
-                    navController1 = navController, feedsViewModel = feedsViewModel
+                    clickAddReview = { navController.navigate("addReview") },
+                    onProfile = { navController.navigate("profile/$it") },
+                    clickShare = { },
+                    clickImage = { },
+                    clickRestaurant = { navController.navigate("restaurant") },
+                    navController1 = navController,
+                    feedsViewModel = feedsViewModel
                 )
             }
             composable("addReview") {
-                //AddReview(0xFFFFFBE6)
-                Box {
-                    SelectPictureAndAddReview(
-                        color = 0xFFFFFBE6,
-                        onShare = {
-                            //TODO viewmodel로 옮겨야 함.
-                            coroutine.launch {
-                                try {
-                                    isProgress = true
-                                    remoteReviewService.addReview(
-                                        params = HashMap<String, RequestBody>().apply {
-                                            put(
-                                                "contents",
-                                                it.contents.toRequestBody("text/plain".toMediaTypeOrNull())
-                                            )
-                                        },
-                                        file = filesToMultipart(it.pictures)
-                                    )
-                                    isProgress = false
-                                    navController.navigate("main")
-                                } catch (e: Exception) {
-                                    Log.d("MainActivity", e.toString())
-                                    isProgress = false
-                                }
-                            }
-                        })
-
-                    if (isProgress) {
-                        CircularProgressIndicator(Modifier.align(Alignment.Center))
-                    }
-                }
+                AddReview(remoteReviewService) { navController.navigate("main") }
             }
             composable("restaurant") {
                 RestaurantScreen()
             }
 
-            composable("profile") {
+            composable(
+                "profile/{userId}",
+                arguments = listOf(navArgument("userId") { type = NavType.StringType })
+            ) {
+                it.arguments?.getString("userId")
                 ProfileScreen(uiState = ProfileUiState(), onLogout =
                 {
                     coroutine.launch {
-                        Log.d("MainScreen", "!!!!!")
                         SessionService(context).removeToken()
                         navController.navigate("splash")
                     }
@@ -164,87 +119,41 @@ fun MainScreen(
     }
 }
 
-
 @Composable
-fun MainScreen1(
-    context: Context,
-    lifecycleOwner: LifecycleOwner,
-    clickAddReview: ((Int) -> Unit)? = null,
-    clickProfile: ((Int) -> Unit)? = null,
-    clickShare: ((Int) -> Unit)? = null,
-    clickImage: ((Int) -> Unit)? = null,
-    clickRestaurant: ((Int) -> Unit)? = null,
-    feedsViewModel: FeedsViewModel,
-    navController1: NavController
-) {
-    val profileUiState = testProfileUiState(lifecycleOwner)
-    val alarmUiState = testAlarmUiState(context = context, lifecycleOwner)
-    val sessionService = SessionService(LocalContext.current)
-    var isExpandMenuBottomSheet by remember { mutableStateOf(false) }
-    var isExpandCommentBottomSheet by remember { mutableStateOf(false) }
-    var isShareCommentBottomSheet by remember { mutableStateOf(false) }
+fun AddReview(remoteReviewService: RemoteReviewService, onUploaded: () -> Unit) {
+    var isProgress by remember { mutableStateOf(false) }
     val coroutine = rememberCoroutineScope()
-    Column {
-        val navController = rememberNavController()
-        NavHost(
-            navController = navController, startDestination = "feed",
-            modifier = Modifier.weight(1f)
-        ) {
-            composable("feed") {
-                FeedsScreen(
-                    uiStateFlow = feedsViewModel.uiState,
-                    inputEvents = FeedsScreenInputEvents(
-                        onRefresh = {
-                            feedsViewModel.refreshFeed()
-                        },
-                        onProfile = clickProfile,
-                        onAddReview = clickAddReview,
-                        onImage = clickImage,
-                        onRestaurant = clickRestaurant,
-                        onMenu = {
-                            isExpandMenuBottomSheet = !isExpandMenuBottomSheet
-                        },
-                        onFavorite = { feedsViewModel.clickFavorite(it) },
-                        onShare = {
-                            isShareCommentBottomSheet = !isShareCommentBottomSheet
-                        },
-                        onComment = {
-                            isExpandCommentBottomSheet = !isExpandCommentBottomSheet
-                        },
-                        onLike = { feedsViewModel.clickLike(it) },
-                        onName = clickProfile,
-                    ),
-                    imageServerUrl = "http://sarang628.iptime.org:89/review_images/",
-                    profileImageServerUrl = "http://sarang628.iptime.org:89/profile_images/",
-                    isExpandMenuBottomSheet = isExpandMenuBottomSheet,
-                    isExpandCommentBottomSheet = isExpandCommentBottomSheet,
-                    isShareCommentBottomSheet = isShareCommentBottomSheet
-                )
-            }
-            composable("friendslist") {
-                val p by profileUiState.collectAsState()
-                ProfileScreen(uiState = p, onLogout = {
-                    coroutine.launch {
-                        sessionService.removeToken()
-                        navController1.navigate("splash")
+    Box {
+        SelectPictureAndAddReview(
+            color = 0xFFFFFBE6,
+            onShare = {
+                //TODO viewmodel로 옮겨야 함.
+                coroutine.launch {
+                    try {
+                        isProgress = true
+                        remoteReviewService.addReview(
+                            params = HashMap<String, RequestBody>().apply {
+                                put(
+                                    "contents",
+                                    it.contents.toRequestBody("text/plain".toMediaTypeOrNull())
+                                )
+                            },
+                            file = filesToMultipart(it.pictures)
+                        )
+                        isProgress = false
+                        onUploaded.invoke()
+                    } catch (e: Exception) {
+                        Log.d("MainActivity", e.toString())
+                        isProgress = false
                     }
-                })
-            }
-            composable("finding") {
-                TextFindScreen()
-            }
-            composable("alarm") {
-                test(alarmUiState)
-            }
-            composable("profile") {
-                Text(text = "profile")
-            }
-        }
-        BottomNavigationComponent(navController = navController)
+                }
+            })
 
+        if (isProgress) {
+            CircularProgressIndicator(Modifier.align(Alignment.Center))
+        }
     }
 }
-
 
 @Composable
 @Preview
@@ -269,21 +178,4 @@ fun PreView() {
             }
         }
     }
-}
-
-fun filesToMultipart(file: List<String>): ArrayList<MultipartBody.Part> {
-    val list = ArrayList<MultipartBody.Part>()
-        .apply {
-            addAll(
-                file.stream().map {
-                    val file = File(it)
-                    MultipartBody.Part.createFormData(
-                        name = "file",
-                        filename = file.name,
-                        body = file.asRequestBody()
-                    )
-                }.toList()
-            )
-        }
-    return list
 }

@@ -1,8 +1,6 @@
-package com.example.screen_main.di.remote
+package com.posco.feedscreentestapp.di.remote
 
-import com.sryang.torang_repository.di.service.feed.FeedServiceProductImpl
 import com.sryang.torang_repository.di.service.review.ReviewServiceProductImpl
-import com.sryang.torang_repository.services.RemoteFeedServices
 import com.sryang.torang_repository.services.RemoteReviewService
 import dagger.Module
 import dagger.Provides
@@ -14,11 +12,11 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 class RemoteReviewModule {
-
     @Singleton
     @Provides
     fun provideRemoveFeedService(
         reviewServiceProduct: ReviewServiceProductImpl
+//        reviewServiceProduct: ReviewServiceLocalImpl
     ): RemoteReviewService {
         return reviewServiceProduct.create()
     }

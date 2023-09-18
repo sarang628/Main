@@ -24,14 +24,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val navController = rememberNavController()
-            MainScreen(
-                context = this@MainActivity,
+            TorangScreen(
                 lifecycleOwner = this@MainActivity,
-                navController = navController,
-                clickAddReview = {
-                    navController.navigate("addReview")
-                },
                 feedsViewModel = feedsViewModel,
                 remoteReviewService = remoteReviewService,
                 loginViewModel = loginViewModel
