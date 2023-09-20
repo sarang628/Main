@@ -19,7 +19,7 @@ class DaoModules {
     }
 
     @Provides
-    fun provideFeedDao(appDatabase: AppDatabase): FeedDao {
+    fun proviadeFeedDao(appDatabase: AppDatabase): FeedDao {
         return appDatabase.feedDao()
     }
 

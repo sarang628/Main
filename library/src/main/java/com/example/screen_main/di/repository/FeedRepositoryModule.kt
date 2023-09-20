@@ -1,4 +1,4 @@
-package com.posco.feedscreentestapp.di.repository
+package com.sryang.torang_repository.di.repository
 
 import com.sryang.torang_repository.repository.feed.FeedRepository
 import com.sryang.torang_repository.repository.feed.FeedRepositoryImpl

@@ -23,7 +23,7 @@ import com.example.screen_finding.finding.TextFindScreen
 import com.sarang.alarm.fragment.test
 import com.sarang.alarm.uistate.testAlarmUiState
 import com.sarang.profile.ProfileScreen
-import com.sarang.profile.uistate.testProfileUiState
+import com.sarang.profile.viewmodel.ProfileViewModel
 import com.sryang.torang_repository.session.SessionService
 import kotlinx.coroutines.launch
 
@@ -37,9 +37,9 @@ fun MainScreen(
     clickImage: ((Int) -> Unit),
     clickRestaurant: (() -> Unit),
     feedsViewModel: FeedsViewModel,
+    profileViewModel: ProfileViewModel,
     navController1: NavController
 ) {
-    val profileUiState = testProfileUiState(lifecycleOwner)
     val alarmUiState = testAlarmUiState(context = context, lifecycleOwner)
     val sessionService = SessionService(LocalContext.current)
     var isExpandMenuBottomSheet by remember { mutableStateOf(false) }
@@ -84,8 +84,7 @@ fun MainScreen(
                 )
             }
             composable("profile") {
-                val p by profileUiState.collectAsState()
-                ProfileScreen(uiState = p, onLogout = {
+                ProfileScreen(profileViewModel = profileViewModel, onLogout = {
                     coroutine.launch {
                         sessionService.removeToken()
                         navController1.navigate("splash")

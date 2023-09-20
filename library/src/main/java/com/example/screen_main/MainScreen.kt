@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.LifecycleOwner
-import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -29,12 +28,12 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.screen_feed.FeedsViewModel
 import com.sarang.profile.ProfileScreen
-import com.sarang.profile.uistate.ProfileUiState
+import com.sarang.profile.viewmodel.ProfileViewModel
 import com.sarang.screen_splash.SplashScreen
 import com.sarang.toringlogin.login.LoginScreen
 import com.sarang.toringlogin.login.LoginViewModel
 import com.sryang.library.SelectPictureAndAddReview
-import com.sryang.torang_repository.services.RemoteReviewService
+import com.sryang.torang_repository.api.ApiReview
 import com.sryang.torang_repository.session.SessionService
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -45,8 +44,10 @@ import okhttp3.RequestBody.Companion.toRequestBody
 fun TorangScreen(
     lifecycleOwner: LifecycleOwner,
     feedsViewModel: FeedsViewModel,
-    remoteReviewService: RemoteReviewService,
-    loginViewModel: LoginViewModel
+    remoteReviewService: ApiReview,
+    loginViewModel: LoginViewModel,
+    profileViewModel: ProfileViewModel,
+    profileUrl: String
 ) {
     val context = LocalContext.current
     val coroutine = rememberCoroutineScope()
@@ -67,6 +68,7 @@ fun TorangScreen(
                     clickImage = { },
                     clickRestaurant = { navController.navigate("restaurant") },
                     navController1 = navController,
+                    profileViewModel = profileViewModel,
                     feedsViewModel = feedsViewModel
                 )
             }
@@ -81,14 +83,18 @@ fun TorangScreen(
                 "profile/{userId}",
                 arguments = listOf(navArgument("userId") { type = NavType.StringType })
             ) {
-                it.arguments?.getString("userId")
-                ProfileScreen(uiState = ProfileUiState(), onLogout =
-                {
-                    coroutine.launch {
-                        SessionService(context).removeToken()
-                        navController.navigate("splash")
-                    }
-                }
+                val userId = it.arguments?.getString("userId")?.toInt() ?: 0
+                Log.d("TorangScreen", "userId = $userId")
+                profileViewModel.loadProfile(userId)
+                ProfileScreen(
+                    profileViewModel = profileViewModel, onLogout =
+                    {
+                        coroutine.launch {
+                            SessionService(context).removeToken()
+                            navController.navigate("splash")
+                        }
+                    },
+                    profileBaseUrl = profileUrl
                 )
             }
             composable("splash") {
@@ -120,7 +126,7 @@ fun TorangScreen(
 }
 
 @Composable
-fun AddReview(remoteReviewService: RemoteReviewService, onUploaded: () -> Unit) {
+fun AddReview(remoteReviewService: ApiReview, onUploaded: () -> Unit) {
     var isProgress by remember { mutableStateOf(false) }
     val coroutine = rememberCoroutineScope()
     Box {

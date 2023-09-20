@@ -1,11 +1,11 @@
 package com.sryang.login.di.login
 
 import android.content.Context
-import androidx.compose.ui.platform.LocalContext
 import com.sarang.toringlogin.login.EmailLoginService
-import com.sryang.torang_repository.services.impl.LoginService
-import com.sryang.torang_repository.services.impl.LoginServiceProvider
-import com.sryang.torang_repository.services.impl.getLoginService
+import com.sryang.torang_repository.di.RetrofitModule
+import com.sryang.torang_repository.di.TorangOkHttpClientImpl
+import com.sryang.torang_repository.di.api.ApiLoginModule
+import com.sryang.torang_repository.repository.LoginService
 import com.sryang.torang_repository.session.SessionService
 import dagger.Module
 import dagger.Provides
@@ -46,6 +46,13 @@ object LoginRepositoryModule {
     @Provides
     fun loginService(@ApplicationContext context: Context): LoginService {
         return getLoginService(context)
+    }
+
+    fun getLoginService(context: Context): LoginService {
+        return ApiLoginModule(
+            torangOkhttpClient = TorangOkHttpClientImpl(context),
+            retrofitModule = RetrofitModule()
+        ).create()
     }
 
     @Singleton

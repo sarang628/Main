@@ -1,4 +1,4 @@
-package com.posco.feedscreentestapp.di.repository
+package com.sryang.torang_repository.di.repository
 
 import com.sryang.torang_repository.repository.login.LoginRepository
 import com.sryang.torang_repository.repository.login.LoginRepositoryImpl
@@ -9,7 +9,7 @@ import dagger.hilt.android.components.ActivityComponent
 
 @Module
 @InstallIn(ActivityComponent::class)
-abstract class RepositoryModules {
+abstract class LoginRepositoryModule {
     @Binds
-    abstract fun provideRepository(loginRepositoryImpl: LoginRepositoryImpl): LoginRepository
+    abstract fun provideLoginRepository(loginRepositoryImpl: LoginRepositoryImpl): LoginRepository
 }

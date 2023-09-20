@@ -21,7 +21,7 @@ ext {
 
     feedVersion = 'd9517080b8'
     alarmVersion = '5ef79ca25c'
-    profileVersion = '51c8b7abe9'
+    profileVersion = '546893328b'
     findingVersion = 'df158fa819'
     themeVersion = '6f8e2a7a08'
     myReviewVersion = '4616d836d8'
@@ -31,7 +31,7 @@ ext {
     designVersion = '973242b6ae'
     loginVersion = 'c02d638591'
     splashVersion = '06e84123ca'
-    torangRepositoryVersion = 'e0e9a84e90'
+    torangRepositoryVersion = '910f9fb6cf'
     settingsVersion = 'bc5bb552d5'
     baseFeedVersion = 'f6942f7c3c'
 
