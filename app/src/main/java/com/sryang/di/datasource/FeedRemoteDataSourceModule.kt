@@ -1,4 +1,4 @@
-package com.posco.feedscreentestapp.di.remote
+package com.sryang.torang_repository.di.datasource
 
 import com.sryang.torang_repository.datasource.FeedRemoteDataSource
 import com.sryang.torang_repository.datasource.impl.FeedRemoteDataSourceImpl

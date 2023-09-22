@@ -19,7 +19,7 @@ ext {
     //navigation
     navigationVersion = '2.4.0-alpha06'
 
-    feedVersion = 'd9517080b8'
+    feedVersion = '9ddcbe12a2'
     alarmVersion = '5ef79ca25c'
     profileVersion = '546893328b'
     findingVersion = 'df158fa819'
@@ -29,10 +29,10 @@ ext {
     torangDetailVersion = "d3e0f38d0c"
     addReviewVersion = '5e0860445e'
     designVersion = '973242b6ae'
-    loginVersion = 'c02d638591'
+    loginVersion = 'd73c3a462c'
     splashVersion = '06e84123ca'
-    torangRepositoryVersion = '910f9fb6cf'
-    settingsVersion = 'bc5bb552d5'
-    baseFeedVersion = 'f6942f7c3c'
+    torangRepositoryVersion = 'fe197df417'
+    settingsVersion = 'ebaa347883'
+    baseFeedVersion = '8433e0850d'
 
 }

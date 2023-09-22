@@ -22,8 +22,8 @@ import com.example.screen_feed.FeedsViewModel
 import com.example.screen_finding.finding.TextFindScreen
 import com.sarang.alarm.fragment.test
 import com.sarang.alarm.uistate.testAlarmUiState
-import com.sarang.profile.ProfileScreen
 import com.sarang.profile.viewmodel.ProfileViewModel
+import com.sarang.profile.ProfileScreen
 import com.sryang.torang_repository.session.SessionService
 import kotlinx.coroutines.launch
 

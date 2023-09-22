@@ -1,4 +1,4 @@
-package com.sryang.myapplication.di
+package com.sryang.torang_repository.di.repository
 
 import com.sryang.torang_repository.repository.profile.ProfileRepository
 import com.sryang.torang_repository.repository.profile.ProfileRepositoryImpl

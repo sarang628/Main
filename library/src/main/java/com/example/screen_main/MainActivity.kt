@@ -14,8 +14,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @Inject
-    lateinit var feedsViewModel: FeedsViewModel
+
+    val feedsViewModel: FeedsViewModel by viewModels()
 
     @Inject
     lateinit var remoteReviewService: ApiReview
