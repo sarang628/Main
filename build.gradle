@@ -22,19 +22,19 @@ ext {
     feedVersion = '4b1258e13e'
     alarmVersion = '5ef79ca25c'
     profileVersion = '61ab3b2fe3'
-    findingVersion = 'f228adde6a'
+    findingVersion = 'db0310afdb'
     themeVersion = '6f8e2a7a08'
     myReviewVersion = '4616d836d8'
     navigationModuleVersion = 'd98f57435d'
-    torangDetailVersion = "d3e0f38d0c"
+    torangDetailVersion = "0abcbc708a"
     addReviewVersion = '279171bf28'
     designVersion = '973242b6ae'
     loginVersion = 'd301a10cb4'
     splashVersion = '06e84123ca'
-    torangRepositoryVersion = 'b791f40882'
+    torangRepositoryVersion = 'e2aba4de6e'
     settingsVersion = 'ebaa347883'
     baseFeedVersion = 'e09ebcb091'
-    cardInfoVersion = 'c5c339a559'
+    cardInfoVersion = '76b5dc3604'
     mapVersion = 'bfad3856d9'
 
 }

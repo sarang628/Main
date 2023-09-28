@@ -29,9 +29,9 @@ import com.sarang.toringlogin.login.LoginScreen
 import com.sarang.toringlogin.login.LoginViewModel
 import com.sryang.library.AddReviewScreen
 import com.sryang.library.ReviewService
-import com.sryang.torang_repository.api.ApiReview
 import com.sryang.torang_repository.session.SessionService
 import kotlinx.coroutines.launch
+import restaurant_information.RestaurantInfoViewModel
 
 @Composable
 fun TorangScreen(
@@ -42,7 +42,8 @@ fun TorangScreen(
     profileViewModel: ProfileViewModel,
     mapViewModel: MapViewModel,
     restaurantCardViewModel: RestaurantCardViewModel,
-    profileUrl: String
+    profileUrl: String,
+    restaurantInfoViewModel: RestaurantInfoViewModel
 ) {
     val context = LocalContext.current
     val coroutine = rememberCoroutineScope()
@@ -73,8 +74,11 @@ fun TorangScreen(
                 //AddReviewScreen(remoteReviewService = )
                 AddReviewScreen(remoteReviewService)
             }
-            composable("restaurant") {
-                RestaurantScreen()
+            composable("restaurant/{restaurantId}") {
+                RestaurantScreen(
+                    restaurantId = 10,
+                    restaurantInfoViewModel = restaurantInfoViewModel
+                )
             }
 
             composable(
@@ -100,8 +104,7 @@ fun TorangScreen(
                     SplashScreen(onSuccess = {
                         if (SessionService(context).isLogin.value) {
                             navController.navigate("main")
-                        }
-                        else {
+                        } else {
                             navController.navigate("login")
                         }
                     })

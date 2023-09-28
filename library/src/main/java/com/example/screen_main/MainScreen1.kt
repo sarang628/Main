@@ -15,12 +15,14 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.cardinfo.RestaurantCardPage
 import com.example.cardinfo.RestaurantCardViewModel
 import com.example.screen_feed.FeedsScreen
 import com.example.screen_feed.FeedsScreenInputEvents
 import com.example.screen_feed.FeedsViewModel
-import com.example.screen_finding.finding.TextFindScreen
+import com.example.screen_finding.finding.FindScreen
 import com.example.screen_map.MapViewModel
+import com.example.screen_map.MarkerData
 import com.sarang.alarm.fragment.test
 import com.sarang.alarm.uistate.testAlarmUiState
 import com.sarang.profile.ProfileScreen
@@ -96,10 +98,26 @@ fun MainScreen(
                 })
             }
             composable("finding") {
-                TextFindScreen(
+                FindScreen(
                     mapViewModel = mapViewModel,
-                    restaurantVardViewModel = restaurantCardViewModel,
-                    restaurantImageUrl = "http://sarang628.iptime.org:89/restaurant_images/"
+                    onMark = {},
+                    restaurantCardPage = {
+                        RestaurantCardPage(
+                            uiState = restaurantCardViewModel.uiState,
+                            restaurantImageUrl = "http://sarang628.iptime.org:89/restaurant_images/",
+                            onChangePage = {
+                                if (restaurantCardViewModel.uiState.value.restaurants.size > it) {
+                                    mapViewModel.selectRestaurant(
+                                        MarkerData(
+                                            id = restaurantCardViewModel.uiState.value.restaurants[it].restaurantId
+                                        )
+                                    )
+                                }
+                            }, onClickCard = {
+                                navController1.navigate("restaurant/$it")
+                            }
+                        )
+                    }
                 )
             }
             composable("alarm") {

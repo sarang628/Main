@@ -14,6 +14,7 @@ import com.sryang.library.ReviewService
 import com.sryang.torang_repository.api.ApiReview
 
 import dagger.hilt.android.AndroidEntryPoint
+import restaurant_information.RestaurantInfoViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -34,6 +35,7 @@ class MainActivity : ComponentActivity() {
     private val feedsViewModel: FeedsViewModel by viewModels()
     private val mapViewModel: MapViewModel by viewModels()
     private val restaurantCardViewModel: RestaurantCardViewModel by viewModels()
+    private val restaurantInfoViewModel: RestaurantInfoViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +49,8 @@ class MainActivity : ComponentActivity() {
                 profileViewModel = profileViewModel,
                 profileUrl = "http://sarang628.iptime.org:89/profile_images/",
                 mapViewModel = mapViewModel,
-                restaurantCardViewModel = restaurantCardViewModel
+                restaurantCardViewModel = restaurantCardViewModel,
+                restaurantInfoViewModel = restaurantInfoViewModel
             )
         }
     }
