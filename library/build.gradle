@@ -100,7 +100,7 @@ dependencies {
     implementation "com.github.sarang628:Alarm:$alarmVersion"
     implementation "com.github.sarang628:Theme:$themeVersion"
     implementation "com.github.sarang628:Profile:$profileVersion"
-    implementation "com.github.sarang628:finding:$findingVersion"
+    implementation "com.github.sarang628:Finding:$findingVersion"
     implementation "com.github.sarang628:MyReview:$myReviewVersion"
     implementation "com.github.sarang628:Navigation:$navigationModuleVersion"
     implementation "com.github.sarang628:TorangDetail:$torangDetailVersion"
@@ -112,4 +112,6 @@ dependencies {
     implementation "com.github.sarang628:TorangRepository:$torangRepositoryVersion"
     implementation "com.github.sarang628:Settings:$settingsVersion"
     implementation "com.github.sarang628:BaseFeed:$baseFeedVersion"
+    implementation "com.github.sarang628:CardInfo:$cardInfoVersion"
+    implementation "com.github.sarang628:Map:$mapVersion"
 }

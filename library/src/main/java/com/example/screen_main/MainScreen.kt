@@ -3,20 +3,13 @@ package com.example.screen_main
 import RestaurantScreen
 import SettingsScreen
 import android.util.Log
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,27 +19,29 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.cardinfo.RestaurantCardViewModel
 import com.example.screen_feed.FeedsViewModel
+import com.example.screen_map.MapViewModel
 import com.sarang.profile.ProfileScreen
 import com.sarang.profile.viewmodel.ProfileViewModel
 import com.sarang.screen_splash.SplashScreen
 import com.sarang.toringlogin.login.LoginScreen
 import com.sarang.toringlogin.login.LoginViewModel
-import com.sryang.library.SelectPictureAndAddReview
+import com.sryang.library.AddReviewScreen
+import com.sryang.library.ReviewService
 import com.sryang.torang_repository.api.ApiReview
 import com.sryang.torang_repository.session.SessionService
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 
 @Composable
 fun TorangScreen(
     lifecycleOwner: LifecycleOwner,
     feedsViewModel: FeedsViewModel,
-    remoteReviewService: ApiReview,
+    remoteReviewService: ReviewService,
     loginViewModel: LoginViewModel,
     profileViewModel: ProfileViewModel,
+    mapViewModel: MapViewModel,
+    restaurantCardViewModel: RestaurantCardViewModel,
     profileUrl: String
 ) {
     val context = LocalContext.current
@@ -69,11 +64,14 @@ fun TorangScreen(
                     clickRestaurant = { navController.navigate("restaurant") },
                     navController1 = navController,
                     profileViewModel = profileViewModel,
-                    feedsViewModel = feedsViewModel
+                    feedsViewModel = feedsViewModel,
+                    mapViewModel = mapViewModel,
+                    restaurantCardViewModel = restaurantCardViewModel
                 )
             }
             composable("addReview") {
-                AddReview(remoteReviewService) { navController.navigate("main") }
+                //AddReviewScreen(remoteReviewService = )
+                AddReviewScreen(remoteReviewService)
             }
             composable("restaurant") {
                 RestaurantScreen()
@@ -100,10 +98,12 @@ fun TorangScreen(
             composable("splash") {
                 Column {
                     SplashScreen(onSuccess = {
-                        if (SessionService(context).isLogin.value)
+                        if (SessionService(context).isLogin.value) {
                             navController.navigate("main")
-                        else
+                        }
+                        else {
                             navController.navigate("login")
+                        }
                     })
                 }
             }
@@ -121,42 +121,6 @@ fun TorangScreen(
 
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun AddReview(remoteReviewService: ApiReview, onUploaded: () -> Unit) {
-    var isProgress by remember { mutableStateOf(false) }
-    val coroutine = rememberCoroutineScope()
-    Box {
-        SelectPictureAndAddReview(
-            color = 0xFFFFFBE6,
-            onShare = {
-                //TODO viewmodel로 옮겨야 함.
-                coroutine.launch {
-                    try {
-                        isProgress = true
-                        remoteReviewService.addReview(
-                            params = HashMap<String, RequestBody>().apply {
-                                put(
-                                    "contents",
-                                    it.contents.toRequestBody("text/plain".toMediaTypeOrNull())
-                                )
-                            },
-                            file = filesToMultipart(it.pictures)
-                        )
-                        isProgress = false
-                        onUploaded.invoke()
-                    } catch (e: Exception) {
-                        Log.d("MainActivity", e.toString())
-                        isProgress = false
-                    }
-                }
-            })
-
-        if (isProgress) {
-            CircularProgressIndicator(Modifier.align(Alignment.Center))
         }
     }
 }

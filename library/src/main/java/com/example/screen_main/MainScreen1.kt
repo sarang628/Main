@@ -3,7 +3,6 @@ package com.example.screen_main
 import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -16,14 +15,16 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.cardinfo.RestaurantCardViewModel
 import com.example.screen_feed.FeedsScreen
 import com.example.screen_feed.FeedsScreenInputEvents
 import com.example.screen_feed.FeedsViewModel
 import com.example.screen_finding.finding.TextFindScreen
+import com.example.screen_map.MapViewModel
 import com.sarang.alarm.fragment.test
 import com.sarang.alarm.uistate.testAlarmUiState
-import com.sarang.profile.viewmodel.ProfileViewModel
 import com.sarang.profile.ProfileScreen
+import com.sarang.profile.viewmodel.ProfileViewModel
 import com.sryang.torang_repository.session.SessionService
 import kotlinx.coroutines.launch
 
@@ -38,6 +39,8 @@ fun MainScreen(
     clickRestaurant: (() -> Unit),
     feedsViewModel: FeedsViewModel,
     profileViewModel: ProfileViewModel,
+    mapViewModel: MapViewModel,
+    restaurantCardViewModel: RestaurantCardViewModel,
     navController1: NavController
 ) {
     val alarmUiState = testAlarmUiState(context = context, lifecycleOwner)
@@ -80,7 +83,8 @@ fun MainScreen(
                     profileImageServerUrl = "http://sarang628.iptime.org:89/profile_images/",
                     isExpandMenuBottomSheet = isExpandMenuBottomSheet,
                     isExpandCommentBottomSheet = isExpandCommentBottomSheet,
-                    isShareCommentBottomSheet = isShareCommentBottomSheet
+                    isShareCommentBottomSheet = isShareCommentBottomSheet,
+                    onBottom = {}
                 )
             }
             composable("profile") {
@@ -92,7 +96,11 @@ fun MainScreen(
                 })
             }
             composable("finding") {
-                TextFindScreen()
+                TextFindScreen(
+                    mapViewModel = mapViewModel,
+                    restaurantVardViewModel = restaurantCardViewModel,
+                    restaurantImageUrl = "http://sarang628.iptime.org:89/restaurant_images/"
+                )
             }
             composable("alarm") {
                 test(alarmUiState)
