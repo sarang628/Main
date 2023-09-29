@@ -2,6 +2,7 @@ package com.example.myapplication.di.restaurant_detail
 
 import android.util.Log
 import com.sryang.torang_repository.api.ApiRestaurant
+import com.sryang.torang_repository.data.remote.response.RemoteRestaurant
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +21,7 @@ class RestaurantServiceModule {
         return object : RestaurantInfoService {
             override suspend fun loadRestaurant(restaurantId: Int): RestaurantInfoData {
                 try {
-                    val result = apiRestaurant.getRestaurantById(restaurantId)
+                    val result: RemoteRestaurant = apiRestaurant.getRestaurantById(restaurantId)
                     return RestaurantInfoData(
                         foodType = result.restaurantType,
                         distance = "100m(hard coded)",
@@ -28,8 +29,9 @@ class RestaurantServiceModule {
                         close = "오후 9:00에 영업 종료(hard coded)",
                         address = result.address,
                         webSite = result.website,
-                        number = result.tel
-
+                        tel = result.tel,
+                        name = result.restaurantName,
+                        imageUrl = result.imgUrl1
                     )
                 } catch (e: HttpException) {
                     val message = e.errorMessage()

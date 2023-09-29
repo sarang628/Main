@@ -14,15 +14,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.cardinfo.RestaurantCardViewModel
-import com.example.screen_feed.FeedsViewModel
 import com.example.screen_map.MapViewModel
+import com.sarang.base_feed.ui.Feeds
+import com.sarang.base_feed.uistate.FeedUiState
+import com.sarang.base_feed.uistate.testFeedUiState
 import com.sarang.profile.ProfileScreen
+import com.sarang.profile.move
 import com.sarang.profile.viewmodel.ProfileViewModel
 import com.sarang.screen_splash.SplashScreen
 import com.sarang.toringlogin.login.LoginScreen
@@ -36,18 +40,18 @@ import restaurant_information.RestaurantInfoViewModel
 @Composable
 fun TorangScreen(
     lifecycleOwner: LifecycleOwner,
-    feedsViewModel: FeedsViewModel,
     remoteReviewService: ReviewService,
     loginViewModel: LoginViewModel,
     profileViewModel: ProfileViewModel,
     mapViewModel: MapViewModel,
     restaurantCardViewModel: RestaurantCardViewModel,
     profileUrl: String,
-    restaurantInfoViewModel: RestaurantInfoViewModel
+    restaurantInfoViewModel: RestaurantInfoViewModel,
+    feedScreen: @Composable () -> Unit,
+    navController: NavHostController
 ) {
     val context = LocalContext.current
     val coroutine = rememberCoroutineScope()
-    val navController = rememberNavController()
 
     Column {
         NavHost(
@@ -58,27 +62,26 @@ fun TorangScreen(
                 MainScreen(
                     context = context,
                     lifecycleOwner = lifecycleOwner,
-                    clickAddReview = { navController.navigate("addReview") },
-                    onProfile = { navController.navigate("profile/$it") },
-                    clickShare = { },
-                    clickImage = { },
-                    clickRestaurant = { navController.navigate("restaurant") },
                     navController1 = navController,
                     profileViewModel = profileViewModel,
-                    feedsViewModel = feedsViewModel,
                     mapViewModel = mapViewModel,
-                    restaurantCardViewModel = restaurantCardViewModel
+                    restaurantCardViewModel = restaurantCardViewModel,
+                    feedScreen = { feedScreen.invoke() }
                 )
             }
             composable("addReview") {
                 //AddReviewScreen(remoteReviewService = )
                 AddReviewScreen(remoteReviewService)
             }
-            composable("restaurant/{restaurantId}") {
-                RestaurantScreen(
-                    restaurantId = 10,
-                    restaurantInfoViewModel = restaurantInfoViewModel
-                )
+            composable("restaurant/{restaurantId}") { backStackEntry ->
+                val restaurantId = backStackEntry.arguments?.getString("restaurantId")
+                restaurantId?.let {
+                    RestaurantScreen(
+                        restaurantId = it.toInt(),
+                        restaurantInfoViewModel = restaurantInfoViewModel,
+                        reviewImageUrl = "http://sarang628.iptime.org:89/restaurant_images/"
+                    )
+                }
             }
 
             composable(
@@ -93,19 +96,65 @@ fun TorangScreen(
                     {
                         coroutine.launch {
                             SessionService(context).removeToken()
-                            navController.navigate("splash")
+                            navController.move("splash")
                         }
                     },
-                    profileBaseUrl = profileUrl
+                    profileBaseUrl = profileUrl,
+                    favorite = {
+                        Feeds(
+                            list = ArrayList<FeedUiState>().apply {
+                                add(testFeedUiState())
+                                add(testFeedUiState())
+                                add(testFeedUiState())
+                                add(testFeedUiState())
+                                add(testFeedUiState())
+                                add(testFeedUiState())
+                            },
+                            onProfile = {},
+                            onLike = {},
+                            onComment = {},
+                            onShare = {},
+                            onFavorite = {},
+                            onMenu = { /*TODO*/ },
+                            onName = { /*TODO*/ },
+                            onRestaurant = { /*TODO*/ },
+                            onImage = {},
+                            onRefresh = { /*TODO*/ },
+                            isRefreshing = false
+                        )
+                    },
+                    wantToGo = {
+                        Feeds(
+                            list = ArrayList<FeedUiState>().apply {
+                                add(testFeedUiState())
+                                add(testFeedUiState())
+                                add(testFeedUiState())
+                                add(testFeedUiState())
+                                add(testFeedUiState())
+                                add(testFeedUiState())
+                            },
+                            onProfile = {},
+                            onLike = {},
+                            onComment = {},
+                            onShare = {},
+                            onFavorite = {},
+                            onMenu = { /*TODO*/ },
+                            onName = { /*TODO*/ },
+                            onRestaurant = { /*TODO*/ },
+                            onImage = {},
+                            onRefresh = { /*TODO*/ },
+                            isRefreshing = false
+                        )
+                    }
                 )
             }
             composable("splash") {
                 Column {
                     SplashScreen(onSuccess = {
                         if (SessionService(context).isLogin.value) {
-                            navController.navigate("main")
+                            navController.move("main")
                         } else {
-                            navController.navigate("login")
+                            navController.move("login")
                         }
                     })
                 }
@@ -114,7 +163,7 @@ fun TorangScreen(
                 val flow = loginViewModel.uiState.collectAsState()
                 LoginScreen(isLogin = flow.value.isLogin, onLogin = {
                     loginViewModel.login(it)
-                    navController.navigate("main")
+                    navController.move("main")
                 }, onLogout = {
                     loginViewModel.logout()
                 })

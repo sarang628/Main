@@ -3,29 +3,26 @@ package com.example.screen_main
 import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.LifecycleOwner
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.cardinfo.RestaurantCardPage
 import com.example.cardinfo.RestaurantCardViewModel
-import com.example.screen_feed.FeedsScreen
-import com.example.screen_feed.FeedsScreenInputEvents
-import com.example.screen_feed.FeedsViewModel
 import com.example.screen_finding.finding.FindScreen
 import com.example.screen_map.MapViewModel
 import com.example.screen_map.MarkerData
 import com.sarang.alarm.fragment.test
 import com.sarang.alarm.uistate.testAlarmUiState
+import com.sarang.base_feed.ui.Feeds
+import com.sarang.base_feed.uistate.FeedUiState
+import com.sarang.base_feed.uistate.testFeedUiState
 import com.sarang.profile.ProfileScreen
+import com.sarang.profile.move
 import com.sarang.profile.viewmodel.ProfileViewModel
 import com.sryang.torang_repository.session.SessionService
 import kotlinx.coroutines.launch
@@ -34,22 +31,14 @@ import kotlinx.coroutines.launch
 fun MainScreen(
     context: Context,
     lifecycleOwner: LifecycleOwner,
-    clickAddReview: ((Int) -> Unit),
-    onProfile: ((Int) -> Unit),
-    clickShare: ((Int) -> Unit),
-    clickImage: ((Int) -> Unit),
-    clickRestaurant: (() -> Unit),
-    feedsViewModel: FeedsViewModel,
     profileViewModel: ProfileViewModel,
     mapViewModel: MapViewModel,
     restaurantCardViewModel: RestaurantCardViewModel,
-    navController1: NavController
+    navController1: NavHostController,
+    feedScreen: @Composable () -> Unit
 ) {
     val alarmUiState = testAlarmUiState(context = context, lifecycleOwner)
     val sessionService = SessionService(LocalContext.current)
-    var isExpandMenuBottomSheet by remember { mutableStateOf(false) }
-    var isExpandCommentBottomSheet by remember { mutableStateOf(false) }
-    var isShareCommentBottomSheet by remember { mutableStateOf(false) }
     val coroutine = rememberCoroutineScope()
     Column {
         val navController = rememberNavController()
@@ -58,59 +47,74 @@ fun MainScreen(
             modifier = Modifier.weight(1f)
         ) {
             composable("feed") {
-                FeedsScreen(
-                    uiStateFlow = feedsViewModel.uiState,
-                    inputEvents = FeedsScreenInputEvents(
-                        onRefresh = {
-                            feedsViewModel.refreshFeed()
-                        },
-                        onProfile = onProfile,
-                        onAddReview = clickAddReview,
-                        onImage = clickImage,
-                        onRestaurant = clickRestaurant,
-                        onMenu = {
-                            isExpandMenuBottomSheet = !isExpandMenuBottomSheet
-                        },
-                        onFavorite = { feedsViewModel.clickFavorite(it) },
-                        onShare = {
-                            isShareCommentBottomSheet = !isShareCommentBottomSheet
-                        },
-                        onComment = {
-                            isExpandCommentBottomSheet = !isExpandCommentBottomSheet
-                        },
-                        onLike = { feedsViewModel.clickLike(it) },
-                        onName = { },
-                    ),
-                    imageServerUrl = "http://sarang628.iptime.org:89/review_images/",
-                    profileImageServerUrl = "http://sarang628.iptime.org:89/profile_images/",
-                    isExpandMenuBottomSheet = isExpandMenuBottomSheet,
-                    isExpandCommentBottomSheet = isExpandCommentBottomSheet,
-                    isShareCommentBottomSheet = isShareCommentBottomSheet,
-                    onBottom = {}
-                )
+                feedScreen.invoke()
             }
             composable("profile") {
                 ProfileScreen(profileViewModel = profileViewModel, onLogout = {
                     coroutine.launch {
                         sessionService.removeToken()
-                        navController1.navigate("splash")
+                        navController1.move("splash")
                     }
+                }, favorite = {
+                    Feeds(
+                        list = ArrayList<FeedUiState>().apply {
+                            add(testFeedUiState())
+                            add(testFeedUiState())
+                            add(testFeedUiState())
+                            add(testFeedUiState())
+                            add(testFeedUiState())
+                            add(testFeedUiState())
+                        },
+                        onProfile = {},
+                        onLike = {},
+                        onComment = {},
+                        onShare = {},
+                        onFavorite = {},
+                        onMenu = { /*TODO*/ },
+                        onName = { /*TODO*/ },
+                        onRestaurant = { /*TODO*/ },
+                        onImage = {},
+                        onRefresh = { /*TODO*/ },
+                        isRefreshing = false
+                    )
+                }, wantToGo = {
+                    Feeds(
+                        list = ArrayList<FeedUiState>().apply {
+                            add(testFeedUiState())
+                            add(testFeedUiState())
+                            add(testFeedUiState())
+                            add(testFeedUiState())
+                            add(testFeedUiState())
+                            add(testFeedUiState())
+                        },
+                        onProfile = {},
+                        onLike = {},
+                        onComment = {},
+                        onShare = {},
+                        onFavorite = {},
+                        onMenu = { /*TODO*/ },
+                        onName = { /*TODO*/ },
+                        onRestaurant = { /*TODO*/ },
+                        onImage = {},
+                        onRefresh = { /*TODO*/ },
+                        isRefreshing = false
+                    )
                 })
             }
             composable("finding") {
                 FindScreen(
                     mapViewModel = mapViewModel,
-                    onMark = {},
+                    onMark = {
+                        mapViewModel.selectRestaurantById(it)
+                    },
                     restaurantCardPage = {
                         RestaurantCardPage(
                             uiState = restaurantCardViewModel.uiState,
                             restaurantImageUrl = "http://sarang628.iptime.org:89/restaurant_images/",
                             onChangePage = {
                                 if (restaurantCardViewModel.uiState.value.restaurants.size > it) {
-                                    mapViewModel.selectRestaurant(
-                                        MarkerData(
-                                            id = restaurantCardViewModel.uiState.value.restaurants[it].restaurantId
-                                        )
+                                    mapViewModel.selectRestaurantById(
+                                        id = restaurantCardViewModel.uiState.value.restaurants[it].restaurantId
                                     )
                                 }
                             }, onClickCard = {

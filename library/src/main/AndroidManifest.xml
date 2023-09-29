@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application>
-        <activity android:name="com.example.screen_main.MainActivity" />
+        <activity android:name="com.example.screen_main.com.sryang.main.MainActivity" />
     </application>
 
 </manifest>
