@@ -18,6 +18,9 @@ import com.sarang.base_feed.ui.TorangToolbar
 import com.sarang.base_feed.uistate.FeedBottomUIState
 import com.sarang.base_feed.uistate.FeedTopUIState
 import com.sarang.base_feed.uistate.FeedUiState
+import com.sryang.library.CommentBottomSheetDialog
+import com.sryang.library.FeedMenuBottomSheetDialog
+import com.sryang.library.ShareBottomSheetDialog
 import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import com.sryang.torang_repository.repository.feed.FeedRepository
@@ -46,11 +49,11 @@ class FeedServiceModule {
                     it.stream().map {
                         FeedData(
                             reviewId = it.review.reviewId,
-                            userId = it.user.userId,
-                            name = it.user.userName ?: "",
+                            userId = it.review.userId,
+                            name = it.review.userName,
                             restaurantName = it.review.restaurantName,
                             rating = it.review.rating,
-                            profilePictureUrl = it.user.profile_pic_url ?: "",
+                            profilePictureUrl = it.review.profilePicUrl,
                             likeAmount = it.review.likeAmount,
                             commentAmount = it.review.commentAmount,
                             author = "",
@@ -64,7 +67,8 @@ class FeedServiceModule {
                             visibleLike = false,
                             visibleComment = false,
                             contents = it.review.contents,
-                            reviewImages = it.images.stream().map { it.pictureUrl }.toList()
+                            reviewImages = it.images.stream().map { it.pictureUrl }.toList(),
+                            restaurantId = it.review.restaurantId
                         )
                     }.toList()
                 }
@@ -95,7 +99,8 @@ fun FeedEntity.toFeedTopUiState(): FeedTopUIState {
         profilePictureUrl = this.profilePicUrl,
         rating = this.rating,
         restaurantName = this.restaurantName,
-        userId = this.userId
+        userId = this.userId,
+        restaurantId = this.restaurantId
     )
 }
 
@@ -144,7 +149,8 @@ fun RemoteFeed.toFeedTopUiState(): FeedTopUIState {
         profilePictureUrl = this.user.profilePicUrl,
         rating = this.rating,
         restaurantName = this.restaurant.restaurantName,
-        userId = this.user.userId
+        userId = this.user.userId,
+        restaurantId = this.restaurant.restaurantId
     )
 }
 
@@ -184,7 +190,8 @@ fun FeedData.toFeedTopUIState(): FeedTopUIState {
         name = this.name,
         restaurantName = this.restaurantName,
         rating = this.rating,
-        profilePictureUrl = this.profilePictureUrl
+        profilePictureUrl = this.profilePictureUrl,
+        restaurantId = this.restaurantId
     )
 }
 
@@ -192,7 +199,7 @@ fun FeedData.toFeedTopUIState(): FeedTopUIState {
 fun TestFeedScreen(
     feedsViewModel: FeedsViewModel,
     onProfile: ((Int) -> Unit), // 프로필 이미지 클릭
-    onRestaurant: (() -> Unit), // 식당명 클릭
+    onRestaurant: ((Int) -> Unit), // 식당명 클릭
     onImage: ((Int) -> Unit), // 이미지 클릭
     onName: (() -> Unit), // 이름 클릭
     onAddReview: (() -> Unit), // 리뷰 추가 클릭
@@ -245,6 +252,15 @@ fun TestFeedScreen(
                     //Loading()
 //                            }
                 }
+            },
+            feedMenuBottomSheetDialog = {
+                FeedMenuBottomSheetDialog(isExpand = it, onSelect = {})
+            },
+            shareBottomSheetDialog = {
+                ShareBottomSheetDialog(isExpand = it, onSelect = {})
+            },
+            commentBottomSheetDialog = {
+                CommentBottomSheetDialog(isExpand = it, onSelect = {})
             }
         )
     }

@@ -1,6 +1,7 @@
 package com.sryang.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -58,7 +59,8 @@ class MainActivity : ComponentActivity() {
                         feedsViewModel = feedsViewModel,
                         onProfile = { navController.navigate("profile/$it") },
                         onRestaurant = {
-                            //navController.navigate("restaurant/$it")
+                            Log.d("MainActivity", "restaurant/$it")
+                            navController.navigate("restaurant/$it")
                         },
                         onImage = {},
                         onName = {},
