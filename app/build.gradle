@@ -97,4 +97,5 @@ dependencies {
     implementation "com.github.sarang628:CardInfo:$cardInfoVersion"
     implementation "com.github.sarang628:Map:$mapVersion"
     implementation "com.github.sarang628:TorangBottomSheet:$torangBottomSheetVersion"
+    implementation "com.github.sarang628:InstagramGallery:$instaGramGalleryVersion"
 }

@@ -10,11 +10,11 @@ import com.example.cardinfo.RestaurantCardViewModel
 import com.example.screen_feed.FeedsViewModel
 import com.example.screen_main.TorangScreen
 import com.example.screen_map.MapViewModel
-import com.sarang.profile.move
-import com.sryang.di.feed.TestFeedScreen
 import com.sarang.profile.viewmodel.ProfileService
 import com.sarang.profile.viewmodel.ProfileViewModel
 import com.sarang.toringlogin.login.LoginViewModel
+import com.sryang.di.feed.TestFeedScreen
+import com.sryang.library.AddReviewViewModel
 import com.sryang.library.ReviewService
 import com.sryang.torang_repository.api.ApiReview
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,6 +39,7 @@ class MainActivity : ComponentActivity() {
     private val mapViewModel: MapViewModel by viewModels()
     private val restaurantCardViewModel: RestaurantCardViewModel by viewModels()
     private val restaurantInfoViewModel: RestaurantInfoViewModel by viewModels()
+    private val addReviewViewModel: AddReviewViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +48,7 @@ class MainActivity : ComponentActivity() {
 
             TorangScreen(
                 lifecycleOwner = this@MainActivity,
-                remoteReviewService = reviewService,
+                addReviewViewModel = addReviewViewModel,
                 loginViewModel = loginViewModel,
                 profileViewModel = profileViewModel,
                 profileUrl = "http://sarang628.iptime.org:89/profile_images/",

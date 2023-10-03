@@ -25,6 +25,7 @@ import com.example.screen_map.MapViewModel
 import com.sarang.base_feed.ui.Feeds
 import com.sarang.base_feed.uistate.FeedUiState
 import com.sarang.base_feed.uistate.testFeedUiState
+import com.sarang.instagralleryModule.GalleryScreen
 import com.sarang.profile.ProfileScreen
 import com.sarang.profile.move
 import com.sarang.profile.viewmodel.ProfileViewModel
@@ -32,7 +33,7 @@ import com.sarang.screen_splash.SplashScreen
 import com.sarang.toringlogin.login.LoginScreen
 import com.sarang.toringlogin.login.LoginViewModel
 import com.sryang.library.AddReviewScreen
-import com.sryang.library.ReviewService
+import com.sryang.library.AddReviewViewModel
 import com.sryang.torang_repository.session.SessionService
 import kotlinx.coroutines.launch
 import restaurant_information.RestaurantInfoViewModel
@@ -40,7 +41,7 @@ import restaurant_information.RestaurantInfoViewModel
 @Composable
 fun TorangScreen(
     lifecycleOwner: LifecycleOwner,
-    remoteReviewService: ReviewService,
+    addReviewViewModel : AddReviewViewModel,
     loginViewModel: LoginViewModel,
     profileViewModel: ProfileViewModel,
     mapViewModel: MapViewModel,
@@ -70,8 +71,19 @@ fun TorangScreen(
                 )
             }
             composable("addReview") {
-                //AddReviewScreen(remoteReviewService = )
-                AddReviewScreen(remoteReviewService)
+                val addReviewNavController = rememberNavController()
+                AddReviewScreen(
+                    addReviewViewModel = addReviewViewModel,
+                    navController = addReviewNavController,
+                    galleryScreen = {
+                        GalleryScreen(color = 0xFFFFFBE6, onNext = {
+                            addReviewViewModel.selectPictures(it)
+                            addReviewNavController.navigate("addReview")
+                        }, onClose = {
+                            navController.popBackStack()
+                        })
+                    }
+                )
             }
             composable("restaurant/{restaurantId}") { backStackEntry ->
                 val restaurantId = backStackEntry.arguments?.getString("restaurantId")
