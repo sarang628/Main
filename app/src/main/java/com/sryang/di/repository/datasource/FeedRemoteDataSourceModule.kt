@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.di.datasource
+package com.sryang.torang_repository.di.repository.datasource
 
 import com.sryang.torang_repository.datasource.FeedRemoteDataSource
 import com.sryang.torang_repository.datasource.impl.FeedRemoteDataSourceImpl

@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.di.room
+package com.sryang.torang_repository.di.repository.room
 
 import android.content.Context
 import com.sryang.torang_repository.data.AppDatabase

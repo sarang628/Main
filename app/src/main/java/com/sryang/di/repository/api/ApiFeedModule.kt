@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.di.api
+package com.sryang.torang_repository.di.repository.api
 
 import android.content.Context
 import com.example.torangrepository.R
@@ -6,8 +6,8 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import com.sryang.torang_repository.api.ApiFeed
-import com.sryang.torang_repository.data.Favorite
-import com.sryang.torang_repository.data.Like
+import com.sryang.torang_repository.data.RemoteFavorite
+import com.sryang.torang_repository.data.RemoteLike
 import com.sryang.torang_repository.data.Review
 import com.sryang.torang_repository.data.entity.ReviewDeleteRequestVO
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
@@ -16,6 +16,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import retrofit2.http.Field
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -32,7 +33,8 @@ class ApiFeedModule {
     @Singleton
     @Provides
     fun provideRemoteFeedService(
-        apiFeed: ProductApiFeed
+        apiFeed: ProductApiFeed,
+//        apiFeed: LocalApiFeed
     ): ApiFeed {
         return apiFeed.create()
     }
@@ -63,7 +65,7 @@ class LocalApiFeed @Inject constructor(
     private val torangOkHttpClientImpl: TorangOkhttpClient,
     private val retrofitModule: RetrofitModule
 ) {
-    private var url = "http://10.0.2.2:8080/"
+    private var url = "http://192.168.0.14:8081/"
     fun create(): ApiFeed {
         return retrofitModule.getRetrofit(torangOkHttpClientImpl.getHttpClient(), url).create(
             ApiFeed::class.java
@@ -75,7 +77,7 @@ class LocalApiFeed @Inject constructor(
 class TestFeedServiceImpl @Inject constructor(
     @ApplicationContext val context: Context
 ) : ApiFeed {
-    override suspend fun getFeeds(params: Map<String, String>): List<RemoteFeed> {
+    override suspend fun getFeeds(userId: Int): List<RemoteFeed> {
         val feeds = ArrayList<RemoteFeed>()
         val list = JsonDataLoader<List<JsonObject>>(context).load(R.raw.feed_response1)
         for (jsonObject in list) {
@@ -91,19 +93,25 @@ class TestFeedServiceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun addLike(like: Like): Like {
+    override suspend fun addLike(
+        @Field(value = "userId") userId: Int,
+        @Field(value = "reviewId") reviewId: Int
+    ): RemoteLike {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteLike(like: Like): Like {
+    override suspend fun deleteLike(@Field(value = "likeId") likeId: Int): RemoteLike {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteFavorite(favorite: Favorite): Favorite {
+    override suspend fun deleteFavorite(@Field(value = "favoriteId") likeId: Int): RemoteFavorite {
         TODO("Not yet implemented")
     }
 
-    override suspend fun addFavorite(favorite: Favorite): Favorite {
+    override suspend fun addFavorite(
+        @Field(value = "userId") userId: Int,
+        @Field(value = "reviewId") reviewId: Int
+    ): RemoteFavorite {
         TODO("Not yet implemented")
     }
 

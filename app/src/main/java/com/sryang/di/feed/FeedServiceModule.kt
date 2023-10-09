@@ -1,26 +1,26 @@
-package com.sryang.di.feed
+package com.posco.feedscreentestapp.di.feed
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import com.example.screen_feed.CommentData
 import com.example.screen_feed.FeedData
 import com.example.screen_feed.FeedService
-import com.example.screen_feed.FeedsScreen
 import com.example.screen_feed.FeedsViewModel
+import com.example.screen_feed._FeedsScreen
 import com.sarang.base_feed.ui.Feeds
 import com.sarang.base_feed.ui.TorangToolbar
 import com.sarang.base_feed.uistate.FeedBottomUIState
 import com.sarang.base_feed.uistate.FeedTopUIState
 import com.sarang.base_feed.uistate.FeedUiState
 import com.sryang.library.CommentBottomSheetDialog
+import com.sryang.library.CommentItemUiState
 import com.sryang.library.FeedMenuBottomSheetDialog
 import com.sryang.library.ShareBottomSheetDialog
+import com.sryang.torang_repository.data.RemoteComment
 import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import com.sryang.torang_repository.repository.feed.FeedRepository
@@ -40,12 +40,12 @@ class FeedServiceModule {
         feedRepository: FeedRepository
     ): FeedService {
         return object : FeedService {
-            override suspend fun getFeeds(params: Map<String, String>) {
-                feedRepository.loadFeed()
+            override suspend fun getFeeds(userId: Int) {
+                feedRepository.loadFeed(userId)
             }
 
             override val feeds1: Flow<List<FeedData>>
-                get() = feedRepository.feeds1.map {
+                get() = feedRepository.feeds1.map { it ->
                     it.stream().map {
                         FeedData(
                             reviewId = it.review.reviewId,
@@ -62,8 +62,8 @@ class FeedServiceModule {
                             comment = "",
                             comment1 = "",
                             comment2 = "",
-                            isLike = false,
-                            isFavorite = false,
+                            isLike = it.like != null,
+                            isFavorite = it.favorite != null,
                             visibleLike = false,
                             visibleComment = false,
                             contents = it.review.contents,
@@ -73,23 +73,44 @@ class FeedServiceModule {
                     }.toList()
                 }
 
-            override suspend fun addLike(reviewId: Int) {
-                TODO("Not yet implemented")
+            override suspend fun addLike(userId: Int, reviewId: Int) {
+                feedRepository.addLike(userId, reviewId)
             }
 
-            override suspend fun deleteLike(reviewId: Int) {
-                TODO("Not yet implemented")
+            override suspend fun deleteLike(userId: Int, reviewId: Int) {
+                feedRepository.deleteLike(userId, reviewId)
             }
 
-            override suspend fun deleteFavorite(reviewId: Int) {
-                TODO("Not yet implemented")
+            override suspend fun deleteFavorite(userId: Int, reviewId: Int) {
+                feedRepository.deleteFavorite(userId, reviewId)
             }
 
-            override suspend fun addFavorite(reviewId: Int) {
-                TODO("Not yet implemented")
+            override suspend fun addFavorite(userId: Int, reviewId: Int) {
+                feedRepository.addFavorite(userId, reviewId)
+            }
+
+            override suspend fun getComment(reviewId: Int): List<CommentData> {
+                return feedRepository.getComment(reviewId).stream().map {
+                    it.toCommentData()
+                }.toList()
+            }
+
+            override suspend fun addComment(reviewId: Int, userId: Int, comment: String) {
+                feedRepository.addComment(reviewId, userId, comment)
             }
         }
     }
+}
+
+fun RemoteComment.toCommentData(): CommentData {
+    return CommentData(
+        userId = this.user_id,
+        profileImageUrl = this.profile_pic_url,
+        date = this.create_date,
+        comment = this.comment,
+        name = this.user_name,
+        likeCount = 0
+    )
 }
 
 fun FeedEntity.toFeedTopUiState(): FeedTopUIState {
@@ -134,8 +155,8 @@ fun RemoteFeed.toFeedBottomUiState(): FeedBottomUIState {
         comment = "",
         comment1 = "",
         comment2 = "",
-        isLike = this.like?.isLike ?: false,
-        isFavorite = this.favorite?.isFavority ?: false,
+        isLike = this.like != null,
+        isFavorite = this.favorite != null,
         visibleLike = true,
         visibleComment = true,
         contents = this.contents
@@ -191,77 +212,82 @@ fun FeedData.toFeedTopUIState(): FeedTopUIState {
         restaurantName = this.restaurantName,
         rating = this.rating,
         profilePictureUrl = this.profilePictureUrl,
-        restaurantId = this.restaurantId
+        restaurantId = restaurantId
     )
 }
 
 @Composable
-fun TestFeedScreen(
+fun FeedScreen(
     feedsViewModel: FeedsViewModel,
-    onProfile: ((Int) -> Unit), // 프로필 이미지 클릭
-    onRestaurant: ((Int) -> Unit), // 식당명 클릭
-    onImage: ((Int) -> Unit), // 이미지 클릭
-    onName: (() -> Unit), // 이름 클릭
-    onAddReview: (() -> Unit), // 리뷰 추가 클릭
+    clickAddReview: (() -> Unit),
+    profileImageServerUrl: String,
+    onProfile: ((Int) -> Unit),
+    onImage: ((Int) -> Unit),
+    onName: (() -> Unit),
+    onRestaurant: ((Int) -> Unit),
+    imageServerUrl: String
 ) {
-    val context = LocalContext.current
-    var isExpandMenuBottomSheet by remember { mutableStateOf(false) }
-    var isExpandCommentBottomSheet by remember { mutableStateOf(false) }
-    var isShareCommentBottomSheet by remember { mutableStateOf(false) }
     val uiState by feedsViewModel.uiState.collectAsState()
 
     Box {
-        FeedsScreen(
+        _FeedsScreen(
             feedsViewModel = feedsViewModel,
-            isExpandMenuBottomSheet = isExpandMenuBottomSheet,
-            isExpandCommentBottomSheet = isExpandCommentBottomSheet,
-            isShareCommentBottomSheet = isShareCommentBottomSheet,
-            onReview = {},
-            itemFeed = {
+            feeds = {
                 Feeds(
                     list = ArrayList(uiState.list.stream().map { it.toFeedUiState() }.toList()),
                     onProfile = onProfile,
-                    onMenu = { isExpandMenuBottomSheet = !isExpandMenuBottomSheet },
+                    onMenu = { feedsViewModel.onMenu() },
                     onImage = onImage,
                     onName = onName,
-                    onLike = { },
-                    onComment = { isExpandCommentBottomSheet = !isExpandCommentBottomSheet },
-                    onShare = { isShareCommentBottomSheet = !isShareCommentBottomSheet },
-                    onFavorite = { },
+                    onLike = { feedsViewModel.onLike(it) },
+                    onComment = { feedsViewModel.onComment(it) },
+                    onShare = { feedsViewModel.onShare() },
+                    onFavorite = { feedsViewModel.onFavorite(it) },
                     onRestaurant = onRestaurant,
-                    profileImageServerUrl = "http://sarang628.iptime.org:89/profile_images/",
-                    imageServerUrl = "http://sarang628.iptime.org:89/review_images/",
+                    profileImageServerUrl = profileImageServerUrl,
+                    imageServerUrl = imageServerUrl,
                     isRefreshing = uiState.isRefreshing,
-                    onRefresh = { feedsViewModel.refreshFeed() }
+                    onRefresh = { feedsViewModel.refreshFeed() },
                 )
             },
-            torangToolbar = { TorangToolbar({ onAddReview.invoke() }) },
-            errorComponent = {
-                Column {
-//                            if (uiState.isEmptyFeed) {
-                    // 피드가 비어있을 때
-                    //EmptyFeed()
-//                            }
-
-//                            if (uiState.isVisibleRefreshButton()) {
-                    // 네트워크 에러
-                    //NetworkError()
-//                            }
-//                            if (uiState.isProgess) {
-                    // 로딩
-                    //Loading()
-//                            }
-                }
-            },
+            torangToolbar = { TorangToolbar { clickAddReview.invoke() } },
             feedMenuBottomSheetDialog = {
-                FeedMenuBottomSheetDialog(isExpand = it, onSelect = {})
-            },
-            shareBottomSheetDialog = {
-                ShareBottomSheetDialog(isExpand = it, onSelect = {})
+                FeedMenuBottomSheetDialog(
+                    isExpand = it,
+                    onSelect = {},
+                    onClose = { feedsViewModel.closeMenu() })
             },
             commentBottomSheetDialog = {
-                CommentBottomSheetDialog(isExpand = it, onSelect = {})
-            }
+                CommentBottomSheetDialog(
+                    isExpand = it,
+                    onSelect = {},
+                    onClose = { feedsViewModel.closeComment() },
+                    list = uiState.comments?.stream()?.map { it.toCommentItemUiState() }?.toList()
+                        ?: ArrayList(),
+                    onSend = { feedsViewModel.sendComment(it) },
+                    profileImageUrl = "",
+                    profileImageServerUrl = profileImageServerUrl
+                )
+            },
+            shareBottomSheetDialog = {
+                ShareBottomSheetDialog(
+                    isExpand = true,
+                    onSelect = {},
+                    onClose = { feedsViewModel.closeShare() })
+            },
+            errorComponent = {}, networkError = {}, loading = {}, emptyFeed = {}
         )
     }
+}
+
+
+fun CommentData.toCommentItemUiState(): CommentItemUiState {
+    return CommentItemUiState(
+        userId = userId,
+        profileImageUrl = profileImageUrl,
+        date = date,
+        comment = comment,
+        name = name,
+        likeCount = likeCount
+    )
 }

@@ -13,17 +13,14 @@ import javax.inject.Inject
 @InstallIn(SingletonComponent::class)
 @Module
 class ReviewServiceImpl {
-
-    @Inject
-    lateinit var remoteReviewService: ApiReview
     @Provides
-    fun provideReviewService(): ReviewService {
+    fun provideReviewService(apiReview: ApiReview): ReviewService {
         return object : ReviewService {
             override suspend fun addReview(
                 params: HashMap<String, RequestBody>,
                 file: ArrayList<MultipartBody.Part>
             ): String {
-                remoteReviewService.addReview(params, file)
+                apiReview.addReview(params, file)
                 return ""
             }
 

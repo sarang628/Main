@@ -3,6 +3,7 @@ package com.example.myapplication.di.restaurant_detail
 import android.util.Log
 import android.view.Menu
 import com.sryang.torang_repository.api.ApiRestaurant
+import com.sryang.torang_repository.data.RestaurantDetail
 import com.sryang.torang_repository.data.remote.response.RemoteRestaurant
 import dagger.Module
 import dagger.Provides
@@ -17,9 +18,11 @@ import data.testMenuData
 import data.testRestaurantImage
 import data.testReviewRowData
 import data.testReviewSummaryData
+import restaurant_information.RestaurantImages
 import restaurant_information.RestaurantInfoService
 import restaurant_information.RestaurantInfoUIState
 import retrofit2.HttpException
+import kotlin.streams.toList
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -31,7 +34,7 @@ class RestaurantServiceModule {
         return object : RestaurantInfoService {
             override suspend fun loadRestaurant(restaurantId: Int): RestaurantInfoUIState {
                 try {
-                    val result: RemoteRestaurant = apiRestaurant.getRestaurantById(restaurantId)
+                    val result: RestaurantDetail = apiRestaurant.getRestaurantDetail(restaurantId)
                     return RestaurantInfoUIState(
                         restaurantInfoData = result.toRestaurantInfoData(),
                         menus = result.toMenus(),
@@ -57,59 +60,49 @@ fun HttpException.errorMessage(): String {
     return this.response()?.errorBody()?.string() ?: "알 수 없는 오류가 발생했습니다."
 }
 
-fun RemoteRestaurant.toRestaurantInfoData(): RestaurantInfoData {
+fun RestaurantDetail.toRestaurantInfoData(): RestaurantInfoData {
     return RestaurantInfoData(
-        foodType = this.restaurantType,
+        foodType = this.restaurant.restaurantType,
         distance = "100m(hard coded)",
         open = "영업 중(hard coded)",
         close = "오후 9:00에 영업 종료(hard coded)",
-        address = this.address,
-        webSite = this.website,
-        tel = this.tel,
-        name = this.restaurantName,
-        imageUrl = this.imgUrl1
+        address = this.restaurant.address,
+        webSite = this.restaurant.website,
+        tel = this.restaurant.tel,
+        name = this.restaurant.restaurantName,
+        imageUrl = this.restaurant.imgUrl1
     )
 }
 
-fun RemoteRestaurant.toMenus(): List<MenuData> {
-    return ArrayList<MenuData>().apply {
-        add(testMenuData())
-        add(testMenuData())
-        add(testMenuData())
-        add(testMenuData())
-        add(testMenuData())
-    }
+fun RestaurantDetail.toMenus(): List<MenuData> {
+    return this.menus.stream().map {
+        MenuData(
+            menuName = it.menu_name,
+            price = it.menu_price.toFloat(),
+            url = it.menu_pic_url
+        )
+    }.toList()
 }
 
-fun RemoteRestaurant.toRestaurantImages(): List<RestaurantImage> {
-    return ArrayList<RestaurantImage>().apply {
-        add(testRestaurantImage())
-        add(testRestaurantImage())
-        add(testRestaurantImage())
-        add(testRestaurantImage())
-        add(testRestaurantImage())
-        add(testRestaurantImage())
-    }
+fun RestaurantDetail.toRestaurantImages(): List<RestaurantImage> {
+    return this.pictures.stream().map {
+        RestaurantImage(
+            url = it.picture_url
+        )
+    }.toList()
 }
 
-fun RemoteRestaurant.toReviewSummaryData(): ReviewSummaryData {
+fun RestaurantDetail.toReviewSummaryData(): ReviewSummaryData {
     return testReviewSummaryData()
 }
 
-fun RemoteRestaurant.toReviewRowData(): List<ReviewRowData> {
-    return ArrayList<ReviewRowData>().apply {
-        add(testReviewRowData())
-        add(testReviewRowData())
-        add(testReviewRowData())
-        add(testReviewRowData())
-        add(testReviewRowData())
-        add(testReviewRowData())
-        add(testReviewRowData())
-        add(testReviewRowData())
-        add(testReviewRowData())
-        add(testReviewRowData())
-        add(testReviewRowData())
-        add(testReviewRowData())
-        add(testReviewRowData())
-    }
+fun RestaurantDetail.toReviewRowData(): List<ReviewRowData> {
+    return this.comments.stream().map {
+        ReviewRowData(
+            name = it.user_name,
+            fullName = it.user_name,
+            rating = 3.0f,
+            comment = it.comment
+        )
+    }.toList()
 }

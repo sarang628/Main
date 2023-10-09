@@ -10,12 +10,13 @@ import com.example.cardinfo.RestaurantCardViewModel
 import com.example.screen_feed.FeedsViewModel
 import com.example.screen_main.TorangScreen
 import com.example.screen_map.MapViewModel
+import com.posco.feedscreentestapp.di.feed.FeedScreen
 import com.sarang.profile.viewmodel.ProfileService
 import com.sarang.profile.viewmodel.ProfileViewModel
 import com.sarang.toringlogin.login.LoginViewModel
-import com.sryang.di.feed.TestFeedScreen
 import com.sryang.library.AddReviewViewModel
 import com.sryang.library.ReviewService
+import com.sryang.library.selectrestaurant.SelectRestaurantViewModel
 import com.sryang.torang_repository.api.ApiReview
 import dagger.hilt.android.AndroidEntryPoint
 import restaurant_information.RestaurantInfoViewModel
@@ -40,6 +41,7 @@ class MainActivity : ComponentActivity() {
     private val restaurantCardViewModel: RestaurantCardViewModel by viewModels()
     private val restaurantInfoViewModel: RestaurantInfoViewModel by viewModels()
     private val addReviewViewModel: AddReviewViewModel by viewModels()
+    private val selectRestaurantViewModel: SelectRestaurantViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,19 +58,19 @@ class MainActivity : ComponentActivity() {
                 restaurantCardViewModel = restaurantCardViewModel,
                 restaurantInfoViewModel = restaurantInfoViewModel,
                 feedScreen = {
-                    TestFeedScreen(
-                        feedsViewModel = feedsViewModel,
+                    FeedScreen(
                         onProfile = { navController.navigate("profile/$it") },
-                        onRestaurant = {
-                            Log.d("MainActivity", "restaurant/$it")
-                            navController.navigate("restaurant/$it")
-                        },
+                        onRestaurant = { Log.d("MainActivity", "restaurant/$it"); navController.navigate("restaurant/$it") },
                         onImage = {},
                         onName = {},
-                        onAddReview = { navController.navigate("addReview") }
+                        clickAddReview = { navController.navigate("addReview") },
+                        feedsViewModel = feedsViewModel,
+                        profileImageServerUrl = "http://sarang628.iptime.org:89/profile_images/",
+                        imageServerUrl = "http://sarang628.iptime.org:89/review_images/"
                     )
                 },
-                navController = navController
+                navController = navController,
+                selectRestaurantViewModel = selectRestaurantViewModel
             )
         }
     }

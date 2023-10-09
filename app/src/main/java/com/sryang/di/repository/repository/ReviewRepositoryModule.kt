@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.di.repository
+package com.sryang.torang_repository.di.repository.repository
 
 import com.sryang.torang_repository.repository.InfoRepository
 import com.sryang.torang_repository.repository.MenuRepository

@@ -34,6 +34,7 @@ import com.sarang.toringlogin.login.LoginScreen
 import com.sarang.toringlogin.login.LoginViewModel
 import com.sryang.library.AddReviewScreen
 import com.sryang.library.AddReviewViewModel
+import com.sryang.library.selectrestaurant.SelectRestaurantViewModel
 import com.sryang.torang_repository.session.SessionService
 import kotlinx.coroutines.launch
 import restaurant_information.RestaurantInfoViewModel
@@ -41,13 +42,14 @@ import restaurant_information.RestaurantInfoViewModel
 @Composable
 fun TorangScreen(
     lifecycleOwner: LifecycleOwner,
-    addReviewViewModel : AddReviewViewModel,
+    addReviewViewModel: AddReviewViewModel,
     loginViewModel: LoginViewModel,
     profileViewModel: ProfileViewModel,
     mapViewModel: MapViewModel,
     restaurantCardViewModel: RestaurantCardViewModel,
     profileUrl: String,
     restaurantInfoViewModel: RestaurantInfoViewModel,
+    selectRestaurantViewModel: SelectRestaurantViewModel,
     feedScreen: @Composable () -> Unit,
     navController: NavHostController
 ) {
@@ -82,6 +84,14 @@ fun TorangScreen(
                         }, onClose = {
                             navController.popBackStack()
                         })
+                    },
+                    selectRestaurantViewModel = selectRestaurantViewModel,
+                    onRestaurant = {
+                        addReviewViewModel.selectRestaurant(it)
+                        addReviewNavController.popBackStack()
+                    },
+                    onShared = {
+                        navController.popBackStack()
                     }
                 )
             }
@@ -91,7 +101,8 @@ fun TorangScreen(
                     RestaurantScreen(
                         restaurantId = it.toInt(),
                         restaurantInfoViewModel = restaurantInfoViewModel,
-                        reviewImageUrl = "http://sarang628.iptime.org:89/restaurant_images/"
+                        reviewImageUrl = "http://sarang628.iptime.org:89/review_images/",
+                        restaurantImageUrl = "http://sarang628.iptime.org:89/restaurant_images/"
                     )
                 }
             }
