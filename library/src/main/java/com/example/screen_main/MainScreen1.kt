@@ -21,6 +21,9 @@ import com.example.cardinfo.RestaurantCardViewModel
 import com.example.screen_finding.finding.FindScreen
 import com.example.screen_map.MapScreen
 import com.example.screen_map.MapViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.maps.android.compose.CameraPositionState
+import com.google.maps.android.compose.rememberCameraPositionState
 import com.sarang.alarm.fragment.test
 import com.sarang.alarm.uistate.testAlarmUiState
 import com.sarang.base_feed.ui.Feeds
@@ -109,6 +112,7 @@ fun MainScreen(
             composable("finding") {
                 //remember로 설정하지 않으면 다른화면으로 갔다 돌아왔을 때 동작하지 않음.
                 var isMovingByMarkerClick by remember { mutableStateOf(false) }
+                val cameraPositionState = rememberCameraPositionState()
                 FindScreen(
                     restaurantCardPage = {
                         RestaurantCardPage(
@@ -134,7 +138,6 @@ fun MainScreen(
                     mapScreen = {
                         MapScreen(
                             mapViewModel = mapViewModel,
-                            mapViewModel.mapUiStateFlow,
                             onMark = {
                                 Log.d("MainScreen", "onMark : $it")
                                 isMovingByMarkerClick = true
@@ -143,8 +146,19 @@ fun MainScreen(
                             animationMoveDuration = 300,
                             onIdle = {
                                 isMovingByMarkerClick = false
-                            }
+                            },
+                            cameraPositionState = cameraPositionState
                         )
+                    },
+                    onZoomOut = {
+                        coroutine.launch {
+                            cameraPositionState.animate(CameraUpdateFactory.zoomOut())
+                        }
+                    },
+                    onZoomIn = {
+                        coroutine.launch {
+                            cameraPositionState.animate(CameraUpdateFactory.zoomIn())
+                        }
                     }
                 )
             }
