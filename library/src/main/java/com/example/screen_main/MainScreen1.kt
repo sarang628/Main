@@ -1,14 +1,9 @@
 package com.example.screen_main
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.LifecycleOwner
@@ -16,14 +11,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.cardinfo.RestaurantCardPage
 import com.example.cardinfo.RestaurantCardViewModel
-import com.example.screen_finding.finding.FindScreen
-import com.example.screen_map.MapScreen
 import com.example.screen_map.MapViewModel
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.maps.android.compose.CameraPositionState
-import com.google.maps.android.compose.rememberCameraPositionState
 import com.sarang.alarm.fragment.test
 import com.sarang.alarm.uistate.testAlarmUiState
 import com.sarang.base_feed.ui.Feeds
@@ -43,7 +32,8 @@ fun MainScreen(
     mapViewModel: MapViewModel,
     restaurantCardViewModel: RestaurantCardViewModel,
     navController1: NavHostController,
-    feedScreen: @Composable () -> Unit
+    feedScreen: @Composable () -> Unit,
+    findingScreen: @Composable () -> Unit
 ) {
     val alarmUiState = testAlarmUiState(context = context, lifecycleOwner)
     val sessionService = SessionService(LocalContext.current)
@@ -110,57 +100,7 @@ fun MainScreen(
                 })
             }
             composable("finding") {
-                //remember로 설정하지 않으면 다른화면으로 갔다 돌아왔을 때 동작하지 않음.
-                var isMovingByMarkerClick by remember { mutableStateOf(false) }
-                val cameraPositionState = rememberCameraPositionState()
-                FindScreen(
-                    restaurantCardPage = {
-                        RestaurantCardPage(
-                            uiState = restaurantCardViewModel.uiState,
-                            restaurantImageUrl = "http://sarang628.iptime.org:89/restaurant_images/",
-                            onChangePage = { page ->
-                                Log.d("MainActivity", "onPageChange : $it")
-                                restaurantCardViewModel.uiState.value.restaurants?.let { restaurants ->
-                                    val restaurantId = restaurants[page].restaurantId
-                                    restaurantCardViewModel.selectRestaurant(restaurantId)
-
-                                    Log.d(
-                                        "MainScreen",
-                                        "isMovingByMarkerClick : $isMovingByMarkerClick"
-                                    )
-                                    if (!isMovingByMarkerClick) {
-                                        mapViewModel.selectRestaurantById(id = restaurantId)
-                                    }
-                                }
-                            }, onClickCard = { navController1.navigate("restaurant/$it") }
-                        )
-                    },
-                    mapScreen = {
-                        MapScreen(
-                            mapViewModel = mapViewModel,
-                            onMark = {
-                                Log.d("MainScreen", "onMark : $it")
-                                isMovingByMarkerClick = true
-                                restaurantCardViewModel.selectRestaurant(it)
-                            },
-                            animationMoveDuration = 300,
-                            onIdle = {
-                                isMovingByMarkerClick = false
-                            },
-                            cameraPositionState = cameraPositionState
-                        )
-                    },
-                    onZoomOut = {
-                        coroutine.launch {
-                            cameraPositionState.animate(CameraUpdateFactory.zoomOut())
-                        }
-                    },
-                    onZoomIn = {
-                        coroutine.launch {
-                            cameraPositionState.animate(CameraUpdateFactory.zoomIn())
-                        }
-                    }
-                )
+                findingScreen.invoke()
             }
             composable("alarm") {
                 test(alarmUiState)
@@ -170,3 +110,5 @@ fun MainScreen(
 
     }
 }
+
+

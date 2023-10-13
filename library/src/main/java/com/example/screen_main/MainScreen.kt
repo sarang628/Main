@@ -34,6 +34,7 @@ import com.sarang.toringlogin.login.LoginScreen
 import com.sarang.toringlogin.login.LoginViewModel
 import com.sryang.library.AddReviewScreen
 import com.sryang.library.AddReviewViewModel
+import com.sryang.library.go
 import com.sryang.library.selectrestaurant.SelectRestaurantViewModel
 import com.sryang.torang_repository.session.SessionService
 import kotlinx.coroutines.launch
@@ -51,7 +52,8 @@ fun TorangScreen(
     restaurantInfoViewModel: RestaurantInfoViewModel,
     selectRestaurantViewModel: SelectRestaurantViewModel,
     feedScreen: @Composable () -> Unit,
-    navController: NavHostController
+    navController: NavHostController,
+    findingScreen: @Composable () -> Unit
 ) {
     val context = LocalContext.current
     val coroutine = rememberCoroutineScope()
@@ -69,7 +71,8 @@ fun TorangScreen(
                     profileViewModel = profileViewModel,
                     mapViewModel = mapViewModel,
                     restaurantCardViewModel = restaurantCardViewModel,
-                    feedScreen = { feedScreen.invoke() }
+                    feedScreen = { feedScreen.invoke() },
+                    findingScreen = { findingScreen.invoke() }
                 )
             }
             composable("addReview") {
@@ -184,12 +187,11 @@ fun TorangScreen(
             }
             composable("login") {
                 val flow = loginViewModel.uiState.collectAsState()
-                LoginScreen(isLogin = flow.value.isLogin, onLogin = {
-                    loginViewModel.login(it)
-                    navController.move("main")
-                }, onLogout = {
-                    loginViewModel.logout()
-                })
+                LoginScreen(
+                    loginViewModel,
+                    onLogin = { navController.go("main") },
+                    onLogout = { navController.go("splash") }
+                )
             }
             composable("settings") {
                 SettingsScreen {

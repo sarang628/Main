@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.navigation.compose.rememberNavController
 import com.example.cardinfo.RestaurantCardViewModel
 import com.example.screen_feed.FeedsViewModel
+import com.example.screen_finding.finding.FindingViewModel
 import com.example.screen_main.TorangScreen
 import com.example.screen_map.MapViewModel
 import com.posco.feedscreentestapp.di.feed.FeedScreen
@@ -17,6 +18,8 @@ import com.sarang.toringlogin.login.LoginViewModel
 import com.sryang.library.AddReviewViewModel
 import com.sryang.library.ReviewService
 import com.sryang.library.selectrestaurant.SelectRestaurantViewModel
+import com.sryang.screen_filter.ui.FilterViewModel
+import com.sryang.screenfindingtest.di.finding.Finding
 import com.sryang.torang_repository.api.ApiReview
 import dagger.hilt.android.AndroidEntryPoint
 import restaurant_information.RestaurantInfoViewModel
@@ -42,6 +45,8 @@ class MainActivity : ComponentActivity() {
     private val restaurantInfoViewModel: RestaurantInfoViewModel by viewModels()
     private val addReviewViewModel: AddReviewViewModel by viewModels()
     private val selectRestaurantViewModel: SelectRestaurantViewModel by viewModels()
+    private val findingViewModel: FindingViewModel by viewModels()
+    private val filterViewModel: FilterViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +75,16 @@ class MainActivity : ComponentActivity() {
                     )
                 },
                 navController = navController,
-                selectRestaurantViewModel = selectRestaurantViewModel
+                selectRestaurantViewModel = selectRestaurantViewModel,
+                findingScreen = {
+                    Finding(
+                        findingViewModel = findingViewModel,
+                        restaurantCardViewModel = restaurantCardViewModel,
+                        filterViewModel = filterViewModel,
+                        mapViewModel = mapViewModel,
+                        navController = navController
+                    )
+                }
             )
         }
     }
