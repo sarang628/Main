@@ -18,6 +18,7 @@ import com.sarang.toringlogin.login.LoginViewModel
 import com.sryang.library.AddReviewViewModel
 import com.sryang.library.ReviewService
 import com.sryang.library.selectrestaurant.SelectRestaurantViewModel
+import com.sryang.myapplication.di.profile.ProfileScreen
 import com.sryang.screen_filter.ui.FilterViewModel
 import com.sryang.screenfindingtest.di.finding.Finding
 import com.sryang.torang_repository.api.ApiReview
@@ -58,14 +59,16 @@ class MainActivity : ComponentActivity() {
                 addReviewViewModel = addReviewViewModel,
                 loginViewModel = loginViewModel,
                 profileViewModel = profileViewModel,
-                profileUrl = "http://sarang628.iptime.org:89/profile_images/",
-                mapViewModel = mapViewModel,
-                restaurantCardViewModel = restaurantCardViewModel,
                 restaurantInfoViewModel = restaurantInfoViewModel,
                 feedScreen = {
                     FeedScreen(
                         onProfile = { navController.navigate("profile/$it") },
-                        onRestaurant = { Log.d("MainActivity", "restaurant/$it"); navController.navigate("restaurant/$it") },
+                        onRestaurant = {
+                            Log.d(
+                                "MainActivity",
+                                "restaurant/$it"
+                            ); navController.navigate("restaurant/$it")
+                        },
                         onImage = {},
                         onName = {},
                         clickAddReview = { navController.navigate("addReview") },
@@ -83,6 +86,16 @@ class MainActivity : ComponentActivity() {
                         filterViewModel = filterViewModel,
                         mapViewModel = mapViewModel,
                         navController = navController
+                    )
+                },
+                profileScreen = {
+                    val id = it.arguments?.getString("id")?.toInt()
+                    profileViewModel.loadProfile(id!!)
+                    ProfileScreen(
+                        profileViewModel = profileViewModel,
+                        profileImageUrl = "http://sarang628.iptime.org:89/profile_images/",
+                        imageServerUrl = "http://sarang628.iptime.org:89/review_images/",
+                        onEditProfile = { navController.navigate("editProfile") }
                     )
                 }
             )
