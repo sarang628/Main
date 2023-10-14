@@ -13,10 +13,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.core.view.ScrollingView
-import com.google.gson.Gson
-import com.google.gson.TypeAdapter
 import com.sryang.torang_repository.api.ApiRestaurant
+import com.sryang.torang_repository.data.Filter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -69,7 +67,7 @@ class LocalApiRestaurant @Inject constructor(
 }
 
 @Composable
-fun TestApiRestaurant(apiRestaurant: ApiRestaurant) {
+fun ApiRestaurantTest(apiRestaurant: ApiRestaurant) {
     val coroutine = rememberCoroutineScope()
     var text by remember { mutableStateOf("") }
     Column {
@@ -86,6 +84,16 @@ fun TestApiRestaurant(apiRestaurant: ApiRestaurant) {
                 } catch (e: Exception) {
                     Log.e("TestApiRestaurant", e.toString())
                 }
+            }
+        }) {
+
+        }
+        Button(onClick = {
+            coroutine.launch {
+                val result = apiRestaurant.getFilterRestaurant(
+                    Filter()
+                )
+                text = result.toString()
             }
         }) {
 

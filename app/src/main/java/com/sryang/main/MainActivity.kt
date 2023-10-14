@@ -49,6 +49,8 @@ class MainActivity : ComponentActivity() {
     private val findingViewModel: FindingViewModel by viewModels()
     private val filterViewModel: FilterViewModel by viewModels()
 
+    val profileImageServerUrl = "http://sarang628.iptime.org:89/profile_images/"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -73,7 +75,7 @@ class MainActivity : ComponentActivity() {
                         onName = {},
                         clickAddReview = { navController.navigate("addReview") },
                         feedsViewModel = feedsViewModel,
-                        profileImageServerUrl = "http://sarang628.iptime.org:89/profile_images/",
+                        profileImageServerUrl = profileImageServerUrl,
                         imageServerUrl = "http://sarang628.iptime.org:89/review_images/"
                     )
                 },
@@ -95,9 +97,16 @@ class MainActivity : ComponentActivity() {
                         profileViewModel = profileViewModel,
                         profileImageUrl = "http://sarang628.iptime.org:89/profile_images/",
                         imageServerUrl = "http://sarang628.iptime.org:89/review_images/",
-                        onEditProfile = { navController.navigate("editProfile") }
+                        onEditProfile = { navController.navigate("editProfile") },
+                        onSetting = { navController.navigate("settings") }
                     )
-                }
+                },
+                onLogout = {
+                    loginViewModel.logout {
+                        navController.navigate("splash")
+                    }
+                },
+                profileImageServerUrl = profileImageServerUrl
             )
         }
     }

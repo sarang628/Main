@@ -1,31 +1,26 @@
 package com.sryang.myapplication.di.profile
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.navigation.NavBackStackEntry
 import com.sarang.base_feed.ui.Feeds
 import com.sarang.base_feed.uistate.FeedBottomUIState
 import com.sarang.base_feed.uistate.FeedTopUIState
 import com.sarang.base_feed.uistate.FeedUiState
-import com.sarang.base_feed.uistate.testFeedUiState
 import com.sarang.profile._ProfileScreen
 import com.sarang.profile.uistate.Feed
 import com.sarang.profile.uistate.ProfileUiState
 import com.sarang.profile.viewmodel.ProfileService
 import com.sarang.profile.viewmodel.ProfileViewModel
-import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
-import com.sryang.torang_repository.repository.profile.ProfileRepositoryImpl
+import com.sryang.torang_repository.repository.EditProfileRepository
+import com.sryang.torang_repository.repository.impl.ProfileRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combineTransform
-import java.util.concurrent.Flow
 import kotlin.streams.toList
 
 @Module
@@ -33,7 +28,8 @@ import kotlin.streams.toList
 class ProfileServiceModule {
     @Provides
     fun provideProfileService(
-        profileRepository: ProfileRepositoryImpl
+        profileRepository: ProfileRepositoryImpl,
+        editProfileRepository: EditProfileRepository
     ): ProfileService {
         return object : ProfileService {
             override suspend fun loadProfile(id: Int): ProfileUiState {
@@ -56,6 +52,10 @@ class ProfileServiceModule {
                 ) { feed, feedEntity ->
                     emit(feedEntity.toFeeds())
                 }
+            }
+
+            override suspend fun updateProfile(id: Int, name: String, uri: String) {
+                editProfileRepository.editProfile(id, name, uri)
             }
         }
     }
@@ -91,14 +91,14 @@ fun ProfileScreen(
     profileViewModel: ProfileViewModel,
     profileImageUrl: String,
     imageServerUrl: String,
-    onEditProfile: () -> Unit
+    onEditProfile: () -> Unit,
+    onSetting: () -> Unit
 ) {
     val uiState by profileViewModel.uiState.collectAsState()
     _ProfileScreen(
         profileBaseUrl = profileImageUrl,
-        profileViewModel = profileViewModel, onLogout = {
-
-        },
+        profileViewModel = profileViewModel, onSetting = onSetting,
+        onEditProfile = onEditProfile,
         favorite = {
             Feeds(
                 list = uiState.favoriteList?.toFeedUiState() ?: ArrayList(),
@@ -133,8 +133,7 @@ fun ProfileScreen(
                 onRefresh = { /*TODO*/ },
                 isRefreshing = false
             )
-        },
-        onEditProfile = onEditProfile
+        }
     )
 }
 

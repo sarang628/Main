@@ -2,6 +2,7 @@ package com.example.screen_main
 
 import RestaurantScreen
 import SettingsScreen
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -17,7 +18,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sarang.instagralleryModule.GalleryScreen
+import com.sarang.instagralleryModule.gallery.GalleryScreen
 import com.sarang.profile.edit.EditProfileScreen
 import com.sarang.profile.move
 import com.sarang.profile.viewmodel.ProfileViewModel
@@ -43,6 +44,8 @@ fun TorangScreen(
     navController: NavHostController,
     findingScreen: @Composable () -> Unit,
     profileScreen: @Composable (NavBackStackEntry) -> Unit,
+    onLogout: () -> Unit,
+    profileImageServerUrl: String
 ) {
     val context = LocalContext.current
     Column {
@@ -122,9 +125,36 @@ fun TorangScreen(
                 }
             }
             composable("editProfile") {
-                EditProfileScreen(onEditImage = { /*TODO*/ }) {
+                EditProfileScreen(
+                    onEditImage = { /*TODO*/ },
+                    profileViewModel = profileViewModel,
+                    profileImageServerUrl = profileImageServerUrl
+                ) {
                     navController.popBackStack()
                 }
+            }
+            composable("profileEdit") {
+                EditProfileScreen(
+                    profileImageServerUrl = profileImageServerUrl,
+                    profileViewModel = profileViewModel,
+                    onBack = {
+                        Log.d("TorangScreen", "popBackStack")
+                        navController.popBackStack()
+                    },
+                    onEditImage = {
+                        Log.d("TorangScreen", "EditProfileImage")
+                        navController.navigate("EditProfileImage")
+                    }
+                )
+            }
+            composable("EditProfileImage") {
+                GalleryScreen(onNext = {
+                    profileViewModel.updateProfileImage(1, it[0])
+                    navController.popBackStack()
+                }, onClose = {})
+            }
+            composable("settings") {
+                SettingsScreen(onLogout = onLogout)
             }
         }
     }

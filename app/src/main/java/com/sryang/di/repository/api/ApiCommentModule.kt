@@ -1,8 +1,6 @@
-package com.sryang.di.repository.api
+package com.sryang.torang_repository.di.repository.api
 
 import com.sryang.torang_repository.api.ApiComment
-import com.sryang.torang_repository.di.repository.api.RetrofitModule
-import com.sryang.torang_repository.di.repository.api.TorangOkhttpClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
