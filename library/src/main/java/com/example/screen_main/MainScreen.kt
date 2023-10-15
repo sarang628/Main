@@ -18,14 +18,10 @@ import com.sryang.torang_repository.session.SessionService
 
 @Composable
 fun MainScreen(
-    context: Context,
-    lifecycleOwner: LifecycleOwner,
     feedScreen: @Composable () -> Unit,
     findingScreen: @Composable () -> Unit,
     profileScreen: @Composable (NavBackStackEntry) -> Unit,
 ) {
-    val sessionService = SessionService(LocalContext.current)
-    val coroutine = rememberCoroutineScope()
     Column {
         val navController = rememberNavController()
         NavHost(
@@ -34,11 +30,12 @@ fun MainScreen(
         ) {
             composable("feed") { feedScreen.invoke() }
             composable("profile",
-                arguments = listOf(navArgument("id") { defaultValue = "0" })) {
+                arguments = listOf(navArgument("id") { defaultValue = "0" })
+            ) {
                 profileScreen.invoke(it)
             }
             composable("finding") { findingScreen.invoke() }
-            composable("alarm") { test(testAlarmUiState(context = context, lifecycleOwner)) }
+            composable("alarm") { }
         }
         BottomNavigationComponent(navController = navController)
     }
