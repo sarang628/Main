@@ -2,7 +2,7 @@ package com.sryang.torang_repository.di.repository
 
 import com.sryang.torang_repository.repository.EditProfileRepository
 import com.sryang.torang_repository.repository.FeedRepository
-import com.sryang.torang_repository.repository.InfoRepository
+import com.sryang.torang_repository.repository.RestaurantRepository
 import com.sryang.torang_repository.repository.LoginRepository
 import com.sryang.torang_repository.repository.MapRepository
 import com.sryang.torang_repository.repository.MenuRepository
@@ -31,7 +31,7 @@ abstract class RepositoryModule {
     abstract fun provideEditProfileRepository(profileRepository: EditProfileRepositoryImpl): EditProfileRepository
 
     @Binds
-    abstract fun provideInfoRepository(infoRepositoryImpl: InfoRepositoryImpl): InfoRepository
+    abstract fun provideInfoRepository(infoRepositoryImpl: InfoRepositoryImpl): RestaurantRepository
 
     @Binds
     abstract fun provideReviewRepository(reviewRepositoryImpl: ReviewRepositoryImpl): ReviewRepository
