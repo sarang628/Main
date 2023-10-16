@@ -20,7 +20,7 @@ import com.sryang.torang_repository.session.SessionService
 fun MainScreen(
     feedScreen: @Composable () -> Unit,
     findingScreen: @Composable () -> Unit,
-    profileScreen: @Composable (NavBackStackEntry) -> Unit,
+    myProfileScreen: @Composable () -> Unit,
 ) {
     Column {
         val navController = rememberNavController()
@@ -29,11 +29,7 @@ fun MainScreen(
             modifier = Modifier.weight(1f)
         ) {
             composable("feed") { feedScreen.invoke() }
-            composable("profile",
-                arguments = listOf(navArgument("id") { defaultValue = "0" })
-            ) {
-                profileScreen.invoke(it)
-            }
+            composable("myProfile") { myProfileScreen.invoke() }
             composable("finding") { findingScreen.invoke() }
             composable("alarm") { }
         }

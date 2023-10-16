@@ -19,7 +19,8 @@ fun TorangScreen(
     loginScreen: @Composable () -> Unit,
     restaurantScreen: @Composable (NavBackStackEntry) -> Unit,
     editProfileScreen: @Composable () -> Unit,
-    editProfileImageScreen: @Composable () -> Unit
+    editProfileImageScreen: @Composable () -> Unit,
+    myProfileScreen: @Composable () -> Unit
 ) {
     val context = LocalContext.current
     NavHost(
@@ -29,7 +30,7 @@ fun TorangScreen(
             MainScreen(
                 feedScreen = { feedScreen.invoke() },
                 findingScreen = { findingScreen.invoke() },
-                profileScreen = { profileScreen.invoke(it) }
+                myProfileScreen = { myProfileScreen.invoke() }
             )
         }
         composable("addReview") {

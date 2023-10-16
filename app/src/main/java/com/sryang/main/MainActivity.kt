@@ -97,6 +97,7 @@ class MainActivity : ComponentActivity() {
                     val id = it.arguments?.getString("id")?.toInt()
                     profileViewModel.loadProfile(id!!)
                     ProfileScreen(
+                        isMyProfile = false,
                         profileViewModel = profileViewModel,
                         profileImageUrl = profileImageServerUrl,
                         imageServerUrl = imageServerUrl,
@@ -173,11 +174,22 @@ class MainActivity : ComponentActivity() {
                 },
                 editProfileImageScreen = {
                     GalleryScreen(onNext = {
-                        profileViewModel.updateProfileImage(1, it[0])
+                        profileViewModel.updateProfileImage(it[0])
                         navController.popBackStack()
                     }, onClose = {
                         navController.popBackStack()
                     })
+                },
+                myProfileScreen = {
+                    profileViewModel.loadProfileByToken()
+                    ProfileScreen(
+                        isMyProfile = true,
+                        profileViewModel = profileViewModel,
+                        profileImageUrl = profileImageServerUrl,
+                        imageServerUrl = imageServerUrl,
+                        onEditProfile = { navController.navigate("editProfile") },
+                        onSetting = { navController.navigate("settings") }
+                    )
                 }
             )
         }

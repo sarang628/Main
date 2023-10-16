@@ -44,6 +44,18 @@ class ProfileServiceModule {
                 )
             }
 
+            override suspend fun loadProfileByToken(): ProfileUiState {
+                val result = profileRepository.loadProfileByToken()
+                return ProfileUiState(
+                    profileUrl = result.profilePicUrl,
+                    feedCount = result.reviewCount,
+                    following = result.following,
+                    follower = result.followers,
+                    name = result.userName,
+                    isLogin = true
+                )
+            }
+
             override suspend fun getFavorites(): kotlinx.coroutines.flow.Flow<List<Feed>> {
                 return MutableStateFlow<List<Feed>>(ArrayList()).combineTransform(
                     profileRepository.getMyFavorite(
@@ -54,8 +66,8 @@ class ProfileServiceModule {
                 }
             }
 
-            override suspend fun updateProfile(id: Int, name: String, uri: String) {
-                editProfileRepository.editProfile(id, name, uri)
+            override suspend fun updateProfile(name: String, uri: String) {
+                editProfileRepository.editProfile(name, uri)
             }
         }
     }
@@ -88,6 +100,7 @@ fun ReviewAndImageEntity.toFeed(): Feed {
 
 @Composable
 fun ProfileScreen(
+    isMyProfile: Boolean,
     profileViewModel: ProfileViewModel,
     profileImageUrl: String,
     imageServerUrl: String,
@@ -96,6 +109,7 @@ fun ProfileScreen(
 ) {
     val uiState by profileViewModel.uiState.collectAsState()
     _ProfileScreen(
+        isMyProfile = isMyProfile,
         profileBaseUrl = profileImageUrl,
         profileViewModel = profileViewModel, onSetting = onSetting,
         onEditProfile = onEditProfile,

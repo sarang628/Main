@@ -10,7 +10,7 @@ sealed class Screen(val route: String, val icon: ImageVector) {
     object Feed : Screen("feed", Icons.Filled.Home)
     object Map : Screen("finding", Icons.Filled.AddCircle)
     object Alarm : Screen("alarm", Icons.Filled.Settings)
-    object Profile : Screen("profile", Icons.Filled.Settings)
+    object Profile : Screen("myProfile", Icons.Filled.Settings)
 }
 
 
