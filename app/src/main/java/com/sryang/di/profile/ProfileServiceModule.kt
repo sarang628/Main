@@ -3,6 +3,7 @@ package com.sryang.myapplication.di.profile
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.sarang.base_feed.ui.Feeds
 import com.sarang.base_feed.uistate.FeedBottomUIState
 import com.sarang.base_feed.uistate.FeedTopUIState
@@ -12,6 +13,7 @@ import com.sarang.profile.uistate.Feed
 import com.sarang.profile.uistate.ProfileUiState
 import com.sarang.profile.viewmodel.ProfileService
 import com.sarang.profile.viewmodel.ProfileViewModel
+import com.sryang.main.BuildConfig
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import com.sryang.torang_repository.repository.EditProfileRepository
 import com.sryang.torang_repository.repository.impl.ProfileRepositoryImpl
@@ -100,9 +102,10 @@ fun ReviewAndImageEntity.toFeed(): Feed {
 
 @Composable
 fun ProfileScreen(
+    id: Int? = null,
     isMyProfile: Boolean,
-    profileViewModel: ProfileViewModel,
-    profileImageUrl: String,
+    profileViewModel: ProfileViewModel = hiltViewModel(),
+    profileImageUrl: String = BuildConfig.PROFILE_IMAGE_SERVER_URL,
     imageServerUrl: String,
     onEditProfile: () -> Unit,
     onSetting: () -> Unit

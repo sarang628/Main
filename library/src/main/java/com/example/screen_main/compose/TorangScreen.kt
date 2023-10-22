@@ -1,7 +1,6 @@
-package com.example.screen_main
+package com.example.screen_main.compose
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -10,8 +9,6 @@ import androidx.navigation.compose.composable
 @Composable
 fun TorangScreen(
     navController: NavHostController,
-    feedScreen: @Composable () -> Unit,
-    findingScreen: @Composable () -> Unit,
     profileScreen: @Composable (NavBackStackEntry) -> Unit,
     settings: @Composable () -> Unit,
     splashScreen: @Composable () -> Unit,
@@ -20,18 +17,13 @@ fun TorangScreen(
     restaurantScreen: @Composable (NavBackStackEntry) -> Unit,
     editProfileScreen: @Composable () -> Unit,
     editProfileImageScreen: @Composable () -> Unit,
-    myProfileScreen: @Composable () -> Unit
+    mainScreen: @Composable () -> Unit
 ) {
-    val context = LocalContext.current
     NavHost(
         navController = navController, startDestination = "splash",
     ) {
         composable("main") {
-            MainScreen(
-                feedScreen = { feedScreen.invoke() },
-                findingScreen = { findingScreen.invoke() },
-                myProfileScreen = { myProfileScreen.invoke() }
-            )
+            mainScreen.invoke()
         }
         composable("addReview") {
             addReviewScreen.invoke()
@@ -39,7 +31,6 @@ fun TorangScreen(
         composable("restaurant/{restaurantId}") { backStackEntry ->
             restaurantScreen.invoke(backStackEntry)
         }
-
         composable("profile/{id}") {
             profileScreen.invoke(it)
         }

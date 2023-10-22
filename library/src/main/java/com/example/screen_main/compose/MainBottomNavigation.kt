@@ -1,25 +1,42 @@
-package com.example.screen_main
+package com.example.screen_main.compose
 
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.screen_main.navigation.items
+import com.example.screen_main.R
+
+sealed class Screen(val route: String, val icon: ImageVector) {
+    object Feed : Screen("feed", Icons.Filled.Home)
+    object Map : Screen("finding", Icons.Filled.AddCircle)
+    object Alarm : Screen("alarm", Icons.Filled.Settings)
+    object Profile : Screen("myProfile", Icons.Filled.Settings)
+}
+
+
+val items = listOf(
+    Screen.Feed,
+    Screen.Map,
+    Screen.Alarm,
+    Screen.Profile
+)
 
 @Composable
-fun BottomNavigationComponent(navController: NavController) {
+fun MainBottomNavigation(navController: NavController) {
     BottomNavigation(
         backgroundColor = colorResource(id = R.color.colorSecondaryLight),
         contentColor = MaterialTheme.colors.onSurface,

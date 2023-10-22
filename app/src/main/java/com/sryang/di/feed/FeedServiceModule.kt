@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.screen_feed.CommentData
 import com.example.screen_feed.FeedData
 import com.example.screen_feed.FeedService
@@ -216,7 +217,7 @@ fun FeedData.toFeedTopUIState(): FeedTopUIState {
 
 @Composable
 fun FeedScreen(
-    feedsViewModel: FeedsViewModel,
+    feedsViewModel: FeedsViewModel = hiltViewModel(),
     clickAddReview: (() -> Unit),
     profileImageServerUrl: String,
     onProfile: ((Int) -> Unit),
