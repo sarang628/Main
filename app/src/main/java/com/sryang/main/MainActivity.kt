@@ -16,6 +16,7 @@ import com.example.myapplication.di.restaurant_detail.toFeedUiState
 import com.example.screen_main.compose.MainScreen
 import com.example.screen_main.compose.TorangScreen
 import com.posco.feedscreentestapp.di.feed.FeedScreen
+import com.sarang.alarm.compose.AlarmScreen
 import com.sarang.base_feed.ui.Feeds
 import com.sarang.instagralleryModule.gallery.GalleryScreen
 import com.sarang.profile.edit.EditProfileScreen
@@ -169,7 +170,8 @@ class MainActivity : ComponentActivity() {
                                 onEditProfile = { navController.navigate("editProfile") },
                                 onSetting = { navController.navigate("settings") }
                             )
-                        }
+                        },
+                        alarm = { AlarmScreen(profileServerUrl = profileImageServerUrl) }
                     )
                 }
             )

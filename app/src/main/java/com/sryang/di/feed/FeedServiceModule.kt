@@ -5,11 +5,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.screen_feed.CommentData
-import com.example.screen_feed.FeedData
-import com.example.screen_feed.FeedService
-import com.example.screen_feed.FeedsViewModel
-import com.example.screen_feed._FeedsScreen
+import com.sryang.torang.data.CommentData
+import com.sryang.torang.data.FeedData
+import com.sryang.torang.viewmodels.FeedService
+import com.sryang.torang.viewmodels.FeedsViewModel
+import com.sryang.torang.compose._FeedsScreen
 import com.sarang.base_feed.ui.Feeds
 import com.sarang.base_feed.ui.TorangToolbar
 import com.sarang.base_feed.uistate.FeedBottomUIState
@@ -19,8 +19,10 @@ import com.sryang.library.CommentBottomSheetDialog
 import com.sryang.library.CommentItemUiState
 import com.sryang.library.FeedMenuBottomSheetDialog
 import com.sryang.library.ShareBottomSheetDialog
+import com.sryang.torang.data.CommentDataUiState
 import com.sryang.torang_repository.data.RemoteComment
 import com.sryang.torang_repository.data.entity.FeedEntity
+import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import com.sryang.torang_repository.repository.FeedRepository
 import dagger.Module
@@ -46,29 +48,7 @@ class FeedServiceModule {
             override val feeds1: Flow<List<FeedData>>
                 get() = feedRepository.feeds.map { it ->
                     it.stream().map {
-                        FeedData(
-                            reviewId = it.review.reviewId,
-                            userId = it.review.userId,
-                            name = it.review.userName,
-                            restaurantName = it.review.restaurantName,
-                            rating = it.review.rating,
-                            profilePictureUrl = it.review.profilePicUrl,
-                            likeAmount = it.review.likeAmount,
-                            commentAmount = it.review.commentAmount,
-                            author = "",
-                            author1 = "",
-                            author2 = "",
-                            comment = "",
-                            comment1 = "",
-                            comment2 = "",
-                            isLike = it.like != null,
-                            isFavorite = it.favorite != null,
-                            visibleLike = false,
-                            visibleComment = false,
-                            contents = it.review.contents,
-                            reviewImages = it.images.stream().map { it.pictureUrl }.toList(),
-                            restaurantId = it.review.restaurantId
-                        )
+                        it.toFeedData()
                     }.toList()
                 }
 
@@ -88,10 +68,12 @@ class FeedServiceModule {
                 feedRepository.addFavorite(reviewId)
             }
 
-            override suspend fun getComment(reviewId: Int): List<CommentData> {
-                return feedRepository.getComment(reviewId).stream().map {
-                    it.toCommentData()
-                }.toList()
+            override suspend fun getComment(reviewId: Int): CommentDataUiState {
+                val result = feedRepository.getComment(reviewId)
+                return CommentDataUiState(
+                    myProfileUrl = result.profilePicUrl,
+                    commentList = result.list.stream().map { it.toCommentData() }.toList()
+                )
             }
 
             override suspend fun addComment(reviewId: Int, comment: String) {
@@ -103,11 +85,11 @@ class FeedServiceModule {
 
 fun RemoteComment.toCommentData(): CommentData {
     return CommentData(
-        userId = this.user_id,
-        profileImageUrl = this.profile_pic_url,
+        userId = this.user.userId,
+        profileImageUrl = this.user.profilePicUrl,
         date = this.create_date,
         comment = this.comment,
-        name = this.user_name,
+        name = this.user.userName,
         likeCount = 0
     )
 }
@@ -264,7 +246,7 @@ fun FeedScreen(
                     list = uiState.comments?.stream()?.map { it.toCommentItemUiState() }?.toList()
                         ?: ArrayList(),
                     onSend = { feedsViewModel.sendComment(it) },
-                    profileImageUrl = "",
+                    profileImageUrl = uiState.myProfileUrl ?: "",
                     profileImageServerUrl = profileImageServerUrl
                 )
             },
@@ -287,5 +269,31 @@ fun CommentData.toCommentItemUiState(): CommentItemUiState {
         comment = comment,
         name = name,
         likeCount = likeCount
+    )
+}
+
+fun ReviewAndImageEntity.toFeedData(): FeedData {
+    return FeedData(
+        reviewId = this.review.reviewId,
+        userId = this.review.userId,
+        name = this.review.userName,
+        restaurantName = this.review.restaurantName,
+        rating = this.review.rating,
+        profilePictureUrl = this.review.profilePicUrl,
+        likeAmount = this.review.likeAmount,
+        commentAmount = this.review.commentAmount,
+        author = "",
+        author1 = "",
+        author2 = "",
+        comment = "",
+        comment1 = "",
+        comment2 = "",
+        isLike = this.like != null,
+        isFavorite = this.favorite != null,
+        visibleLike = false,
+        visibleComment = false,
+        contents = this.review.contents,
+        reviewImages = this.images.stream().map { it.pictureUrl }.toList(),
+        restaurantId = this.review.restaurantId
     )
 }

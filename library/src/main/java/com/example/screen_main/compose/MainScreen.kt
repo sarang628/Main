@@ -6,12 +6,14 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.sryang.torang_repository.data.RemoteAlarm
 
 @Composable
 fun MainScreen(
     feedScreen: @Composable () -> Unit,
     findingScreen: @Composable () -> Unit,
     myProfileScreen: @Composable () -> Unit,
+    alarm: @Composable () -> Unit,
 ) {
     Column {
         val navController = rememberNavController()
@@ -22,7 +24,7 @@ fun MainScreen(
             composable("feed") { feedScreen.invoke() }
             composable("myProfile") { myProfileScreen.invoke() }
             composable("finding") { findingScreen.invoke() }
-            composable("alarm") { }
+            composable("alarm") { alarm.invoke() }
         }
         MainBottomNavigation(navController = navController)
     }

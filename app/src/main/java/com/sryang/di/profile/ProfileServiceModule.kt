@@ -1,6 +1,7 @@
 package com.sryang.myapplication.di.profile
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -111,6 +112,17 @@ fun ProfileScreen(
     onSetting: () -> Unit
 ) {
     val uiState by profileViewModel.uiState.collectAsState()
+
+    LaunchedEffect(key1 = isMyProfile, block = {
+        if (isMyProfile) {
+            profileViewModel.loadProfileByToken()
+        } else {
+            id?.let {
+                profileViewModel.loadProfile(it)
+            }
+        }
+    })
+
     _ProfileScreen(
         isMyProfile = isMyProfile,
         profileBaseUrl = profileImageUrl,
