@@ -29,7 +29,6 @@ ext {
     navigationModuleVersion = 'd98f57435d'
     torangDetailVersion = "d9f16eb1a6"
     addReviewVersion = 'cdc9743450'
-    designVersion = '973242b6ae'
     loginVersion = '81e77c2c46'
     splashVersion = '88cf7fa504'
     torangRepositoryVersion = '2c259c9f04'
