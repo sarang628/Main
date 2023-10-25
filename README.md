@@ -64,7 +64,6 @@ implementation "com.github.sarang628:finding:$findingVersion"
 implementation "com.github.sarang628:MyReview:$myReviewVersion"
 implementation "com.github.sarang628:Navigation:$navigationModuleVersion"
 implementation "com.github.sarang628:TorangDetail:$restaurantVersion"
-implementation 'com.github.sarang628:JsonToObjectGenerator:960fe9fece
 ```
 
 ## 메인 시작 로직 요청
