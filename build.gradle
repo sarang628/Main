@@ -38,7 +38,7 @@ ext {
     cardInfoVersion = '5a4bbcbb1a'
     mapVersion = 'fb272a7ab3'
     torangBottomSheetVersion = 'eeb2d06d1e'
-    jsonToObjectGeneratorVersion = '960fe9fece'
+    jsonToObjectGeneratorVersion = '8d8a65e1f1'
     instaGramGalleryVersion = '50ecde5309'
     filterVersion = '35d906e5ee'
 }
