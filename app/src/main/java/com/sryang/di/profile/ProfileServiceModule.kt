@@ -14,7 +14,6 @@ import com.sarang.profile.uistate.Feed
 import com.sarang.profile.uistate.ProfileUiState
 import com.sarang.profile.viewmodel.ProfileService
 import com.sarang.profile.viewmodel.ProfileViewModel
-import com.sryang.main.BuildConfig
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import com.sryang.torang_repository.repository.EditProfileRepository
 import com.sryang.torang_repository.repository.impl.ProfileRepositoryImpl
@@ -69,8 +68,8 @@ class ProfileServiceModule {
                 }
             }
 
-            override suspend fun updateProfile(name: String, uri: String) {
-                editProfileRepository.editProfile(name, uri)
+            override suspend fun updateProfile(uri: String) {
+                editProfileRepository.editProfile(name = null, uri = uri)
             }
         }
     }
@@ -106,7 +105,7 @@ fun ProfileScreen(
     id: Int? = null,
     isMyProfile: Boolean,
     profileViewModel: ProfileViewModel = hiltViewModel(),
-    profileImageUrl: String = BuildConfig.PROFILE_IMAGE_SERVER_URL,
+    profileImageUrl: String,
     imageServerUrl: String,
     onEditProfile: () -> Unit,
     onSetting: () -> Unit
@@ -126,7 +125,8 @@ fun ProfileScreen(
     _ProfileScreen(
         isMyProfile = isMyProfile,
         profileBaseUrl = profileImageUrl,
-        profileViewModel = profileViewModel, onSetting = onSetting,
+        profileViewModel = profileViewModel,
+        onSetting = onSetting,
         onEditProfile = onEditProfile,
         favorite = {
             Feeds(

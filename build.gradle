@@ -22,13 +22,13 @@ ext {
 
     feedVersion = '226ba1fce3'
     alarmVersion = '2ffd79e9a8'
-    profileVersion = '62877be36f'
+    profileVersion = '2e6ae38507'
     findingVersion = 'ad7cad601c'
     themeVersion = '6f8e2a7a08'
     myReviewVersion = '4616d836d8'
     navigationModuleVersion = 'd98f57435d'
-    torangDetailVersion = "05b85e6e8c"
-    addReviewVersion = 'cf17e0b024'
+    torangDetailVersion = "d9f16eb1a6"
+    addReviewVersion = 'cdc9743450'
     designVersion = '973242b6ae'
     loginVersion = '81e77c2c46'
     splashVersion = '88cf7fa504'

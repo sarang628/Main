@@ -5,12 +5,11 @@ import SettingsScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.di.restaurant_detail.toFeedUiState
 import com.example.screen_main.compose.MainScreen
@@ -21,6 +20,7 @@ import com.sarang.base_feed.ui.Feeds
 import com.sarang.instagralleryModule.gallery.GalleryScreen
 import com.sarang.profile.edit.EditProfileScreen
 import com.sarang.profile.move
+import com.sarang.profile.viewmodel.ProfileViewModel
 import com.sarang.screen_splash.compose.SplashScreen
 import com.sarang.toringlogin.login.LoginScreen
 import com.sr.restaurant.restaurant.compose.RestaurantScreen
@@ -37,14 +37,14 @@ class MainActivity : ComponentActivity() {
     private val imageServerUrl = "http://sarang628.iptime.org:89/review_images/"
     private val restaurantServerUrl = "http://sarang628.iptime.org:89/restaurant_images/"
 
+    private val profileViewmodel: ProfileViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Displaying edge-to-edge
         //WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             val navController = rememberNavController()
-            val context = LocalContext.current
-
             TorangScreen(
                 navController = navController,
                 profileScreen = {
@@ -53,7 +53,8 @@ class MainActivity : ComponentActivity() {
                         isMyProfile = false,
                         imageServerUrl = imageServerUrl,
                         onEditProfile = { navController.navigate("editProfile") },
-                        onSetting = { navController.navigate("settings") }
+                        onSetting = { navController.navigate("settings") },
+                        profileImageUrl = profileImageServerUrl
                     )
                 },
                 settings = {
@@ -72,20 +73,16 @@ class MainActivity : ComponentActivity() {
                     val addReviewNavController = rememberNavController()
                     AddReviewScreen(
                         navController = addReviewNavController,
-                        galleryScreen = {
-                            GalleryScreen(color = 0xFFFFFBE6, onNext = {
-                                //addReviewViewModel.selectPictures(it)
-                                addReviewNavController.navigate("addReview")
-                            }, onClose = {
-                                navController.popBackStack()
-                            })
+                        galleryScreen = { color, onNext, onClose ->
+                            GalleryScreen(color, onNext, onClose)
                         },
                         onRestaurant = {
-                            //addReviewViewModel.selectRestaurant(it)
                             addReviewNavController.popBackStack()
                         },
                         onShared = {
                             navController.popBackStack()
+                        }, onNext = {
+                            addReviewNavController.navigate("addReview")
                         }
                     )
                 },
