@@ -1,7 +1,6 @@
 package com.sryang.main
 
 
-import SettingsScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.di.restaurant_detail.toFeedUiState
 import com.example.screen_main.compose.MainScreen
 import com.example.screen_main.compose.TorangScreen
+import com.example.torangscreensettings.compose.SettingsScreen
 import com.posco.feedscreentestapp.di.feed.FeedScreen
 import com.sarang.alarm.compose.AlarmScreen
 import com.sarang.base_feed.ui.Feeds
@@ -59,14 +59,24 @@ class MainActivity : ComponentActivity() {
                 },
                 settings = {
                     SettingsScreen(onLogout = {
-                        navController.navigate("splash")  //TODO::Settings viewmodel에서 로그아웃 구현하기
+                        navController.go("splash")
+                    }, onBack = {
+                        navController.popBackStack()
                     })
                 },
                 splashScreen = {
                     SplashScreen(onSuccess = {
-                        navController.move("main")
+                        navController.navigate("main"){
+                            popUpTo(0)
+                        }
                     }, onLoginExpired = {
-                        navController.move("login")
+                        navController.navigate("login"){
+                            popUpTo(0)
+                        }
+                    }, unLogin = {
+                        navController.navigate("login"){
+                            popUpTo(0)
+                        }
                     })
                 },
                 addReviewScreen = {

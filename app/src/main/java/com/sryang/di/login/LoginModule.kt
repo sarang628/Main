@@ -23,7 +23,7 @@ object LoginServiceModule {
     ): EmailLoginService {
         return object : EmailLoginService {
             override suspend fun emailLogin(id: String, email: String): String {
-                return loginRepository.emailLogin(id, email)
+                return loginRepository.emailLogin(id, email).token
             }
 
             override suspend fun saveToken(token: String) {
