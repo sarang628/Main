@@ -26,7 +26,7 @@ import com.example.screen_map.MarkerData
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.sryang.screen_filter.ui.Filter
+import com.sryang.screen_filter.ui.FilterScreen
 import com.sryang.screen_filter.ui.FilterUiState
 import com.sryang.screen_filter.ui.FilterViewModel
 import com.sryang.torang_repository.api.ApiRestaurant
@@ -96,10 +96,10 @@ fun Finding(
     val cameraPositionState = rememberCameraPositionState()
     val coroutineScope = rememberCoroutineScope()
     var isMovingByMarkerClick by remember { mutableStateOf(false) }
+    var isVisible by remember { mutableStateOf(true) }
     FindScreen(
         restaurantCardPage = {
             RestaurantCardPage(
-                uiState = restaurantCardViewModel.uiState,
                 restaurants = uiState.restaurants.stream().map { it.toRestaurantCardData() }
                     .toList(),
                 restaurantImageUrl = "http://sarang628.iptime.org:89/restaurant_images/",
@@ -107,13 +107,15 @@ fun Finding(
                     findingViewModel.selectPage(page)
                 },
                 onClickCard = { navController.navigate("restaurant/$it") },
-                selectedRestaurant = uiState.selectedRestaurant?.toRestaurantCardData()
+                selectedRestaurant = uiState.selectedRestaurant?.toRestaurantCardData(),
+                visible = isVisible
             )
         },
         mapScreen = {
             MapScreen(
                 mapViewModel = mapViewModel,
                 onMark = {
+                    isVisible = true
                     isMovingByMarkerClick = true
                     findingViewModel.selectMarker(it)
                 },
@@ -124,7 +126,8 @@ fun Finding(
                 cameraPositionState = cameraPositionState,
                 list = uiState.restaurants.stream().map { it.toMarkData() }.toList(),
                 selectedMarkerData = uiState.selectedRestaurant?.toMarkData(),
-                currentLocation = uiState.currentLocation
+                currentLocation = uiState.currentLocation,
+                onMapClick = {isVisible = !isVisible}
             )
         },
         onZoomIn = {
@@ -138,9 +141,9 @@ fun Finding(
             }
         },
         filter = {
-            Filter(filterViewModel = filterViewModel, onFilter = {
+            FilterScreen(filterViewModel = filterViewModel, onFilter = {
                 findingViewModel.filter(it.toFilter())
-            })
+            }, visible = isVisible)
         },
         myLocation = {
             CurrentLocationScreen(onLocation = {
