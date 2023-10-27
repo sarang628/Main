@@ -19,15 +19,15 @@ import com.sarang.alarm.compose.AlarmScreen
 import com.sarang.base_feed.ui.Feeds
 import com.sarang.instagralleryModule.gallery.GalleryScreen
 import com.sarang.profile.edit.EditProfileScreen
-import com.sarang.profile.move
 import com.sarang.profile.viewmodel.ProfileViewModel
-import com.sarang.screen_splash.compose.SplashScreen
 import com.sarang.toringlogin.login.LoginScreen
 import com.sr.restaurant.restaurant.compose.RestaurantScreen
 import com.sryang.library.AddReviewScreen
 import com.sryang.library.go
 import com.sryang.myapplication.di.profile.ProfileScreen
 import com.sryang.screenfindingtest.di.finding.Finding
+import com.sryang.splash.compose.SplashScreen
+import com.sryang.splash.uistate.LoginState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.streams.toList
 
@@ -65,17 +65,15 @@ class MainActivity : ComponentActivity() {
                     })
                 },
                 splashScreen = {
-                    SplashScreen(onSuccess = {
-                        navController.navigate("main"){
-                            popUpTo(0)
-                        }
-                    }, onLoginExpired = {
-                        navController.navigate("login"){
-                            popUpTo(0)
-                        }
-                    }, unLogin = {
-                        navController.navigate("login"){
-                            popUpTo(0)
+                    SplashScreen(onLoginState = {
+                        if (it == LoginState.LOGIN) {
+                            navController.navigate("main") {
+                                popUpTo(0)
+                            }
+                        } else if (it == LoginState.LOGOUT) {
+                            navController.navigate("login") {
+                                popUpTo(0)
+                            }
                         }
                     })
                 },

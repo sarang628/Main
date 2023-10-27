@@ -1,12 +1,14 @@
 package com.example.screen_main.compose
 
+import android.widget.RatingBar
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sryang.torang_repository.data.RemoteAlarm
 
 @Composable
 fun MainScreen(
@@ -31,3 +33,17 @@ fun MainScreen(
 }
 
 
+@Preview
+@Composable
+fun RatingBar1(modifier: Modifier = Modifier) {
+    AndroidView(
+        modifier = modifier, factory = {
+            RatingBar(it).apply {
+                scaleX = 0.4f
+                scaleY = 0.4f
+                pivotX = 0f
+                pivotY = 0f
+                stepSize = 0f
+            }
+        })
+}
