@@ -28,7 +28,7 @@ ext {
     myReviewVersion = '4616d836d8'
     navigationModuleVersion = 'd98f57435d'
     torangDetailVersion = "d9f16eb1a6"
-    addReviewVersion = 'cdc9743450'
+    addReviewVersion = '769034acff'
     loginVersion = '81e77c2c46'
     splashVersion = 'f8e255a7c2'
     torangRepositoryVersion = 'fbbd1d439b'
@@ -37,6 +37,6 @@ ext {
     cardInfoVersion = '93ce877975'
     mapVersion = '9efc724710'
     torangBottomSheetVersion = 'b8df8e054d'
-    instaGramGalleryVersion = '50ecde5309'
+    instaGramGalleryVersion = '8cd1c00bcf'
     filterVersion = '2c947b9606'
 }
