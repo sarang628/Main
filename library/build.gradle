@@ -84,24 +84,4 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
-
-
-    implementation "com.github.sarang628:Feed:$feedVersion"
-    implementation "com.github.sarang628:Alarm:$alarmVersion"
-    implementation "com.github.sarang628:Theme:$themeVersion"
-    implementation "com.github.sarang628:Profile:$profileVersion"
-    implementation "com.github.sarang628:Finding:$findingVersion"
-    implementation "com.github.sarang628:MyReview:$myReviewVersion"
-    implementation "com.github.sarang628:Navigation:$navigationModuleVersion"
-    implementation "com.github.sarang628:TorangDetail:$torangDetailVersion"
-    implementation "com.github.sarang628:AddReview:$addReviewVersion"
-    implementation "com.github.sarang628:Login:$loginVersion"
-    implementation "com.github.sarang628:Splash:$splashVersion"
-    implementation "com.github.sarang628:TorangRepository:$torangRepositoryVersion"
-    implementation "com.github.sarang628:Settings:$settingsVersion"
-    implementation "com.github.sarang628:BaseFeed:$baseFeedVersion"
-    implementation "com.github.sarang628:CardInfo:$cardInfoVersion"
-    implementation "com.github.sarang628:Map:$mapVersion"
-    implementation "com.github.sarang628:InstagramGallery:$instaGramGalleryVersion"
-    implementation "com.github.sarang628:Filter:$filterVersion"
 }
