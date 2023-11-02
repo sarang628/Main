@@ -38,7 +38,6 @@ val items = listOf(
 @Composable
 fun MainBottomNavigation(navController: NavController) {
     BottomNavigation(
-        backgroundColor = colorResource(id = R.color.colorSecondaryLight),
         contentColor = MaterialTheme.colors.onSurface,
         elevation = 2.dp
     ) {
