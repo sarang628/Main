@@ -61,7 +61,6 @@ dependencies {
     implementation composeBom
     androidTestImplementation composeBom
     implementation 'androidx.compose.ui:ui' //없으면 @Composable import 안됨
-    implementation 'androidx.compose.material:material' //없으면 Text("Hello") 안됨
     implementation 'androidx.compose.ui:ui-tooling-preview' // Android Studio Preview support
     debugImplementation 'androidx.compose.ui:ui-tooling'
     implementation 'androidx.compose.material3:material3' //JetNews Main 따라하기
