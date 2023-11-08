@@ -24,7 +24,7 @@ fun MainScreen(
             modifier = Modifier.weight(1f)
         ) {
             composable("feed") { feedScreen.invoke() }
-            composable("myProfile") { myProfileScreen.invoke() }
+            composable("profile") { myProfileScreen.invoke() }
             composable("finding") { findingScreen.invoke() }
             composable("alarm") { alarm.invoke() }
         }

@@ -76,13 +76,14 @@ fun MainBottomNavigation1(navController: NavController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     var state by remember { mutableStateOf(0) }
-    val titles = listOf("feed", "finding", "alarm", "myProfile")
+    val titles = listOf("feed", "finding", "alarm", "profile")
     Log.d("RestaurntTopMenu1", currentDestination?.route.toString())
     Column {
         PrimaryTabRow(
             selectedTabIndex = if (currentDestination == null) 0 else titles.indexOf(
                 currentDestination.route.toString()
-            )
+            ),
+            indicator = {}
         ) {
             titles.forEachIndexed { index, title ->
                 Tab(

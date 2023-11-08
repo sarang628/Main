@@ -39,5 +39,5 @@ ext {
     torangBottomSheetVersion = '072acef63c'
     instaGramGalleryVersion = 'cd04d90e46'
     filterVersion = 'a7a731ffba'
-    mainVersion = '61c7b8d470'
+    mainVersion = '54f5cd90df'
 }
