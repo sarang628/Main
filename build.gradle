@@ -8,9 +8,9 @@ plugins {
 
 ext {
     // Sdk and tools
-    compileSdk = 33
+    compileSdk = 34
     minSdk = 24
-    targetSdk = 33
+    targetSdk = 34
     buildToolsVersion = '30.0.3'
 
     //hilt
@@ -20,23 +20,24 @@ ext {
     navigationVersion = '2.4.0-alpha06'
     nav_version = '2.5.3'
 
-    feedVersion = '226ba1fce3'
-    alarmVersion = '2ffd79e9a8'
-    profileVersion = '2e6ae38507'
-    findingVersion = 'a448e61f1e'
-    themeVersion = '6f8e2a7a08'
-    myReviewVersion = '4616d836d8'
     navigationModuleVersion = 'd98f57435d'
-    torangDetailVersion = "d9f16eb1a6"
-    addReviewVersion = '769034acff'
-    loginVersion = '81e77c2c46'
-    splashVersion = 'f8e255a7c2'
-    torangRepositoryVersion = 'fbbd1d439b'
-    settingsVersion = '80ae18bbdf'
-    baseFeedVersion = '691a642d82'
-    cardInfoVersion = '93ce877975'
-    mapVersion = '9efc724710'
-    torangBottomSheetVersion = 'b8df8e054d'
-    instaGramGalleryVersion = '8cd1c00bcf'
-    filterVersion = '2c947b9606'
+    addReviewVersion = 'c1f74e46e8'
+    alarmVersion = 'da0455f22e'
+    baseFeedVersion = '2b12e38961'
+    cardInfoVersion = 'e09c262012'
+    feedVersion = '0e36ab3184'
+    profileVersion = '5fba7c47e6'
+    findingVersion = '5dd7483450'
+    themeVersion = '28a1702347'
+    myReviewVersion = '7788b8d9f7'
+    torangDetailVersion = "81612b7dd3"
+    loginVersion = 'f9aa6ba517'
+    splashVersion = '5c304ec16a'
+    torangRepositoryVersion = '75cd175253'
+    settingsVersion = '9058c03310'
+    mapVersion = '86a9b002ac'
+    torangBottomSheetVersion = '072acef63c'
+    instaGramGalleryVersion = 'cd04d90e46'
+    filterVersion = 'a7a731ffba'
+    mainVersion = '61c7b8d470'
 }

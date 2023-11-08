@@ -5,15 +5,21 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavHostController
 import com.sarang.base_feed.ui.Feeds
 import com.sarang.base_feed.uistate.FeedBottomUIState
 import com.sarang.base_feed.uistate.FeedTopUIState
 import com.sarang.base_feed.uistate.FeedUiState
+import com.sarang.instagralleryModule.gallery.GalleryScreen
 import com.sarang.profile._ProfileScreen
+import com.sarang.profile.edit.EditProfileScreen
+import com.sarang.profile.edit.ProfileNavHost
 import com.sarang.profile.uistate.Feed
 import com.sarang.profile.uistate.ProfileUiState
 import com.sarang.profile.viewmodel.ProfileService
 import com.sarang.profile.viewmodel.ProfileViewModel
+import com.sryang.main.BuildConfig
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import com.sryang.torang_repository.repository.EditProfileRepository
 import com.sryang.torang_repository.repository.impl.ProfileRepositoryImpl
@@ -23,7 +29,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combineTransform
-import kotlin.streams.toList
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -58,6 +63,7 @@ class ProfileServiceModule {
                 )
             }
 
+
             override suspend fun getFavorites(): kotlinx.coroutines.flow.Flow<List<Feed>> {
                 return MutableStateFlow<List<Feed>>(ArrayList()).combineTransform(
                     profileRepository.getMyFavorite(
@@ -79,6 +85,7 @@ class ProfileServiceModule {
 fun List<ReviewAndImageEntity>.toFeeds(): List<Feed> {
     return this.stream().map { it.toFeed() }.toList()
 }
+
 
 fun ReviewAndImageEntity.toFeed(): Feed {
     return Feed(
@@ -102,32 +109,17 @@ fun ReviewAndImageEntity.toFeed(): Feed {
 
 @Composable
 fun ProfileScreen(
-    id: Int? = null,
-    isMyProfile: Boolean,
     profileViewModel: ProfileViewModel = hiltViewModel(),
-    profileImageUrl: String,
-    imageServerUrl: String,
-    onEditProfile: () -> Unit,
-    onSetting: () -> Unit
+    profileImageUrl: String = BuildConfig.PROFILE_IMAGE_SERVER_URL,
+    imageServerUrl: String = BuildConfig.RESTAURANT_IMAGE_SERVER_URL,
+    onSetting: () -> Unit,
+    navBackStackEntry: NavBackStackEntry?
 ) {
     val uiState by profileViewModel.uiState.collectAsState()
 
-    LaunchedEffect(key1 = isMyProfile, block = {
-        if (isMyProfile) {
-            profileViewModel.loadProfileByToken()
-        } else {
-            id?.let {
-                profileViewModel.loadProfile(it)
-            }
-        }
-    })
-
-    _ProfileScreen(
-        isMyProfile = isMyProfile,
-        profileBaseUrl = profileImageUrl,
+    ProfileNavHost(
         profileViewModel = profileViewModel,
         onSetting = onSetting,
-        onEditProfile = onEditProfile,
         favorite = {
             Feeds(
                 list = uiState.favoriteList?.toFeedUiState() ?: ArrayList(),
@@ -143,7 +135,8 @@ fun ProfileScreen(
                 onRefresh = { /*TODO*/ },
                 isRefreshing = false,
                 profileImageServerUrl = profileImageUrl,
-                imageServerUrl = imageServerUrl
+                imageServerUrl = BuildConfig.REVIEW_IMAGE_SERVER_URL,
+                ratingBar = {}
             )
         },
         wantToGo = {
@@ -160,9 +153,16 @@ fun ProfileScreen(
                 onRestaurant = { /*TODO*/ },
                 onImage = {},
                 onRefresh = { /*TODO*/ },
-                isRefreshing = false
+                isRefreshing = false,
+                ratingBar = {}
             )
-        }
+        },
+        galleryScreen = { onNext, onClose ->
+            GalleryScreen(onNext = onNext, onClose = { onClose.invoke() })
+        },
+        isMyProfile = navBackStackEntry == null,
+        id = navBackStackEntry?.arguments?.getString("id")?.toInt(),
+        profileImageServerUrl = profileImageUrl
     )
 }
 
@@ -208,4 +208,35 @@ fun Feed.toFeedBottomUiState(): FeedBottomUIState {
         visibleComment = false,
         visibleLike = false
     )
+}
+
+@Composable
+fun ProvideProfileScreen(
+    navBackStackEntry: NavBackStackEntry? = null,
+    navController: NavHostController
+) {
+    ProfileScreen(
+        onSetting = { navController.navigate("settings") }, navBackStackEntry = navBackStackEntry
+    )
+}
+
+@Composable
+fun ProvideEditProfileScreen(navController: NavHostController) {
+    EditProfileScreen(
+        onEditImage = { navController.navigate("EditProfileImage") },
+        profileImageServerUrl = BuildConfig.PROFILE_IMAGE_SERVER_URL,
+        onBack = {
+            navController.popBackStack()
+        }
+    )
+}
+
+@Composable
+fun ProvideEditProfileImageScreen(navController: NavHostController) {
+    GalleryScreen(onNext = {
+        //profileViewModel.updateProfileImage(it[0]) // TODO:: profileViewModel 없이 이미지 업로드 방법 찾기
+        navController.popBackStack()
+    }, onClose = {
+        navController.popBackStack()
+    })
 }

@@ -28,7 +28,7 @@ fun MainScreen(
             composable("finding") { findingScreen.invoke() }
             composable("alarm") { alarm.invoke() }
         }
-        MainBottomNavigation(navController = navController)
+        MainBottomNavigation1(navController = navController)
     }
 }
 
