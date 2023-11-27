@@ -8,12 +8,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.example.screen_main.compose.MainScreen
+import com.sryang.torang.compose.MainScreen
 import com.google.samples.apps.sunflower.ui.TorangTheme
-import com.sryang.di.feed.FeedScreen
 import com.sarang.alarm.compose.AlarmScreen
-import com.sryang.myapplication.di.profile.ProfileScreen
 import com.sryang.screenfindingtest.di.finding.Finding
+import com.sryang.torang.compose.bottomsheet.comment.CommentBottomSheetDialog
+import com.sryang.torang.di.feed_di.FeedScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,7 +28,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             TorangTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
                     MainScreen(
                         feedScreen = {
                             FeedScreen(
@@ -48,14 +51,20 @@ class MainActivity : ComponentActivity() {
                             )
                         },
                         myProfileScreen = {
-                            ProfileScreen(
-                                profileImageUrl = profileImageServerUrl,
-                                imageServerUrl = imageServerUrl,
-                                onSetting = { navController.navigate("settings") },
-                                navBackStackEntry = null
-                            )
                         },
-                        alarm = { AlarmScreen(profileServerUrl = profileImageServerUrl) }
+                        alarm = { AlarmScreen(profileServerUrl = profileImageServerUrl) },
+                        commentDialog = {
+                            CommentBottomSheetDialog(
+                                profileImageServerUrl = "",
+                                profileImageUrl = "",
+                                list = listOf(),
+                                isExpand = true,
+                                onSelect = {},
+                                onClose = { /*TODO*/ },
+                                onSend = {},
+                                name = "name"
+                            )
+                        }
                     )
                 }
             }

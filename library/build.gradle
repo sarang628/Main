@@ -7,7 +7,7 @@ plugins {
 
 android {
     compileSdk rootProject.compileSdk
-
+    namespace 'com.sryang.torang'
     defaultConfig {
         minSdk rootProject.minSdk
         targetSdk rootProject.targetSdk
@@ -30,8 +30,6 @@ android {
     buildFeatures { compose true }
 
     composeOptions { kotlinCompilerExtensionVersion = "1.4.6" }
-    
-    namespace 'com.example.screen_main'
 }
 
 dependencies {

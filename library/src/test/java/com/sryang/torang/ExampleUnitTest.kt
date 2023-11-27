@@ -1,4 +1,4 @@
-package com.example.screen_main
+package com.sryang.torang
 
 import org.junit.Test
 

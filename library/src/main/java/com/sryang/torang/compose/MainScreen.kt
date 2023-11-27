@@ -1,7 +1,9 @@
-package com.example.screen_main.compose
+package com.sryang.torang.compose
 
 import android.widget.RatingBar
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,19 +18,23 @@ fun MainScreen(
     findingScreen: @Composable () -> Unit,
     myProfileScreen: @Composable () -> Unit,
     alarm: @Composable () -> Unit,
+    commentDialog: @Composable () -> Unit
 ) {
-    Column {
-        val navController = rememberNavController()
-        NavHost(
-            navController = navController, startDestination = "feed",
-            modifier = Modifier.weight(1f)
-        ) {
-            composable("feed") { feedScreen.invoke() }
-            composable("profile") { myProfileScreen.invoke() }
-            composable("finding") { findingScreen.invoke() }
-            composable("alarm") { alarm.invoke() }
+    Box(Modifier.fillMaxSize()) {
+        Column {
+            val navController = rememberNavController()
+            NavHost(
+                navController = navController, startDestination = "feed",
+                modifier = Modifier.weight(1f)
+            ) {
+                composable("feed") { feedScreen.invoke() }
+                composable("profile") { myProfileScreen.invoke() }
+                composable("finding") { findingScreen.invoke() }
+                composable("alarm") { alarm.invoke() }
+            }
+            MainBottomNavigation(navController = navController)
         }
-        MainBottomNavigation1(navController = navController)
+        commentDialog.invoke()
     }
 }
 
