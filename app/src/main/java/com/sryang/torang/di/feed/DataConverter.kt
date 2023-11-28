@@ -1,4 +1,4 @@
-package com.sryang.torang.di.feed_di
+package com.sryang.torang.di.feed
 
 import com.sryang.base.feed.data.Restaurant
 import com.sryang.base.feed.data.Review
