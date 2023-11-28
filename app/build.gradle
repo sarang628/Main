@@ -106,4 +106,5 @@ dependencies {
     implementation "com.github.sarang628:BaseFeed:$baseFeedVersion"
     implementation "com.github.sarang628:TorangBottomSheet:$torangBottomSheetVersion"
     implementation "com.github.sarang628:InstagramGallery:$instaGramGalleryVersion"
+    implementation "com.github.sarang628:Report:$reportVersion"
 }

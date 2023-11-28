@@ -21,9 +21,9 @@ ext {
     nav_version = '2.5.3'
 
     alarmVersion = 'da0455f22e'
-    baseFeedVersion = 'a9f2774ef8'
-    feedVersion = '0897bee615'
-    profileVersion = '5fba7c47e6'
+    baseFeedVersion = '73fe574ec5'
+    feedVersion = '4ce76b805d'
+    profileVersion = '32d8801dd7'
     findingVersion = '16701124cd'
     themeVersion = '28a1702347'
     myReviewVersion = '7788b8d9f7'
@@ -31,4 +31,5 @@ ext {
     torangBottomSheetVersion = '19e86938f4'
     instaGramGalleryVersion = 'cd04d90e46'
     mainVersion = '54f5cd90df'
+    reportVersion = '4fb865eeb3'
 }

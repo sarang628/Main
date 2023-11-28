@@ -1,4 +1,4 @@
-package com.sryang.di.finding
+package com.sryang.torang.di.finding
 
 import com.example.screen_finding.data.RestaurantInfo
 import com.example.screen_finding.viewmodel.Filter

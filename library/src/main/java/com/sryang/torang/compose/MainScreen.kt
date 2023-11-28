@@ -5,21 +5,46 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.sryang.torang.viewmodels.MainViewModel
 
 @Composable
 fun MainScreen(
-    feedScreen: @Composable () -> Unit,
+    mainViewModel: MainViewModel = hiltViewModel(),
+    feedScreen: @Composable (
+        onComment: ((Int) -> Unit),
+        onMenu: ((Int) -> Unit),
+        onShare: ((Int) -> Unit),
+        onReport: ((Int) -> Unit),
+        onReported: (() -> Unit),
+    ) -> Unit,
     findingScreen: @Composable () -> Unit,
     myProfileScreen: @Composable () -> Unit,
     alarm: @Composable () -> Unit,
-    commentDialog: @Composable () -> Unit
+    commentDialog: @Composable (
+        onClose: () -> Unit
+    ) -> Unit,
+    menuDialog: @Composable (
+        reviewId: Int,
+        onClose: () -> Unit,
+        onReport: (Int) -> Unit
+    ) -> Unit,
+    shareDialog: @Composable (
+        onClose: () -> Unit
+    ) -> Unit,
+    reportDialog: @Composable (
+        Int, onReported: () -> Unit
+    ) -> Unit
 ) {
+    val uiState by mainViewModel.uiState.collectAsState()
     Box(Modifier.fillMaxSize()) {
         Column {
             val navController = rememberNavController()
@@ -27,14 +52,55 @@ fun MainScreen(
                 navController = navController, startDestination = "feed",
                 modifier = Modifier.weight(1f)
             ) {
-                composable("feed") { feedScreen.invoke() }
+                composable("feed") {
+                    feedScreen.invoke(
+                        onComment = {
+                            mainViewModel.onComment(it)
+                        }, onMenu = {
+                            mainViewModel.onMenu(it)
+                        }, onShare = {
+                            mainViewModel.onShare(it)
+                        }, onReport = {
+                            mainViewModel.onReport(it)
+                        }, onReported = {
+                            mainViewModel.closeReport()
+                        }
+                    )
+                }
                 composable("profile") { myProfileScreen.invoke() }
                 composable("finding") { findingScreen.invoke() }
                 composable("alarm") { alarm.invoke() }
             }
             MainBottomNavigation(navController = navController)
         }
-        commentDialog.invoke()
+        if (uiState.showComment) {
+            commentDialog.invoke(onClose = {
+                mainViewModel.closeComment()
+            })
+        }
+
+        if (uiState.showMenu != null) {
+            menuDialog.invoke(
+                reviewId = uiState.showMenu!!,
+                onClose = {
+                    mainViewModel.closeMenu()
+                }, onReport = {
+                    mainViewModel.onReport(it)
+                })
+        }
+
+        if (uiState.showShare) {
+            shareDialog.invoke(onClose = {
+                mainViewModel.closeShare()
+            })
+        }
+
+        if (uiState.showReport != null) {
+            reportDialog.invoke(uiState.showReport!!,
+                onReported = {
+                    mainViewModel.closeReport()
+                })
+        }
     }
 }
 

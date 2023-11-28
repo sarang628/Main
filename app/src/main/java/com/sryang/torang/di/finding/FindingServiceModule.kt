@@ -16,7 +16,7 @@ import com.example.screen_finding.usecase.SearchThisAreaUseCase
 import com.example.screen_finding.viewmodel.Filter
 import com.example.screen_finding.viewmodel.FindingViewModel
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.sryang.di.finding.toFilter
+import com.sryang.torang.di.finding.toFilter
 import com.sryang.torang_repository.api.ApiRestaurant
 import com.sryang.torang_repository.data.SearchType
 import com.sryang.torang_repository.repository.MapRepository
