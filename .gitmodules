@@ -13,3 +13,6 @@
 [submodule "app/src/main/java/com/sryang/torang/di/feed/feed_di"]
 	path = app/src/main/java/com/sryang/torang/di/feed/feed_di
 	url = https://github.com/sarang628/feed_di.git
+[submodule "app/src/main/java/com/sryang/torang/di/feed_di"]
+	path = app/src/main/java/com/sryang/torang/di/feed_di
+	url = https://github.com/sarang628/feed_di.git
