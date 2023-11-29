@@ -13,12 +13,12 @@ class MainViewModel @Inject constructor() : ViewModel() {
     private val _uiState = MutableStateFlow(MainUiState())
     val uiState = _uiState.asStateFlow()
 
-    fun onComment(it: Int) {
-        _uiState.update { it.copy(showComment = true) }
+    fun onComment(reviewId: Int) {
+        _uiState.update { it.copy(showComment = reviewId) }
     }
 
     fun closeComment() {
-        _uiState.update { it.copy(showComment = false) }
+        _uiState.update { it.copy(showComment = null) }
     }
 
     fun onMenu(reviewId: Int) {

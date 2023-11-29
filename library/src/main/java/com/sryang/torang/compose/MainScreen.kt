@@ -73,7 +73,7 @@ fun MainScreen(
             }
             MainBottomNavigation(navController = navController)
         }
-        if (uiState.showComment) {
+        if (uiState.showComment != null) {
             commentDialog.invoke(onClose = {
                 mainViewModel.closeComment()
             })
