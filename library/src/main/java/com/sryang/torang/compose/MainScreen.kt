@@ -30,6 +30,7 @@ fun MainScreen(
     myProfileScreen: @Composable () -> Unit,
     alarm: @Composable () -> Unit,
     commentDialog: @Composable (
+        reviewId: Int,
         onClose: () -> Unit
     ) -> Unit,
     menuDialog: @Composable (
@@ -74,7 +75,7 @@ fun MainScreen(
             MainBottomNavigation(navController = navController)
         }
         if (uiState.showComment != null) {
-            commentDialog.invoke(onClose = {
+            commentDialog.invoke(reviewId = uiState.showComment!!, onClose = {
                 mainViewModel.closeComment()
             })
         }
