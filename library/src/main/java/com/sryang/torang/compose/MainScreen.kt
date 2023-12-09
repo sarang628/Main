@@ -36,14 +36,18 @@ fun MainScreen(
     menuDialog: @Composable (
         reviewId: Int,
         onClose: () -> Unit,
-        onReport: (Int) -> Unit
+        onReport: (Int) -> Unit,
+        onDelete: (Int) -> Unit,
+        onEdit: (Int) -> Unit
     ) -> Unit,
     shareDialog: @Composable (
         onClose: () -> Unit
     ) -> Unit,
     reportDialog: @Composable (
         Int, onReported: () -> Unit
-    ) -> Unit
+    ) -> Unit,
+    onEdit: (Int) -> Unit,
+    onDelete: (Int) -> Unit,
 ) {
     val uiState by mainViewModel.uiState.collectAsState()
     Box(Modifier.fillMaxSize()) {
@@ -85,9 +89,19 @@ fun MainScreen(
                 reviewId = uiState.showMenu!!,
                 onClose = {
                     mainViewModel.closeMenu()
-                }, onReport = {
+                },
+                onReport = {
                     mainViewModel.onReport(it)
-                })
+                },
+                onEdit = {
+                    mainViewModel.onEdit(it)
+                    onEdit.invoke(it)
+                },
+                onDelete = {
+                    mainViewModel.onDelete(it)
+                    onDelete.invoke(it)
+                }
+            )
         }
 
         if (uiState.showShare) {

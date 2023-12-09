@@ -41,6 +41,14 @@ class MainViewModel @Inject constructor() : ViewModel() {
         _uiState.update { it.copy(showReport = reviewId, showMenu = null) }
     }
 
+    fun onEdit(reviewId: Int) {
+        _uiState.update { it.copy(modifyReview = reviewId, showMenu = null) }
+    }
+
+    fun onDelete(reviewId: Int) {
+        _uiState.update { it.copy(deleteReview = reviewId, showMenu = null) }
+    }
+
     fun closeReport() {
         _uiState.update { it.copy(showReport = null) }
     }
