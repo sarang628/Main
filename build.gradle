@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    id 'com.android.application' version '8.1.0' apply false
-    id 'com.android.library' version '8.1.0' apply false
+    id 'com.android.application' version '8.2.0' apply false
+    id 'com.android.library' version '8.2.0' apply false
     id 'org.jetbrains.kotlin.android' version '1.8.20' apply false
     id 'com.google.dagger.hilt.android' version '2.44' apply false
 }
@@ -20,16 +20,15 @@ ext {
     navigationVersion = '2.4.0-alpha06'
     nav_version = '2.5.3'
 
-    alarmVersion = 'da0455f22e'
-    baseFeedVersion = '73fe574ec5'
-    feedVersion = '4ce76b805d'
+    alarmVersion = 'd56aec385a'
+    baseFeedVersion = '78b893b13b'
+    feedVersion = 'b447d80ff7'
     profileVersion = '32d8801dd7'
     findingVersion = '16701124cd'
     themeVersion = '28a1702347'
     myReviewVersion = '7788b8d9f7'
-    torangRepositoryVersion = 'f4b763b26f'
+    torangRepositoryVersion = '57438e9346'
     torangBottomSheetVersion = '605516c161'
-    instaGramGalleryVersion = 'cd04d90e46'
-    mainVersion = '54f5cd90df'
-    reportVersion = '4fb865eeb3'
+    instaGramGalleryVersion = '4742515032'
+    reportVersion = 'e795225629'
 }

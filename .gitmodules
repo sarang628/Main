@@ -1,6 +1,3 @@
-[submodule "app/src/main/java/com/sryang/di/repository"]
-	path = app/src/main/java/com/sryang/di/repository
-	url = https://github.com/sarang628/repository.git
 [submodule "app/src/main/java/com/sryang/di/feed_di"]
 	path = app/src/main/java/com/sryang/di/feed_di
 	url = https://github.com/sarang628/feed_di.git
@@ -16,3 +13,9 @@
 [submodule "app/src/main/java/com/sryang/torang/di/feed_di"]
 	path = app/src/main/java/com/sryang/torang/di/feed_di
 	url = https://github.com/sarang628/feed_di.git
+[submodule "app/src/main/java/com/sryang/torang/di/profile_di"]
+	path = app/src/main/java/com/sryang/torang/di/profile_di
+	url = https://github.com/sarang628/profile_di.git
+[submodule "app/src/main/java/com/sryang/torang/di/alarm_di"]
+	path = app/src/main/java/com/sryang/torang/di/alarm_di
+	url = https://github.com/sarang628/alarm_di.git
