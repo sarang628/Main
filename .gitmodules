@@ -19,3 +19,6 @@
 [submodule "app/src/main/java/com/sryang/torang/di/alarm_di"]
 	path = app/src/main/java/com/sryang/torang/di/alarm_di
 	url = https://github.com/sarang628/alarm_di.git
+[submodule "app/src/main/java/com/sryang/torang/di/repository"]
+	path = app/src/main/java/com/sryang/torang/di/repository
+	url = https://github.com/sarang628/repository.git

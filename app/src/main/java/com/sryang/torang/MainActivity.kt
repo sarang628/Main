@@ -13,6 +13,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.samples.apps.sunflower.ui.TorangTheme
 import com.sryang.torang.di.main_di.ProvideMainScreen
@@ -37,9 +39,23 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    val navController = rememberNavController()
                     Column(Modifier.verticalScroll(rememberScrollState())) {
                         Box(modifier = Modifier.height(830.dp)) {
-                            ProvideMainScreen(rememberNavController())
+                            NavHost(navController = navController, startDestination = "main"){
+                                composable("main") {
+                                    ProvideMainScreen(navController)
+                                }
+                                composable("modReview/{id}"){
+
+                                }
+                                composable("profile/{id}"){
+
+                                }
+                                composable("restaurant/{id}"){
+
+                                }
+                            }
                         }
                         LoginRepositoryTest(loginRepository = loginRepository)
                     }

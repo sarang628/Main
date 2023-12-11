@@ -1,15 +1,20 @@
 package com.sryang.torang.viewmodels
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.sryang.torang.uistate.MainUiState
+import com.sryang.torang.usecase.DeleteReviewUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor() : ViewModel() {
+class MainViewModel @Inject constructor(
+    val deleteReviewUseCase: DeleteReviewUseCase
+) : ViewModel() {
     private val _uiState = MutableStateFlow(MainUiState())
     val uiState = _uiState.asStateFlow()
 
@@ -51,5 +56,18 @@ class MainViewModel @Inject constructor() : ViewModel() {
 
     fun closeReport() {
         _uiState.update { it.copy(showReport = null) }
+    }
+
+    fun dismissDeleteReview() {
+        _uiState.update { it.copy(deleteReview = null) }
+    }
+
+    fun deleteReview() {
+        viewModelScope.launch {
+            uiState.value.deleteReview?.let {
+                deleteReviewUseCase.invoke(it)
+            }
+            dismissDeleteReview()
+        }
     }
 }

@@ -8,7 +8,7 @@ plugins {
 
 android {
     compileSdk rootProject.compileSdk
-
+    namespace 'com.sryang.torang'
     defaultConfig {
         applicationId "com.sryang.torang"
         minSdk rootProject.minSdk
@@ -50,7 +50,6 @@ android {
         targetCompatibility JavaVersion.VERSION_17
         sourceCompatibility JavaVersion.VERSION_17
     }
-    namespace 'com.sryang.main'
 }
 
 dependencies {
@@ -107,4 +106,5 @@ dependencies {
     implementation "com.github.sarang628:TorangBottomSheet:$torangBottomSheetVersion"
     implementation "com.github.sarang628:InstagramGallery:$instaGramGalleryVersion"
     implementation "com.github.sarang628:Report:$reportVersion"
+    implementation "com.github.sarang628:MediaContentResolver:$mediaContentResolverVersion"
 }

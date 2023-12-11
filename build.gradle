@@ -31,4 +31,5 @@ ext {
     torangBottomSheetVersion = '605516c161'
     instaGramGalleryVersion = '4742515032'
     reportVersion = 'e795225629'
+    mediaContentResolverVersion = '54ff69ee3a'
 }
