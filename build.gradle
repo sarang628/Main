@@ -21,8 +21,8 @@ ext {
     nav_version = '2.5.3'
 
     alarmVersion = 'd56aec385a'
-    baseFeedVersion = '78b893b13b'
-    feedVersion = 'b447d80ff7'
+    baseFeedVersion = '65e291c2f3'
+    feedVersion = 'ea9bd220dd'
     profileVersion = '32d8801dd7'
     findingVersion = '16701124cd'
     themeVersion = '28a1702347'

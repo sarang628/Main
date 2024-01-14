@@ -8,9 +8,9 @@ plugins {
 
 android {
     compileSdk rootProject.compileSdk
-    namespace 'com.sryang.torang'
+    namespace 'com.sarang.torang'
     defaultConfig {
-        applicationId "com.sryang.torang"
+        applicationId "com.sarang.torang"
         minSdk rootProject.minSdk
         targetSdk rootProject.targetSdk
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
