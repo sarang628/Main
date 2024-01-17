@@ -22,7 +22,7 @@ ext {
 
     alarmVersion = 'd56aec385a'
     baseFeedVersion = '65e291c2f3'
-    feedVersion = '7da97e6377'
+    feedVersion = '014623bc5d'
     profileVersion = '6fd5503ebc'
     findingVersion = '7e3622b409'
     themeVersion = '28a1702347'
