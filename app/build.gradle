@@ -107,8 +107,8 @@ dependencies {
     implementation "com.github.sarang628:InstagramGallery:$instaGramGalleryVersion"
     implementation "com.github.sarang628:Report:$reportVersion"
     implementation "com.github.sarang628:MediaContentResolver:$mediaContentResolverVersion"
-    implementation 'com.github.sarang628:Comment:69ccb633b0'
-    implementation 'com.github.sarang628:Map:64559814e8'
-    implementation 'com.github.sarang628:Filter:e0228f69df'
-    implementation 'com.github.sarang628:CardInfo:30e8604397'
+    implementation "com.github.sarang628:Comment:$commentVersion"
+    implementation "com.github.sarang628:Map:$mapVersion"
+    implementation "com.github.sarang628:Filter:$filterVersion"
+    implementation "com.github.sarang628:CardInfo:$cardInfo"
 }
