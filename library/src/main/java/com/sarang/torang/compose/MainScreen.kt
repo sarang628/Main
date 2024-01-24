@@ -1,27 +1,22 @@
 package com.sarang.torang.compose
 
-import android.widget.RatingBar
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.viewmodels.MainViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     mainViewModel: MainViewModel = hiltViewModel(),
@@ -64,17 +59,11 @@ fun MainScreen(
             ) {
                 composable("feed") {
                     feedScreen.invoke(
-                        onComment = {
-                            mainViewModel.onComment(it)
-                        }, onMenu = {
-                            mainViewModel.onMenu(it)
-                        }, onShare = {
-                            mainViewModel.onShare(it)
-                        }, onReport = {
-                            mainViewModel.onReport(it)
-                        }, onReported = {
-                            mainViewModel.closeReport()
-                        }
+                        { mainViewModel.onComment(it) },
+                        { mainViewModel.onMenu(it) },
+                        { mainViewModel.onShare(it) },
+                        { mainViewModel.onReport(it) },
+                        { mainViewModel.closeReport() }
                     )
                 }
                 composable("profile") { myProfileScreen.invoke() }
@@ -84,41 +73,28 @@ fun MainScreen(
             MainBottomNavigation(navController = navController)
         }
         if (uiState.showComment != null) {
-            commentDialog.invoke(reviewId = uiState.showComment!!, onClose = {
-                mainViewModel.closeComment()
-            })
+            commentDialog.invoke(uiState.showComment!!) { mainViewModel.closeComment() }
         }
 
         if (uiState.showMenu != null) {
             menuDialog.invoke(
-                reviewId = uiState.showMenu!!,
-                onClose = {
-                    mainViewModel.closeMenu()
-                },
-                onReport = {
-                    mainViewModel.onReport(it)
-                },
-                onEdit = {
+                uiState.showMenu!!,
+                { mainViewModel.closeMenu() },
+                { mainViewModel.onReport(it) },
+                {
                     mainViewModel.onEdit(it)
                     onEdit.invoke(it)
                 },
-                onDelete = {
-                    mainViewModel.onDelete(it)
-                }
+                { mainViewModel.onDelete(it) }
             )
         }
 
         if (uiState.showShare) {
-            shareDialog.invoke(onClose = {
-                mainViewModel.closeShare()
-            })
+            shareDialog.invoke { mainViewModel.closeShare() }
         }
 
         if (uiState.showReport != null) {
-            reportDialog.invoke(uiState.showReport!!,
-                onReported = {
-                    mainViewModel.closeReport()
-                })
+            reportDialog.invoke(uiState.showReport!!) { mainViewModel.closeReport() }
         }
 
         if (uiState.deleteReview != null) {
@@ -139,20 +115,4 @@ fun MainScreen(
                 })
         }
     }
-}
-
-
-@Preview
-@Composable
-fun RatingBar1(modifier: Modifier = Modifier) {
-    AndroidView(
-        modifier = modifier, factory = {
-            RatingBar(it).apply {
-                scaleX = 0.4f
-                scaleY = 0.4f
-                pivotX = 0f
-                pivotY = 0f
-                stepSize = 0f
-            }
-        })
 }
