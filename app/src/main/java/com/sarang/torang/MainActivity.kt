@@ -33,7 +33,6 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var loginRepository: LoginRepository
 
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -59,6 +58,9 @@ class MainActivity : ComponentActivity() {
                                 }
                                 composable("restaurant/{id}") {
                                     Text(text = "restaurant ${it.arguments?.getString("id")}")
+                                }
+                                composable("addReview") {
+                                    Text(text = "addReview")
                                 }
                             }
                         }
