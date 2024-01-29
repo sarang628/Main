@@ -33,7 +33,7 @@ ext {
     reportVersion = 'e795225629'
     mediaContentResolverVersion = '54ff69ee3a'
     commonWidgetVersion = '501b7b057a'
-    commentVersion = '69ccb633b0'
+    commentVersion = '53e62f3d89'
     mapVersion = '64559814e8'
     filterVersion = '5c0074be37'
     cardInfo = '30e8604397'

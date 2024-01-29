@@ -25,3 +25,6 @@
 [submodule "app/src/main/java/com/sarang/torang/di/finding_di"]
 	path = app/src/main/java/com/sarang/torang/di/finding_di
 	url = https://github.com/sarang628/finding_di.git
+[submodule "app/src/main/java/com/sarang/torang/di/comment_di"]
+	path = app/src/main/java/com/sarang/torang/di/comment_di
+	url = https://github.com/sarang628/comment_di.git
