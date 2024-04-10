@@ -22,8 +22,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.samples.apps.sunflower.ui.TorangTheme
 import com.sarang.torang.di.main_di.ProvideMainScreen
-import com.sryang.torang_repository.repository.LoginRepository
-import com.sryang.torang_repository.repository.LoginRepositoryTest
+import com.sarang.torang.repository.LoginRepository
+import com.sarang.torang.repository.LoginRepositoryTest
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -48,6 +48,9 @@ class MainActivity : ComponentActivity() {
                                 composable("main") {
                                     ProvideMainScreen(
                                         navController = navController,
+                                        onBackPressed = {
+
+                                        }
                                     )
                                 }
                                 composable("modReview/{id}") {

@@ -14,6 +14,8 @@
 - Room(데이터베이스)
 - Hilt(의존성 주입)
 
+## 개발환경 설정
+
 ### Jetpack
 - UI 라이브러리 JetpackCompose
 - Navigation 라이브러리 NavigationComnent
@@ -28,7 +30,6 @@
 - 단점
   - 공통 라이브러리 적용 시 해당 라이브러리가 변경되면 모든 화면 모듈을 업데이트해줘야해서 이를 분리하는 작업을 함.
   - 처음 시도해보는 방식으로 시행착오가 많고. 초기개발 시 잦은 라이브러리 업데이트로 개발 외 작업공수가 많이 듬.
-
 
 # 토랑 메인화면 모듈
 최상단에서 4개의 화면을 제어하는 화면입니다. BottomNavigationView와 Jetpack Navigation
