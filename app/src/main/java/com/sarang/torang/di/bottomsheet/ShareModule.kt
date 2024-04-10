@@ -1,10 +1,10 @@
 package com.sryang.torangbottomsheet.di.bottomsheet
 
+import com.sarang.torang.api.ApiProfile
+import com.sarang.torang.data.dao.LoggedInUserDao
+import com.sarang.torang.session.SessionService
 import com.sryang.torang.data.User
 import com.sryang.torang.usecase.GetFollowerUseCase
-import com.sryang.torang_repository.api.ApiProfile
-import com.sryang.torang_repository.data.dao.LoggedInUserDao
-import com.sryang.torang_repository.session.SessionService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
