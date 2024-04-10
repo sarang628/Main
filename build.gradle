@@ -27,7 +27,7 @@ ext {
     findingVersion = '7e3622b409'
     themeVersion = '28a1702347'
     myReviewVersion = '7788b8d9f7'
-    torangRepositoryVersion = 'cd793930dc'
+    torangRepositoryVersion = 'e08e769c25'
     torangBottomSheetVersion = '605516c161'
     instaGramGalleryVersion = '0f8ae3c8f7'
     reportVersion = 'e795225629'
