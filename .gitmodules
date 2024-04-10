@@ -28,3 +28,6 @@
 [submodule "app/src/main/java/com/sarang/torang/di/comment_di"]
 	path = app/src/main/java/com/sarang/torang/di/comment_di
 	url = https://github.com/sarang628/comment_di.git
+[submodule "app/src/main/java/com/sarang/torang/di/report_di"]
+	path = app/src/main/java/com/sarang/torang/di/report_di
+	url = https://github.com/sarang628/report_di
