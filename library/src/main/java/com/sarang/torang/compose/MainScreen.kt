@@ -68,7 +68,10 @@ fun MainScreen(
 ) {
     val uiState by mainViewModel.uiState.collectAsState()
     val sheetState: BottomSheetScaffoldState = rememberBottomSheetScaffoldState(
-        bottomSheetState = rememberStandardBottomSheetState(initialValue = SheetValue.Hidden, skipHiddenState = false)
+        bottomSheetState = rememberStandardBottomSheetState(
+            initialValue = SheetValue.Hidden,
+            skipHiddenState = false
+        )
     )
     val coroutine = rememberCoroutineScope()
 
@@ -90,21 +93,23 @@ fun MainScreen(
                 modifier = Modifier.weight(1f)
             ) {
                 composable("feed") {
+                    feedScreen.invoke(
+                        {
+                            mainViewModel.onComment(it)
+                            coroutine.launch {
+                                sheetState.bottomSheetState.expand()
+                            }
+                        },
+                        { mainViewModel.onMenu(it) },
+                        { mainViewModel.onShare(it) },
+                        { mainViewModel.onReport(it) },
+                        { mainViewModel.closeReport() }
+                    )
+
                     commentBottomSheet.invoke(uiState.showComment, {}, sheetState, {
                         onBackPressed?.invoke()
                     }, {
-                        feedScreen.invoke(
-                            {
-                                mainViewModel.onComment(it)
-                                coroutine.launch {
-                                    sheetState.bottomSheetState.expand()
-                                }
-                            },
-                            { mainViewModel.onMenu(it) },
-                            { mainViewModel.onShare(it) },
-                            { mainViewModel.onReport(it) },
-                            { mainViewModel.closeReport() }
-                        )
+
                     })
                 }
                 composable("profile") { myProfileScreen.invoke() }
