@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Tab
@@ -36,13 +37,13 @@ val items = listOf(
     Screen.Profile
 )
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainBottomNavigation(navController: NavController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     var state by remember { mutableStateOf(0) }
     val titles = listOf("feed", "finding", "alarm", "profile")
-    Log.d("RestaurntTopMenu1", currentDestination?.route.toString())
     Column {
         PrimaryTabRow(
             selectedTabIndex = if (currentDestination == null) 0 else titles.indexOf(
