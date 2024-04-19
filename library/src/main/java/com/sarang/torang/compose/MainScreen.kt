@@ -124,11 +124,11 @@ fun MainScreen(
                 uiState.showMenu!!,
                 { mainViewModel.closeMenu() },
                 { mainViewModel.onReport(it) },
+                { mainViewModel.onDelete(it) },
                 {
                     mainViewModel.onEdit(it)
                     onEdit.invoke(it)
-                },
-                { mainViewModel.onDelete(it) }
+                }
             )
         }
 
