@@ -73,3 +73,4 @@ implementation "com.github.sarang628:TorangDetail:$restaurantVersion"
 ## 로그인 기능 요청
 로그인 로직 : Design 모듈 LoginLogic
 로그인 로직 구현 : Login 모듈
+
