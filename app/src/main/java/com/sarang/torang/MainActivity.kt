@@ -47,12 +47,7 @@ class MainActivity : ComponentActivity() {
                         Box(modifier = Modifier.height((LocalConfiguration.current.screenHeightDp.dp) - 40.dp)) {
                             NavHost(navController = navController, startDestination = "main") {
                                 composable("main") {
-                                    ProvideMainScreen(
-                                        navController = navController,
-                                        onBackPressed = {
-
-                                        }
-                                    )
+                                    ProvideMainScreen(navController = navController)
                                 }
                                 composable("modReview/{id}") {
                                     Text(text = "modReview ${it.arguments?.getString("id")}")
@@ -66,9 +61,10 @@ class MainActivity : ComponentActivity() {
                                 composable("addReview") {
                                     Text(text = "addReview")
                                 }
-                                composable("myFeed/{reviewId}"){
+                                composable("myFeed/{reviewId}") {
                                     ProvideMyFeedScreen(
-                                        reviewId = it.arguments?.getString("reviewId")?.toInt() ?: 0,
+                                        reviewId = it.arguments?.getString("reviewId")?.toInt()
+                                            ?: 0,
                                     )
                                 }
                             }

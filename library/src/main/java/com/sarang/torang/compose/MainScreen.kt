@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -23,35 +22,15 @@ import com.sarang.torang.viewmodels.MainViewModel
 @Composable
 fun MainScreen(
     mainViewModel: MainViewModel = hiltViewModel(),
-    feedScreen: @Composable (
-        onComment: ((Int) -> Unit),
-        onMenu: ((Int) -> Unit),
-        onShare: ((Int) -> Unit)
-    ) -> Unit,
+    feedScreen: @Composable (onComment: ((Int) -> Unit), onMenu: ((Int) -> Unit), onShare: ((Int) -> Unit)) -> Unit,
     findingScreen: @Composable () -> Unit,
     myProfileScreen: @Composable () -> Unit,
     alarm: @Composable () -> Unit,
-    commentBottomSheet: @Composable (
-        reviewId: Int?,
-        onDismissRequest: () -> Unit,
-        onBackPressed: () -> Unit,
-        content: @Composable (PaddingValues) -> Unit
-    ) -> Unit,
-    menuDialog: @Composable (
-        reviewId: Int,
-        onClose: () -> Unit,
-        onReport: (Int) -> Unit,
-        onDelete: (Int) -> Unit,
-        onEdit: (Int) -> Unit
-    ) -> Unit,
-    shareDialog: @Composable (
-        onClose: () -> Unit
-    ) -> Unit,
-    reportDialog: @Composable (
-        Int, onReported: () -> Unit
-    ) -> Unit,
-    onEdit: (Int) -> Unit,
-    onBackPressed: (() -> Unit)? = null
+    commentBottomSheet: @Composable (reviewId: Int?) -> Unit,
+    menuDialog: @Composable (reviewId: Int, onClose: () -> Unit, onReport: (Int) -> Unit, onDelete: (Int) -> Unit, onEdit: (Int) -> Unit) -> Unit,
+    shareDialog: @Composable (onClose: () -> Unit) -> Unit,
+    reportDialog: @Composable (Int, onReported: () -> Unit) -> Unit,
+    onEdit: (Int) -> Unit
 ) {
     val uiState by mainViewModel.uiState.collectAsState()
 
@@ -69,12 +48,7 @@ fun MainScreen(
                         { mainViewModel.onMenu(it) },
                         { mainViewModel.onShare(it) }
                     )
-
-                    commentBottomSheet.invoke(uiState.showComment, {}, {
-                        onBackPressed?.invoke()
-                    }, {
-
-                    })
+                    commentBottomSheet.invoke(uiState.showComment)
                 }
                 composable("profile") { myProfileScreen.invoke() }
                 composable("finding") { findingScreen.invoke() }
@@ -95,6 +69,8 @@ fun MainScreen(
                 }
             )
         }
+
+        MainDialogs(uiState.showShare)
 
         if (uiState.showShare) {
             shareDialog.invoke { mainViewModel.closeShare() }
