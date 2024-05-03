@@ -9,18 +9,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.viewmodels.MainViewModel
 
 @Composable
-fun MainScreen(
+fun MainMyFeedScreen(
     mainViewModel: MainViewModel = hiltViewModel(),
-    feedScreen: @Composable (onComment: ((Int) -> Unit), onMenu: ((Int) -> Unit), onShare: ((Int) -> Unit)) -> Unit,
-    findingScreen: @Composable () -> Unit,
-    myProfileScreen: @Composable () -> Unit,
-    alarm: @Composable () -> Unit,
+    myFeedScreen: @Composable (onComment: ((Int) -> Unit), onMenu: ((Int) -> Unit), onShare: ((Int) -> Unit)) -> Unit,
     commentBottomSheet: @Composable (reviewId: Int?) -> Unit,
     menuDialog: @Composable (reviewId: Int, onClose: () -> Unit, onReport: (Int) -> Unit, onDelete: (Int) -> Unit, onEdit: (Int) -> Unit) -> Unit,
     shareDialog: @Composable (onClose: () -> Unit) -> Unit,
@@ -29,28 +23,14 @@ fun MainScreen(
 ) {
     val uiState by mainViewModel.uiState.collectAsState()
 
-    Log.d("__MainScreen", "showComment = ${uiState.showComment.toString()}")
+    Log.d("__MainMyFeedScreen", "showComment = ${uiState.showComment.toString()}")
     Box(Modifier.fillMaxSize()) {
-        Column {
-            val navController = rememberNavController()
-            NavHost(
-                navController = navController, startDestination = "feed",
-                modifier = Modifier.weight(1f)
-            ) {
-                composable("feed") {
-                    feedScreen.invoke(
-                        { mainViewModel.onComment(it) },
-                        { mainViewModel.onMenu(it) },
-                        { mainViewModel.onShare(it) }
-                    )
-                    commentBottomSheet.invoke(uiState.showComment)
-                }
-                composable("profile") { myProfileScreen.invoke() }
-                composable("finding") { findingScreen.invoke() }
-                composable("alarm") { alarm.invoke() }
-            }
-            MainBottomNavigation(navController = navController)
-        }
+        myFeedScreen.invoke(
+            { mainViewModel.onComment(it) },
+            { mainViewModel.onMenu(it) },
+            { mainViewModel.onShare(it) }
+        )
+        commentBottomSheet.invoke(uiState.showComment)
 
         MainDialogs(
             uiState = uiState.dialogUiState,

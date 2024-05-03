@@ -2,6 +2,8 @@ package com.sarang.torang.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sarang.torang.compose.MainDialogEvent
+import com.sarang.torang.compose.MainDialogUiState
 import com.sarang.torang.uistate.MainUiState
 import com.sarang.torang.usecase.DeleteReviewUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,61 +15,94 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    val deleteReviewUseCase: DeleteReviewUseCase
+    private val deleteReviewUseCase: DeleteReviewUseCase
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(MainUiState())
+    private val _uiState = MutableStateFlow(
+        MainUiState(
+            dialogUiState = MainDialogUiState(mainDialogEvent = mainDialogEvent())
+        )
+    )
     val uiState = _uiState.asStateFlow()
+
+
+    private fun mainDialogEvent(): MainDialogEvent {
+        return MainDialogEvent(
+            onCloseShare = {
+                _uiState.update {
+                    it.copy(
+                        dialogUiState = it.dialogUiState.copy(
+                            showShare = false
+                        )
+                    )
+                }
+            },
+            closeReport = {
+                _uiState.update {
+                    it.copy(
+                        dialogUiState = it.dialogUiState.copy(
+                            showReport = null
+                        )
+                    )
+                }
+            },
+            onDismissRequest = {
+                _uiState.update {
+                    it.copy(
+                        dialogUiState = it.dialogUiState.copy(
+                            deleteReview = null
+                        )
+                    )
+                }
+            },
+            onDelete = {
+                viewModelScope.launch {
+                    uiState.value.dialogUiState.deleteReview?.let {
+                        deleteReviewUseCase.invoke(it)
+                    }
+                    _uiState.update { it.copy(dialogUiState = it.dialogUiState.copy(deleteReview = null)) }
+                }
+            },
+            onCloseMenu = { _uiState.update { it.copy(dialogUiState = it.dialogUiState.copy(showMenu = null)) } },
+            onReport = { reviewId ->
+                _uiState.update {
+                    it.copy(
+                        dialogUiState = it.dialogUiState.copy(
+                            showReport = reviewId,
+                            showMenu = null
+                        )
+                    )
+                }
+            },
+            onDeleteMenu = { reviewId ->
+                _uiState.update {
+                    it.copy(
+                        dialogUiState = it.dialogUiState.copy(
+                            deleteReview = reviewId,
+                            showMenu = null
+                        )
+                    )
+                }
+            },
+            onEdit = { reviewId ->
+                _uiState.update {
+                    it.copy(
+                        modifyReview = reviewId,
+                        dialogUiState = it.dialogUiState.copy(showMenu = null)
+                    )
+                }
+            }
+        )
+    }
 
     fun onComment(reviewId: Int) {
         _uiState.update { it.copy(showComment = reviewId) }
     }
 
-    fun closeComment() {
-        _uiState.update { it.copy(showComment = null) }
-    }
-
     fun onMenu(reviewId: Int) {
-        _uiState.update { it.copy(showMenu = reviewId) }
-    }
-
-    fun closeMenu() {
-        _uiState.update { it.copy(showMenu = null) }
+        _uiState.update { it.copy(dialogUiState = it.dialogUiState.copy(showMenu = reviewId)) }
     }
 
     fun onShare(it: Int) {
-        _uiState.update { it.copy(showShare = true) }
-    }
-
-    fun closeShare() {
-        _uiState.update { it.copy(showShare = false) }
-    }
-
-    fun onReport(reviewId: Int) {
-        _uiState.update { it.copy(showReport = reviewId, showMenu = null) }
-    }
-
-    fun onEdit(reviewId: Int) {
-        _uiState.update { it.copy(modifyReview = reviewId, showMenu = null) }
-    }
-
-    fun onDelete(reviewId: Int) {
-        _uiState.update { it.copy(deleteReview = reviewId, showMenu = null) }
-    }
-
-    fun closeReport() {
-        _uiState.update { it.copy(showReport = null) }
-    }
-
-    fun dismissDeleteReview() {
-        _uiState.update { it.copy(deleteReview = null) }
-    }
-
-    fun deleteReview() {
-        viewModelScope.launch {
-            uiState.value.deleteReview?.let {
-                deleteReviewUseCase.invoke(it)
-            }
-            dismissDeleteReview()
-        }
+        _uiState.update { it.copy(dialogUiState = it.dialogUiState.copy(showShare = true)) }
     }
 }
