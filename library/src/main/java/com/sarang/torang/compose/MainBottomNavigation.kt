@@ -37,9 +37,12 @@ val items = listOf(
     Screen.Profile
 )
 
+/**
+ * @param onBottomMenu 하단 메뉴 선택 시 이벤트
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainBottomNavigation(navController: NavController) {
+fun MainBottomNavigation(navController: NavController, onBottomMenu: ((String) -> Unit)? = null) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     var state by remember { mutableStateOf(0) }
@@ -55,6 +58,12 @@ fun MainBottomNavigation(navController: NavController) {
                 Tab(
                     selected = currentDestination?.hierarchy?.any { it.route == titles[index] } == true,
                     onClick = {
+                        Log.d("__MainBottomNavigation", "onClick ${titles[index]}")
+                        if (onBottomMenu == null)
+                            Log.w("__MainBottomNavigation", "onBottomMenu isn't set")
+
+                        onBottomMenu?.invoke(titles[index])
+
                         state = index
                         navController.navigate(titles[index]) {
                             // Pop up to the start destination of the graph to

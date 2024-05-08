@@ -27,7 +27,7 @@ class ShareModule {
             override suspend fun invoke(): List<User> {
                 val token = sessionService.getToken() ?: throw Exception("로그인을 해주세요.")
 
-                return apiProfile.getFollowing(token).map {
+                return apiProfile.getMyFollowing(token).map {
                     User(userId = it.followerId, userName = it.userName, picture = it.profilePicUrl)
                 }
             }
