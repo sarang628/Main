@@ -28,8 +28,8 @@ import com.google.samples.apps.sunflower.ui.TorangTheme
 import com.sarang.torang.compose.MainScreen
 import com.sarang.torang.di.bottomsheet.provideFeedMenuBottomSheetDialog
 import com.sarang.torang.di.comment_di.provideCommentBottomDialogSheet
-import com.sarang.torang.di.feed_di.provideFeedScreen
 import com.sarang.torang.di.main_di.ProvideMyFeedScreen
+import com.sarang.torang.di.main_di.provideFeedScreen
 import com.sarang.torang.di.profile_di.MyProfileScreenNavHost
 import com.sarang.torang.di.report_di.provideReportModal
 import com.sarang.torang.repository.LoginRepository

@@ -21,8 +21,8 @@ ext {
     nav_version = '2.5.3'
 
     alarmVersion = '2bf7ba7bdf'
-    baseFeedVersion = '3d16f49d20'
-    feedVersion = '24f6530220'
+    baseFeedVersion = 'c7b0de9487'
+    feedVersion = 'fd818b4460'
     profileVersion = '472768ceba'
     findingVersion = '140273ff81'
     themeVersion = '28a1702347'
@@ -33,6 +33,7 @@ ext {
     reportVersion = 'bb52e7be2e'
     mediaContentResolverVersion = '54ff69ee3a'
     commonWidgetVersion = '501b7b057a'
+    commonImageLoaderVersion = '8230ade5ca'
     commentVersion = '1ab0cba914'
     mapVersion = '28f340f717'
     filterVersion = 'e2a358f7e9'
