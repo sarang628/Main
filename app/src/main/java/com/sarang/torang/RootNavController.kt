@@ -1,7 +1,5 @@
 package com.sarang.torang
 
-import androidx.navigation.NavHostController
-
 class RootNavController {
     fun modReview(): (Int) -> Unit = { }
 

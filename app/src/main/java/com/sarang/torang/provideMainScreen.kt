@@ -4,13 +4,8 @@ import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavHost
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.MainScreen
-import com.sarang.torang.compose.feed.FeedScreenForMain
 import com.sarang.torang.di.profile_di.MyProfileScreenNavHost
 import com.sarang.torang.viewmodels.FeedDialogsViewModel
 import com.sryang.findinglinkmodules.di.finding_di.Finding
@@ -56,37 +51,6 @@ fun provideMainScreen(
                 )
             },
             alarm = { AlarmScreen(onEmailLogin = {}) },
-        )
-    }
-}
-
-@Composable
-fun FeedScreenWithProfile(
-    rootNavController: RootNavController,
-    dialogsViewModel: FeedDialogsViewModel,
-) {
-    val feedNavHostController = rememberNavController()
-    NavHost(navController = feedNavHostController, startDestination = "feed") {
-        composable("feed") {
-            FeedScreenForMain(
-                onAddReview = { rootNavController.addReview() },
-                feed = provideFeed(
-                    { dialogsViewModel.onComment(it) },
-                    { dialogsViewModel.onMenu(it) },
-                    { dialogsViewModel.onShare(it) },
-                    navController = feedNavHostController,
-                    rootNavController = rootNavController
-                ),
-                consumeOnTop = {},
-                onTop = false
-            )
-        }
-        composable(
-            "profile/{id}",
-            content = provideProfileScreen(
-                rootNavController = rootNavController,
-                navController = feedNavHostController
-            )
         )
     }
 }
