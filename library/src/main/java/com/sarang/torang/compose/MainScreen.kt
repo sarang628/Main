@@ -10,14 +10,11 @@ import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun MainScreen(
-    feedScreen: @Composable (onComment: ((Int) -> Unit), onMenu: ((Int) -> Unit), onShare: ((Int) -> Unit), navBackStackEntry: NavBackStackEntry) -> Unit,
+    feedScreen: @Composable () -> Unit,
     findingScreen: @Composable () -> Unit,
     myProfileScreen: @Composable () -> Unit,
     alarm: @Composable () -> Unit,
-    onBottomMenu: ((String) -> Unit)? = null,
-    onComment: (Int) -> Unit,
-    onMenu: (Int) -> Unit,
-    onShare: (Int) -> Unit,
+    onBottomMenu: ((String) -> Unit)? = null
 ) {
     Column {
         val navController = rememberNavController()
@@ -25,9 +22,7 @@ fun MainScreen(
             navController = navController, startDestination = "feed",
             modifier = Modifier.weight(1f)
         ) {
-            composable("feed") { navBackStackEntry ->
-                feedScreen.invoke(onComment, onMenu, onShare, navBackStackEntry)
-            }
+            composable("feed") { feedScreen.invoke() }
             composable("profile") { myProfileScreen.invoke() }
             composable("finding") { findingScreen.invoke() }
             composable("alarm") { alarm.invoke() }
