@@ -17,13 +17,12 @@ import com.sryang.findinglinkmodules.di.finding_di.Finding
 import com.sryang.torang.compose.AlarmScreen
 
 fun provideMainScreen(
-    navController: NavHostController,
     rootNavController: RootNavController,
 ): @Composable (NavBackStackEntry) -> Unit = {
     val dialogsViewModel: FeedDialogsViewModel = hiltViewModel()
     ProvideMainDialog(
         dialogsViewModel = dialogsViewModel,
-        navController = navController
+        navController = rootNavController
     ) {
         MainScreen(
             feedScreen = {
@@ -37,8 +36,8 @@ fun provideMainScreen(
                 val profileNavController = rememberNavController() // 상위에 선언하면 앱 죽음
                 MyProfileScreenNavHost(
                     navController = profileNavController,
-                    onSetting = { navController.navigate("settings") },
-                    onEmailLogin = { navController.navigate("emailLogin") },
+                    onSetting = { rootNavController.settings() },
+                    onEmailLogin = { rootNavController.emailLogin() },
                     onReview = {
                         Log.d(
                             "__Main",
@@ -49,8 +48,8 @@ fun provideMainScreen(
                     onClose = { profileNavController.popBackStack() },
                     myFeed = {
                         ProvideMyFeedScreen(
-                            navController = navController,
                             rootNavController = rootNavController,
+                            navController = profileNavController,
                             navBackStackEntry = it
                         )
                     }
@@ -67,8 +66,6 @@ fun FeedScreenWithProfile(
     dialogsViewModel: FeedDialogsViewModel,
 ) {
     val feedNavHostController = rememberNavController()
-
-
     NavHost(navController = feedNavHostController, startDestination = "feed") {
         composable("feed") {
             FeedScreenForMain(
@@ -86,7 +83,10 @@ fun FeedScreenWithProfile(
         }
         composable(
             "profile/{id}",
-            content = provideProfileScreen(rootNavController = rootNavController)
+            content = provideProfileScreen(
+                rootNavController = rootNavController,
+                navController = feedNavHostController
+            )
         )
     }
 }

@@ -15,23 +15,17 @@ import com.sryang.torangbottomsheet.di.bottomsheet.provideShareBottomSheetDialog
 @Composable
 fun ProvideMainDialog(
     dialogsViewModel: FeedDialogsViewModel = hiltViewModel(),
-    navController: NavHostController,
+    navController: RootNavController,
     contents: @Composable () -> Unit,
 ) {
-
     val uiState by dialogsViewModel.uiState.collectAsState()
-    val onEdit: (Int) -> Unit = {
-        navController.navigate("modReview/${it}")
-    }
     MainDialogs(
         uiState = uiState,
         commentBottomSheet = { provideCommentBottomDialogSheet().invoke(it) { dialogsViewModel.closeComment() } },
         menuDialog = provideFeedMenuBottomSheetDialog(),
         shareDialog = provideShareBottomSheetDialog(),
         reportDialog = provideReportModal(),
-        onEdit = {
-            navController.navigate("modReview/${it}")
-        },
+        onEdit = navController.modReview(),
         contents = contents
     )
 }

@@ -21,7 +21,7 @@ fun ProvideMyFeedScreen(
 ) {
     ProvideMainDialog(
         dialogsViewModel = dialogsViewModel,
-        navController = navController
+        navController = rootNavController
     ) {
         MyFeedScreen(
             reviewId = navBackStackEntry.arguments?.getString("reviewId")?.toInt()

@@ -3,12 +3,16 @@ package com.sarang.torang
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.RootNavController
 import com.sarang.torang.compose.ProfileScreenNavHost
 import com.sarang.torang.di.image.provideTorangAsyncImage
 
-internal fun provideProfileScreen(rootNavController: RootNavController): @Composable (NavBackStackEntry) -> Unit =
+internal fun provideProfileScreen(
+    rootNavController: RootNavController,
+    navController: NavHostController
+): @Composable (NavBackStackEntry) -> Unit =
     {
         val profileNavController = rememberNavController() // 상위에 선언하면 앱 죽음
         val userId = it.arguments?.getString("id")?.toInt()
@@ -16,7 +20,7 @@ internal fun provideProfileScreen(rootNavController: RootNavController): @Compos
             ProfileScreenNavHost(
                 navController = profileNavController,
                 id = userId,
-                onClose = { rootNavController.popBackStack() },
+                onClose = { navController.popBackStack() },
                 onEmailLogin = { rootNavController.emailLogin() },
                 onReview = { profileNavController.navigate("myFeed/${it}") },
                 myFeed = {

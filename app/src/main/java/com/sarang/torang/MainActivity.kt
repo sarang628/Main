@@ -45,7 +45,6 @@ class MainActivity : ComponentActivity() {
                                 composable(
                                     "main",
                                     content = provideMainScreen(
-                                        navController = navController,
                                         RootNavController()
                                     )
                                 )
