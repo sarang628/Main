@@ -122,7 +122,7 @@ fun provideMainScreen(
             onBottomMenu = {
                 Log.d("__MainActivity", "onBottomMenu:${it}")
             },
-            findingScreen = { Finding(navController = navController) },
+            findingScreen = { Finding(navController = RootNavController()) },
             myProfileScreen = {
                 val profileNavController = rememberNavController() // 상위에 선언하면 앱 죽음
                 MyProfileScreenNavHost(
