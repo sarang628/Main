@@ -1,10 +1,11 @@
-package com.sarang.torang.compose
+package com.sarang.torang.uistate
 
 data class MainDialogUiState(
     val showShare: Boolean = false,
     val showReport: Int? = null,
     val deleteReview: Int? = null,
     val showMenu: Int? = null,
+    val showComment: Int? = null,
     val mainDialogEvent: MainDialogEvent
 )
 
@@ -16,5 +17,4 @@ data class MainDialogEvent(
     val onCloseMenu: () -> Unit,
     val onReport: (Int) -> Unit,
     val onDeleteMenu: (Int) -> Unit,
-    val onEdit: (Int) -> Unit,
 )
