@@ -19,6 +19,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.samples.apps.sunflower.ui.TorangTheme
+import com.sarang.torang.di.main_di.ProvideMyFeedScreen
+import com.sarang.torang.di.main_di.provideMainScreen
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.repository.LoginRepositoryTest
 import dagger.hilt.android.AndroidEntryPoint
