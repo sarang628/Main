@@ -3,8 +3,8 @@ package com.sarang.alarm_test_app.di.alarm_di
 import android.util.Log
 import com.sarang.torang.BuildConfig
 import com.sarang.torang.api.ApiAlarm
-import com.sarang.torang.data.RemoteAlarm
 import com.sarang.torang.data.dao.LoggedInUserDao
+import com.sarang.torang.data.remote.response.AlarmAlarmModel
 import com.sarang.torang.session.SessionService
 import com.sryang.torang.data1.alarm.AlarmListItem
 import com.sryang.torang.data1.alarm.AlarmType
@@ -41,7 +41,7 @@ class AlarmServiceModule {
     }
 }
 
-fun RemoteAlarm.toAlarmListItem(): AlarmListItem {
+fun AlarmAlarmModel.toAlarmListItem(): AlarmListItem {
     Log.d("RemoteAlarm", this.toString())
     return AlarmListItem(
         id = this.alarmId,

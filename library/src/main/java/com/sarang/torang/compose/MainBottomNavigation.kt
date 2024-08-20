@@ -40,7 +40,6 @@ val items = listOf(
 /**
  * @param onBottomMenu 하단 메뉴 선택 시 이벤트
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainBottomNavigation(navController: NavController, onBottomMenu: ((String) -> Unit)? = null) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -51,8 +50,7 @@ fun MainBottomNavigation(navController: NavController, onBottomMenu: ((String) -
         PrimaryTabRow(
             selectedTabIndex = if (currentDestination == null) 0 else titles.indexOf(
                 currentDestination.route.toString()
-            ),
-            indicator = {}
+            )
         ) {
             items.forEachIndexed { index, screen ->
                 Tab(

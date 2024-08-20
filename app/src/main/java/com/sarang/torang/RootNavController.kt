@@ -23,6 +23,10 @@ class RootNavController {
 
     }
 
+    fun like(id : Int) {
+
+    }
+
     fun main() {
 
     }
@@ -48,6 +52,14 @@ class RootNavController {
     }
 
     fun singleTopMain() {
+
+    }
+
+    fun review(it: Int) {
+
+    }
+
+    fun profile(it: Int) {
 
     }
 }

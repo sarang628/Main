@@ -31,3 +31,6 @@
 [submodule "app/src/main/java/com/sarang/torang/di/report_di"]
 	path = app/src/main/java/com/sarang/torang/di/report_di
 	url = https://github.com/sarang628/report_di
+[submodule "gradle/TorangToml"]
+	path = gradle/TorangToml
+	url = https://github.com/sarang628/TorangToml.git

@@ -46,9 +46,11 @@ class MainActivity : ComponentActivity() {
                             NavHost(navController = navController, startDestination = "main") {
                                 composable(
                                     "main",
-                                    content = provideMainScreen(
-                                        RootNavController()
-                                    )
+                                    content = { it ->
+                                        provideMainScreen(
+                                            RootNavController()
+                                        ).invoke()
+                                    }
                                 )
                                 composable("modReview/{id}") {
                                     Text(text = "modReview ${it.arguments?.getString("id")}")
