@@ -1,5 +1,6 @@
 package com.sarang.torang.compose
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,7 +15,7 @@ fun MainScreen(
     findingScreen: @Composable () -> Unit,
     myProfileScreen: @Composable () -> Unit,
     alarm: @Composable () -> Unit,
-    onBottomMenu: ((String) -> Unit)? = null
+    onBottomMenu: ((String) -> Unit)? = null,
 ) {
     Column {
         val navController = rememberNavController()

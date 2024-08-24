@@ -19,32 +19,35 @@ material3 = "1.2.0-alpha10"
 retrofit = "2.9.0"
 room = "2.5.1"
 addReviewVersion = '268f368236'
-alarmVersion = '34ba26f49c'
-baseFeedVersion = '8e309e63d1'
+alarmVersion = 'a48ab79e8f'
+baseFeedVersion = '9c2542a90a'
 cardInfoVersion = "0ae8d4fd77"
-feedVersion = '1e5d387ea8'
-profileVersion = '68528c88b0'
+feedVersion = '6b90ef87f2'
+profileVersion = 'e6c6dada54'
 findingVersion = '47ad95d530'
 themeVersion = '28a1702347'
 themesVersion = 'bdb00d9256'
 myReviewVersion = '7788b8d9f7'
-torangDetailVersion = '1f7f01f3fb'
+torangDetailVersion = '358de20325'
 loginVersion = 'ac5034132b'
 splashVersion = 'ea97b19733'
-torangRepositoryVersion = '794f8dfd90'
+torangRepositoryVersion = '225938b065'
 settingsVersion = '06efa47b11'
-mapVersion = 'f7ff07fe0a'
+mapVersion = '7507c8c152'
 torangBottomSheetVersion = 'c84399fb7f'
 instaGramGalleryVersion = 'b506724857'
-filterVersion = '67a1dc559b'
+filterVersion = '7e8fc56f8a'
 mainVersion = '04e8b58fa5'
 reportVersion = 'bb52e7be2e'
 mediaContentResolverVersion = '54ff69ee3a'
 commentVersion = '13a0dff4c3'
 commonImageLoaderVersion = 'd0446c327d'
 imagePagerVersion = '35b42a2392'
-torangImagePagerVersion = '6aba83ba7b'
+torangImagePagerVersion = '7667c10f6d'
 likesScreenVersion = 'adb7eb7479'
+mUI3ScrollToRefreshVersion = '6daacb7290'
+bottomDetectLazyColunmVersion = '2486834b10'
+expandableTextVersion = '547e79fc42'
 featureDeliveryVersion = "2.1.0"
 serialization = "1.7.10"
 
@@ -124,6 +127,9 @@ commonImageLoader               = { group = "com.github.sarang628", name = "Comm
 imagePager                      = { group = "com.github.sarang628", name = "ImagePager",            version.ref = "imagePagerVersion" }
 torangImagePager                = { group = "com.github.sarang628", name = "TorangImagePager",      version.ref = "torangImagePagerVersion" }
 likes                           = { group = "com.github.sarang628", name = "Likes",                 version.ref = "likesScreenVersion" }
+mui3scrolltorefresh             = { group = "com.github.sarang628", name = "MUI3ScrollToRefresh",   version.ref = "mUI3ScrollToRefreshVersion" }
+expandableText                  = { group = "com.github.sarang628", name = "ExpandableText",        version.ref = "expandableTextVersion" }
+bottomdetectlazycolunm          = { group = "com.github.sarang628", name = "BottomDetectLazyColunm",version.ref = "bottomDetectLazyColunmVersion" }
 themes                          = { group = "com.github.bingley1",  name = "Themes",                version.ref = "themesVersion" }
 feature-delivery                = { group = "com.google.android.play", name = "feature-delivery",   version.ref = "featureDeliveryVersion"}
 # @formatter:on

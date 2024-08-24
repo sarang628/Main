@@ -151,6 +151,8 @@ dependencies {
     implementation(libs.mediaContentResolver)
     implementation(libs.instagramGallery)
     implementation(libs.report)
+    implementation(libs.mui3scrolltorefresh)
+    implementation(libs.expandableText)
 
     implementation(project(":library"))
 }

@@ -1,4 +1,4 @@
-package com.sryang.findinglinkmodules.di.filter
+package com.sarang.torang.di.filter
 
 import com.sarang.torang.api.ApiFilter
 import com.sarang.torang.data.remote.response.CityApiModel
@@ -27,7 +27,8 @@ fun CityApiModel.toCity(): City {
         name = this.name,
         latitude = this.latitude,
         longitude = this.longitude,
-        url = "http://sarang628.iptime.org:89/"+this.url,
-        zoom = this.zoom
+        url = this.url,
+        zoom = this.zoom,
+        nation = this.nation
     )
 }
