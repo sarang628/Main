@@ -1,10 +1,9 @@
 package com.sarang.torang.compose
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavBackStackEntry
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -28,6 +27,17 @@ fun MainScreen(
             composable("finding") { findingScreen.invoke() }
             composable("alarm") { alarm.invoke() }
         }
-        MainBottomNavigation(navController = navController, onBottomMenu = onBottomMenu)
+//        MainBottomNavigation(navController = navController, onBottomMenu = onBottomMenu)
+        MainBottomNavigationAppBar(navController = navController, onBottomMenu = onBottomMenu)
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewMainScreen() {
+    MainScreen(
+        feedScreen = { /*TODO*/ },
+        findingScreen = { /*TODO*/ },
+        myProfileScreen = { /*TODO*/ },
+        alarm = { /*TODO*/ })
 }

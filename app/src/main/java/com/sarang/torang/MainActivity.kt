@@ -41,8 +41,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    Column(Modifier.verticalScroll(rememberScrollState())) {
-                        Box(modifier = Modifier.height((LocalConfiguration.current.screenHeightDp.dp) - 40.dp)) {
+//                    Column(Modifier.verticalScroll(rememberScrollState())) {
+//                        Box(modifier = Modifier.height((LocalConfiguration.current.screenHeightDp.dp) - 40.dp)) {
                             NavHost(navController = navController, startDestination = "main") {
                                 composable(
                                     "main",
@@ -73,9 +73,10 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                         }
-                        LoginRepositoryTest(loginRepository = loginRepository)
-                    }
-                }
+                        //LoginRepositoryTest(loginRepository = loginRepository)
+                        //}
+//                    }
+//                }
             }
         }
     }
