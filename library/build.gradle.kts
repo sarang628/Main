@@ -41,6 +41,12 @@ android {
     }
 }
 
+afterEvaluate {
+    tasks.matching { it.name.startsWith("generate") && it.name.endsWith("BuildConfig") }.configureEach {
+        enabled = false
+    }
+}
+
 dependencies {
     // HILT
     implementation(libs.hilt)
