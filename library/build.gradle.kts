@@ -89,6 +89,10 @@ dependencies {
 }
 
 afterEvaluate {
+    tasks.matching { it.name.startsWith("generate") && it.name.endsWith("BuildConfig") }.configureEach {
+        enabled = false
+    }
+
     publishing {
         publications {
             create<MavenPublication>("release") {
