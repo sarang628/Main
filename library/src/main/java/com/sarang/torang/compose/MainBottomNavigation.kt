@@ -113,7 +113,7 @@ fun MainBottomNavigationAppBar(navController: NavController, onBottomMenu: ((Str
     Column {
         NavigationBar(
             Modifier.height(50.dp),
-            containerColor = Color(0xFFFCFBF5),
+            containerColor = MaterialTheme.colorScheme.background,
 //            selectedTabIndex = if (currentDestination == null) 0 else titles.indexOf(
 //                currentDestination.route.toString()
 //            )
