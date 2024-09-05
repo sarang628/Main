@@ -1,14 +1,11 @@
 package com.sarang.torang.compose
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,29 +15,36 @@ import com.sarang.torang.compose.main.Alarm
 import com.sarang.torang.compose.main.Feed
 import com.sarang.torang.compose.main.Finding
 import com.sarang.torang.compose.main.Profile
+import kotlinx.coroutines.launch
 
+/**
+ * 메인 화면
+ * @param
+ */
 @Composable
 fun MainScreen(
-    feedScreen: @Composable () -> Unit,
+    feedScreen: @Composable (
+        onReview: () -> Unit,
+    ) -> Unit,
     findingScreen: @Composable () -> Unit,
     myProfileScreen: @Composable () -> Unit,
     alarm: @Composable () -> Unit,
+    addReview: @Composable () -> Unit,
+    chat: @Composable () -> Unit,
     onBottomMenu: ((Any) -> Unit)? = null,
 ) {
+    val state = rememberPagerState(
+        initialPage = 1,
+        pageCount = { 3 },
+        initialPageOffsetFraction = 0f
+    )
+    val coroutine = rememberCoroutineScope()
     HorizontalPager(
-        state = rememberPagerState(
-            initialPage = 1,
-            pageCount = { 3 },
-            initialPageOffsetFraction = 0f
-        )
+        state = state
     ) {
         when (it) {
             0 -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color(0xFFEEEEEE))
-                )
+                addReview.invoke()
             }
 
             1 -> {
@@ -50,7 +54,13 @@ fun MainScreen(
                         navController = navController, startDestination = Feed,
                         modifier = Modifier.weight(1f)
                     ) {
-                        composable<Feed> { feedScreen.invoke() }
+                        composable<Feed> {
+                            feedScreen.invoke {
+                                coroutine.launch {
+                                    state.animateScrollToPage(3)
+                                }
+                            }
+                        }
                         composable<Profile> { myProfileScreen.invoke() }
                         composable<Finding> { findingScreen.invoke() }
                         composable<Alarm> { alarm.invoke() }
@@ -58,17 +68,18 @@ fun MainScreen(
                     }
                     MainBottomNavigationAppBar(
                         navController = navController,
-                        onBottomMenu = onBottomMenu
+                        onBottomMenu = onBottomMenu,
+                        onAddReview = {
+                            coroutine.launch {
+                                state.animateScrollToPage(0)
+                            }
+                        }
                     )
                 }
             }
 
             2 -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color(0xFFEEEEEE))
-                )
+                chat.invoke()
             }
         }
     }
@@ -81,5 +92,8 @@ fun PreviewMainScreen() {
         feedScreen = { /*TODO*/ },
         findingScreen = { /*TODO*/ },
         myProfileScreen = { /*TODO*/ },
-        alarm = { /*TODO*/ })
+        alarm = { /*TODO*/ },
+        addReview = { /*TODO*/ },
+        chat = { /*TODO*/ },
+    )
 }

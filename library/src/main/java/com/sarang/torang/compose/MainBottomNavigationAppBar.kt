@@ -37,6 +37,7 @@ import com.sarang.torang.compose.main.items
 fun MainBottomNavigationAppBar(
     navController: NavController,
     onBottomMenu: ((Any) -> Unit)? = null,
+    onAddReview: () -> Unit,
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -45,6 +46,11 @@ fun MainBottomNavigationAppBar(
         items = items,
         route = currentDestination?.route,
         onBottomMenu = {
+            if (it == Add) {
+                onAddReview.invoke()
+                return@MainBottomNavigationAppBar
+            }
+
             navController.navigate(it) {
                 // Pop up to the start destination of the graph to
                 // avoid building up a large stack of destinations

@@ -39,38 +39,40 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
 //                    Column(Modifier.verticalScroll(rememberScrollState())) {
 //                        Box(modifier = Modifier.height((LocalConfiguration.current.screenHeightDp.dp) - 40.dp)) {
-                            NavHost(navController = navController, startDestination = "main") {
-                                composable(
-                                    "main",
-                                    content = { it ->
-                                        provideMainScreen(
-                                            RootNavController()
-                                        ).invoke()
-                                    }
-                                )
-                                composable("modReview/{id}") {
-                                    Text(text = "modReview ${it.arguments?.getString("id")}")
-                                }
-                                composable("profile/{id}") {
-                                    Text(text = "profile ${it.arguments?.getString("id")}")
-                                }
-                                composable("restaurant/{id}") {
-                                    Text(text = "restaurant ${it.arguments?.getString("id")}")
-                                }
-                                composable("addReview") {
-                                    Text(text = "addReview")
-                                }
-                                composable("myFeed/{reviewId}") {
-                                    ProvideMyFeedScreen(
-                                        navController = navController,
-                                        rootNavController = RootNavController(),
-                                        navBackStackEntry = it
-                                    )
-                                }
+                    NavHost(navController = navController, startDestination = "main") {
+                        composable(
+                            "main",
+                            content = { it ->
+                                provideMainScreen(
+                                    RootNavController(),
+                                    videoPlayer = { url, isPlaying, onVideoClick -> }
+                                ).invoke()
                             }
+                        )
+                        composable("modReview/{id}") {
+                            Text(text = "modReview ${it.arguments?.getString("id")}")
                         }
-                        //LoginRepositoryTest(loginRepository = loginRepository)
-                        //}
+                        composable("profile/{id}") {
+                            Text(text = "profile ${it.arguments?.getString("id")}")
+                        }
+                        composable("restaurant/{id}") {
+                            Text(text = "restaurant ${it.arguments?.getString("id")}")
+                        }
+                        composable("addReview") {
+                            Text(text = "addReview")
+                        }
+                        composable("myFeed/{reviewId}") {
+                            ProvideMyFeedScreen(
+                                navController = navController,
+                                rootNavController = RootNavController(),
+                                navBackStackEntry = it,
+                                videoPlayer = { url, isPlaying, onVideoClick -> }
+                            )
+                        }
+                    }
+                }
+                //LoginRepositoryTest(loginRepository = loginRepository)
+                //}
 //                    }
 //                }
             }
@@ -91,6 +93,6 @@ fun MainBottomNavigationPreview() {
 @Composable
 fun MainBottomAppBarPreview() {
     TorangTheme {
-        MainBottomNavigationAppBar(navController = rememberNavController())
+        MainBottomNavigationAppBar(navController = rememberNavController(), onAddReview = {})
     }
 }
