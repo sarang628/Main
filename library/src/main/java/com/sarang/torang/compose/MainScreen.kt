@@ -19,7 +19,14 @@ import kotlinx.coroutines.launch
 
 /**
  * 메인 화면
- * @param
+ * @param feedScreen 피드화면
+ * @param findingScreen 음식점 찾기 화면
+ * @param myProfileScreen 내 프로필 화면
+ * @param alarm 알람 화면
+ * @param addReview 리뷰 추가 화면
+ * @param chat 채팅 화면
+ * @param onBottomMenu 하단바 클릭 리스너
+ * @param onCloseReview 리뷰 추가 닫기 리스너
  */
 @Composable
 fun MainScreen(
@@ -29,9 +36,10 @@ fun MainScreen(
     findingScreen: @Composable () -> Unit,
     myProfileScreen: @Composable () -> Unit,
     alarm: @Composable () -> Unit,
-    addReview: @Composable () -> Unit,
+    addReview: @Composable (onClose: () -> Unit) -> Unit,
     chat: @Composable () -> Unit,
     onBottomMenu: ((Any) -> Unit)? = null,
+    onCloseReview: (() -> Unit),
 ) {
     val state = rememberPagerState(
         initialPage = 1,
@@ -44,7 +52,7 @@ fun MainScreen(
     ) {
         when (it) {
             0 -> {
-                addReview.invoke()
+                addReview.invoke(onCloseReview)
             }
 
             1 -> {
@@ -95,5 +103,6 @@ fun PreviewMainScreen() {
         alarm = { /*TODO*/ },
         addReview = { /*TODO*/ },
         chat = { /*TODO*/ },
+        onCloseReview = {}
     )
 }
