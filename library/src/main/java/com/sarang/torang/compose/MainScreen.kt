@@ -39,7 +39,6 @@ fun MainScreen(
     addReview: @Composable (onClose: () -> Unit) -> Unit,
     chat: @Composable () -> Unit,
     onBottomMenu: ((Any) -> Unit)? = null,
-    onCloseReview: (() -> Unit),
 ) {
     val state = rememberPagerState(
         initialPage = 1,
@@ -52,7 +51,11 @@ fun MainScreen(
     ) {
         when (it) {
             0 -> {
-                addReview.invoke(onCloseReview)
+                addReview.invoke {
+                    coroutine.launch {
+                        state.animateScrollToPage(1)
+                    }
+                }
             }
 
             1 -> {
@@ -102,7 +105,6 @@ fun PreviewMainScreen() {
         myProfileScreen = { /*TODO*/ },
         alarm = { /*TODO*/ },
         addReview = { /*TODO*/ },
-        chat = { /*TODO*/ },
-        onCloseReview = {}
+        chat = { /*TODO*/ }
     )
 }
