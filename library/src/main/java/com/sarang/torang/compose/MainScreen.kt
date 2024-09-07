@@ -1,10 +1,17 @@
 package com.sarang.torang.compose
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
@@ -19,6 +26,11 @@ import kotlinx.coroutines.launch
 
 /**
  * 메인 화면
+ *
+ * 3개 페이지로 구성된 메인 화면
+ *
+ * 좌: 리뷰, 우: 채팅, 중앙: 피드, 음식점 찾기, 리뷰 추가, 알람, 프로필
+ *
  * @param feedScreen 피드화면
  * @param findingScreen 음식점 찾기 화면
  * @param myProfileScreen 내 프로필 화면
@@ -45,9 +57,20 @@ fun MainScreen(
         pageCount = { 3 },
         initialPageOffsetFraction = 0f
     )
+    val navController = rememberNavController()
     val coroutine = rememberCoroutineScope()
+    var userScrollEnabled by remember { mutableStateOf(true) }
+
+    // 피드 화면에서만 좌우 스크롤 가능하게
+    LaunchedEffect(key1 = navController.currentDestination) {
+        navController.currentBackStackEntryFlow.collect {
+            userScrollEnabled = it.destination.route == Feed.toString()
+        }
+    }
+
     HorizontalPager(
-        state = state
+        state = state,
+        userScrollEnabled = userScrollEnabled
     ) {
         when (it) {
             0 -> {
@@ -60,7 +83,7 @@ fun MainScreen(
 
             1 -> {
                 Column {
-                    val navController = rememberNavController()
+                    val navController = navController
                     NavHost(
                         navController = navController, startDestination = Feed,
                         modifier = Modifier.weight(1f)

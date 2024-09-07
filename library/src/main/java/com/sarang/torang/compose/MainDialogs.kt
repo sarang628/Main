@@ -11,6 +11,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import com.sarang.torang.uistate.MainDialogUiState
 
+/**
+ * 메인 다이얼로그
+ * 메인 화면에서 사용하는 다이얼로그
+ * 리뷰 신고, 리뷰 메뉴, 리뷰 공유, 리뷰 댓글 보기/작성 다이얼로그 등
+ * @param uiState 다이얼로그 상태
+ * @param onEdit 리뷰 수정
+ * @param reportDialog 리뷰 신고 다이얼로그
+ * @param menuDialog 리뷰 메뉴 다이얼로그
+ * @param shareDialog 리뷰 공유 다이얼로그
+ * @param commentBottomSheet 리뷰 댓글 보기/작성 다이얼로그
+ * @param contents 화면
+ */
 @Composable
 fun MainDialogs(
     uiState: MainDialogUiState,
