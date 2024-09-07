@@ -53,6 +53,7 @@ fun MainScreen(
     addReview: @Composable (onClose: () -> Unit) -> Unit,
     chat: @Composable () -> Unit,
     onBottomMenu: ((Any) -> Unit)? = null,
+    swipeAblePager: Boolean = true,
 ) {
     val state = rememberPagerState(
         initialPage = 1,
@@ -96,7 +97,7 @@ fun MainScreen(
 
     HorizontalPager(
         state = state,
-        userScrollEnabled = userScrollEnabled
+        userScrollEnabled = userScrollEnabled && swipeAblePager
     ) {
         when (it) {
             0 -> {
@@ -148,7 +149,7 @@ fun MainScreen(
 @Preview(showBackground = true)
 @Composable
 fun PreviewMainScreen() {
-    MainScreen(
+    MainScreen(/*Preview*/
         feedScreen = { /*TODO*/ },
         findingScreen = { /*TODO*/ },
         myProfileScreen = { /*TODO*/ },
