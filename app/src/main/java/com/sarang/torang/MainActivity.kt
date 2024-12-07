@@ -45,7 +45,11 @@ class MainActivity : ComponentActivity() {
                             content = { it ->
                                 provideMainScreen(
                                     RootNavController(),
-                                    videoPlayer = { url, isPlaying, onVideoClick -> }
+                                    videoPlayer = { url, isPlaying, onVideoClick -> },
+                                    addReviewScreen = {},
+                                    chat = {},
+                                    onCloseReview = {},
+                                    onMessage = {}
                                 ).invoke()
                             }
                         )
