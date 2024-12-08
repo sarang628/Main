@@ -44,6 +44,16 @@ object Profile {
     }
 }
 
+/**
+ * 알림 화면 내비게이션 Object
+ */
+@Serializable
+object Alarm {
+    override fun toString(): String {
+        return "com.sarang.torang.compose.main.Alarm"
+    }
+}
+
 val mainNavigations = listOf(
     Feed,
     FeedGrid,

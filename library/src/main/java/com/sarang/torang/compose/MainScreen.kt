@@ -20,6 +20,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.main.Add
+import com.sarang.torang.compose.main.Alarm
 import com.sarang.torang.compose.main.FindingMap
 import com.sarang.torang.compose.main.Feed
 import com.sarang.torang.compose.main.FeedGrid
@@ -44,6 +45,9 @@ import kotlinx.coroutines.launch
  * @param onBottomMenu 하단바 클릭 리스너
  * @param onCloseReview 리뷰 추가 닫기 리스너
  * @param swipeAblePager 페이지 좌우 스와이프 가능 여부
+ * @param goAlarm 알림 이동 플래그
+ * @param consumeAlarm 알림 이동 후 콜백
+ * @param alarm 알림 화면
  */
 @Composable
 fun MainScreen(
@@ -55,6 +59,9 @@ fun MainScreen(
     chat: @Composable () -> Unit,
     onBottomMenu: ((Any) -> Unit)? = null,
     swipeAblePager: Boolean = true,
+    goAlarm: Boolean = false,
+    consumeAlarm: () -> Unit,
+    alarm: @Composable () -> Unit,
 ) {
     val state = rememberPagerState(
         initialPage = 1,
@@ -96,6 +103,14 @@ fun MainScreen(
         }
     }
 
+    LaunchedEffect(key1 = goAlarm) {
+        if (goAlarm) {
+            Log.d("__MainScreen", "goAlarm:$goAlarm")
+            navController.navigate(Alarm)
+            consumeAlarm.invoke()
+        }
+    }
+
     // 메인 화면 페이저
     HorizontalPager(
         state = state,
@@ -110,7 +125,7 @@ fun MainScreen(
                 }
             }
 
-            MainScreenPager.FEED -> {
+            MainScreenPager.MAIN -> {
                 Column {
                     NavHost(
                         navController = navController, startDestination = Feed,
@@ -127,6 +142,7 @@ fun MainScreen(
                         composable<FeedGrid> { feedGrid.invoke() }
                         composable<FindingMap> { findingMapScreen.invoke() }
                         composable<Add> { }
+                        composable<Alarm> { alarm.invoke() }
                     }
                     MainBottomNavigationAppBar(
                         navController = navController,
@@ -156,7 +172,7 @@ fun MainScreen(
  */
 enum class MainScreenPager(val page: Int) {
     ADD_REVIEW(0),
-    FEED(1),
+    MAIN(1),
     CHAT(2);
 
     companion object {
@@ -171,13 +187,14 @@ enum class MainScreenPager(val page: Int) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewMainScreen() {
-    MainScreen(
-        /*Preview*/
+    MainScreen(/*Preview*/
         feedScreen = { /*TODO*/ },
         feedGrid = { /*TODO*/ },
         myProfileScreen = { /*TODO*/ },
         addReview = { /*TODO*/ },
         chat = { /*TODO*/ },
-        findingMapScreen = { /*TODO*/ }
+        findingMapScreen = { /*TODO*/ },
+        consumeAlarm = {},
+        alarm = {}
     )
 }
