@@ -6,6 +6,7 @@ import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -19,9 +20,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.main.Add
-import com.sarang.torang.compose.main.Alarm
+import com.sarang.torang.compose.main.FindingMap
 import com.sarang.torang.compose.main.Feed
-import com.sarang.torang.compose.main.Finding
+import com.sarang.torang.compose.main.FeedGrid
 import com.sarang.torang.compose.main.Profile
 import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.launch
@@ -31,25 +32,25 @@ import kotlinx.coroutines.launch
  *
  * 3개 페이지로 구성된 메인 화면
  *
- * 좌: 리뷰, 우: 채팅, 중앙: 피드, 음식점 찾기, 리뷰 추가, 알람, 프로필
+ * 좌: 리뷰
+ * 우: 채팅
+ * 중앙: 피드, 피드 그리드, 리뷰 추가, 지도 검색, 프로필
  *
  * @param feedScreen 피드화면
- * @param findingScreen 음식점 찾기 화면
+ * @param feedGrid 피드 그리드
  * @param myProfileScreen 내 프로필 화면
- * @param alarm 알람 화면
  * @param addReview 리뷰 추가 화면
  * @param chat 채팅 화면
  * @param onBottomMenu 하단바 클릭 리스너
  * @param onCloseReview 리뷰 추가 닫기 리스너
+ * @param swipeAblePager 페이지 좌우 스와이프 가능 여부
  */
 @Composable
 fun MainScreen(
-    feedScreen: @Composable (
-        onReview: () -> Unit,
-    ) -> Unit,
-    findingScreen: @Composable () -> Unit,
+    feedScreen: @Composable (onReview: () -> Unit) -> Unit,
+    feedGrid: @Composable () -> Unit,
+    findingMapScreen: @Composable () -> Unit,
     myProfileScreen: @Composable () -> Unit,
-    alarm: @Composable () -> Unit,
     addReview: @Composable (onClose: () -> Unit) -> Unit,
     chat: @Composable () -> Unit,
     onBottomMenu: ((Any) -> Unit)? = null,
@@ -95,12 +96,13 @@ fun MainScreen(
         }
     }
 
+    // 메인 화면 페이저
     HorizontalPager(
         state = state,
         userScrollEnabled = userScrollEnabled && swipeAblePager
     ) {
-        when (it) {
-            0 -> {
+        when (MainScreenPager.fromPage(it)) {
+            MainScreenPager.ADD_REVIEW -> {
                 addReview.invoke {
                     coroutine.launch {
                         state.animateScrollToPage(1)
@@ -108,9 +110,8 @@ fun MainScreen(
                 }
             }
 
-            1 -> {
+            MainScreenPager.FEED -> {
                 Column {
-                    val navController = navController
                     NavHost(
                         navController = navController, startDestination = Feed,
                         modifier = Modifier.weight(1f)
@@ -123,8 +124,8 @@ fun MainScreen(
                             }
                         }
                         composable<Profile> { myProfileScreen.invoke() }
-                        composable<Finding> { findingScreen.invoke() }
-                        composable<Alarm> { alarm.invoke() }
+                        composable<FeedGrid> { feedGrid.invoke() }
+                        composable<FindingMap> { findingMapScreen.invoke() }
                         composable<Add> { }
                     }
                     MainBottomNavigationAppBar(
@@ -139,8 +140,29 @@ fun MainScreen(
                 }
             }
 
-            2 -> {
+            MainScreenPager.CHAT -> {
                 chat.invoke()
+            }
+
+            else -> {
+                Text("화면을 불러오는데 실패하였습니다.")
+            }
+        }
+    }
+}
+
+/**
+ * 메인 화면의 각 페이지명
+ */
+enum class MainScreenPager(val page: Int) {
+    ADD_REVIEW(0),
+    FEED(1),
+    CHAT(2);
+
+    companion object {
+        fun fromPage(page: Int): MainScreenPager? {
+            return MainScreenPager.values().firstOrNull {
+                it.page == page
             }
         }
     }
@@ -149,12 +171,13 @@ fun MainScreen(
 @Preview(showBackground = true)
 @Composable
 fun PreviewMainScreen() {
-    MainScreen(/*Preview*/
+    MainScreen(
+        /*Preview*/
         feedScreen = { /*TODO*/ },
-        findingScreen = { /*TODO*/ },
+        feedGrid = { /*TODO*/ },
         myProfileScreen = { /*TODO*/ },
-        alarm = { /*TODO*/ },
         addReview = { /*TODO*/ },
-        chat = { /*TODO*/ }
+        chat = { /*TODO*/ },
+        findingMapScreen = { /*TODO*/ }
     )
 }

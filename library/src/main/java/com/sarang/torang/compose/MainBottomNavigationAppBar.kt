@@ -23,12 +23,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.main.Add
-import com.sarang.torang.compose.main.Alarm
+import com.sarang.torang.compose.main.FindingMap
 import com.sarang.torang.compose.main.Feed
-import com.sarang.torang.compose.main.Finding
+import com.sarang.torang.compose.main.FeedGrid
 import com.sarang.torang.compose.main.Profile
 import com.sarang.torang.compose.main.icon
-import com.sarang.torang.compose.main.items
+import com.sarang.torang.compose.main.mainNavigations
 
 /**
  * @param onBottomMenu 하단 메뉴 선택 시 이벤트
@@ -43,7 +43,7 @@ fun MainBottomNavigationAppBar(
     val currentDestination = navBackStackEntry?.destination
 
     MainBottomNavigationAppBar(
-        items = items,
+        items = mainNavigations,
         route = currentDestination?.route,
         onBottomMenu = {
             if (it == Add) {
@@ -110,15 +110,15 @@ fun MainBottomAppBarPreview() {
     Box {
         NavHost(navController = navController, startDestination = currentDestination) {
             composable<Feed> {}
-            composable<Finding> {}
-            composable<Alarm> {}
+            composable<FeedGrid> {}
+            composable<FindingMap> {}
             composable<Profile> {}
             composable<Add> {}
         }
     }
 
     MainBottomNavigationAppBar(
-        items = items,
+        items = mainNavigations,
         route = currentDestination,
         onBottomMenu = {
             Log.d("__Preview", it.toString())

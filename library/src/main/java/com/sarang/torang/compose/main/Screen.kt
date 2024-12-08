@@ -4,7 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.graphics.vector.ImageVector
 import kotlinx.serialization.Serializable
@@ -17,7 +17,7 @@ object Feed {
 }
 
 @Serializable
-object Finding {
+object FeedGrid {
     override fun toString(): String {
         return "com.sarang.torang.compose.main.Finding"
     }
@@ -31,9 +31,9 @@ object Add {
 }
 
 @Serializable
-object Alarm {
+object FindingMap {
     override fun toString(): String {
-        return "com.sarang.torang.compose.main.Alarm"
+        return "com.sarang.torang.compose.main.FindingMap"
     }
 }
 
@@ -44,11 +44,11 @@ object Profile {
     }
 }
 
-val items = listOf(
+val mainNavigations = listOf(
     Feed,
-    Finding,
+    FeedGrid,
     Add,
-    Alarm,
+    FindingMap,
     Profile
 )
 
@@ -57,9 +57,9 @@ val Any.icon: ImageVector
     get() =
         when (this) {
             is Feed -> Icons.Filled.Home
-            is Finding -> Icons.Filled.Search
+            is FeedGrid -> Icons.Filled.Search
             is Add -> Icons.Filled.AddCircle
-            is Alarm -> Icons.Filled.Notifications
+            is FindingMap -> Icons.Filled.LocationOn
             is Profile -> Icons.Filled.Face
             else -> {
                 Icons.Filled.Home

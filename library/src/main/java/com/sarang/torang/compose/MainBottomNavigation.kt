@@ -14,7 +14,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.main.icon
-import com.sarang.torang.compose.main.items
+import com.sarang.torang.compose.main.mainNavigations
 
 /**
  * @param onBottomMenu 하단 메뉴 선택 시 이벤트
@@ -30,7 +30,7 @@ fun MainBottomNavigation(navController: NavController, onBottomMenu: ((String) -
                 currentDestination.route.toString()
             )
         ) {
-            items.forEachIndexed { index, screen ->
+            mainNavigations.forEachIndexed { index, screen ->
                 Tab(
                     selected = currentDestination?.hierarchy?.any { it.route == titles[index] } == true,
                     onClick = {
