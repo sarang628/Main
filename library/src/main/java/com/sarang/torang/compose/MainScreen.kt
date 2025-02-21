@@ -78,8 +78,11 @@ fun MainScreen(
 
 
 
+    // 뒤로가기
     BackHandler(enabled = !backPressHandled) {
+        // 첫번째 페이지가 아니라면
         if (state.currentPage != 1) {
+            //첫번째 페이지로 이동하기
             coroutineScope.launch {
                 state.animateScrollToPage(1)
             }
@@ -91,7 +94,6 @@ fun MainScreen(
             Log.d("__MainScreen", "onBackPressed backPressHandled:$backPressHandled")
             awaitFrame()
             onBackPressedDispatcher?.onBackPressed()
-            //backPressHandled = false
         }
     }
 
@@ -103,6 +105,7 @@ fun MainScreen(
         }
     }
 
+    // 알람 이동 체크
     LaunchedEffect(key1 = goAlarm) {
         if (goAlarm) {
             Log.d("__MainScreen", "goAlarm:$goAlarm")
