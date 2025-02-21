@@ -70,7 +70,7 @@ fun MainScreen(
     )
     val navController = rememberNavController()
     val coroutine = rememberCoroutineScope()
-    var userScrollEnabled by remember { mutableStateOf(true) }
+    var isFeedPage by remember { mutableStateOf(true) }
 
     val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     var backPressHandled by remember { mutableStateOf(false) }
@@ -101,7 +101,7 @@ fun MainScreen(
     // 피드 화면에서만 좌우 스크롤 가능하게
     LaunchedEffect(key1 = navController.currentDestination) {
         navController.currentBackStackEntryFlow.collect {
-            userScrollEnabled = it.destination.route == Feed.toString()
+            isFeedPage = it.destination.route == Feed.toString()
         }
     }
 
@@ -117,7 +117,7 @@ fun MainScreen(
     // 메인 화면 페이저
     HorizontalPager(
         state = state,
-        userScrollEnabled = userScrollEnabled && swipeAblePager
+        userScrollEnabled = isFeedPage && swipeAblePager
     ) {
         when (MainScreenPager.fromPage(it)) {
             MainScreenPager.ADD_REVIEW -> {
