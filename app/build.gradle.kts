@@ -150,6 +150,8 @@ dependencies {
     implementation(libs.report)
     implementation(libs.mui3scrolltorefresh)
     implementation(libs.expandableText)
+    implementation(libs.torangGrid)
+    implementation(libs.bottomdetectlazycolunm)
 
     implementation(project(":library"))
 }

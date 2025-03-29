@@ -22,7 +22,7 @@ addReviewVersion = '6545e9e445'
 alarmVersion = 'a48ab79e8f'
 baseFeedVersion = 'c5f4705b5a'
 cardInfoVersion = "0ae8d4fd77"
-feedVersion = '00b39ecbc6'
+feedVersion = '4183f5ab7f'
 profileVersion = '41d660f8fb'
 findingVersion = '47ad95d530'
 themeVersion = '8fb60b535f'
@@ -31,13 +31,13 @@ myReviewVersion = '7788b8d9f7'
 torangDetailVersion = '358de20325'
 loginVersion = 'ac5034132b'
 splashVersion = 'ea97b19733'
-torangRepositoryVersion = 'f2582c8144'
+torangRepositoryVersion = 'ae427be611'
 settingsVersion = '06efa47b11'
 mapVersion = '7507c8c152'
 torangBottomSheetVersion = '094b601c45'
 instaGramGalleryVersion = '4bfb2bff32'
 filterVersion = '7e8fc56f8a'
-mainVersion = '20255e2128'
+mainVersion = '01fd2d1cab'
 reportVersion = 'bb52e7be2e'
 mediaContentResolverVersion = '54ff69ee3a'
 commentVersion = '58b14bce0c'
@@ -45,9 +45,10 @@ commonImageLoaderVersion = '9b2a552576'
 imagePagerVersion = '35b42a2392'
 torangImagePagerVersion = '7667c10f6d'
 likesScreenVersion = 'adb7eb7479'
-mUI3ScrollToRefreshVersion = '6daacb7290'
-bottomDetectLazyColunmVersion = '2486834b10'
+mUI3ScrollToRefreshVersion = '9978be75d5'
+bottomDetectLazyColunmVersion = '8968918dca'
 chatVersion = 'ea29716da1'
+torangGridVersion = 'f31f7a31e6'
 expandableTextVersion = '547e79fc42'
 featureDeliveryVersion = "2.1.0"
 serialization = "1.7.10"
@@ -138,6 +139,7 @@ mui3scrolltorefresh             = { group = "com.github.sarang628", name = "MUI3
 expandableText                  = { group = "com.github.sarang628", name = "ExpandableText",        version.ref = "expandableTextVersion" }
 bottomdetectlazycolunm          = { group = "com.github.sarang628", name = "BottomDetectLazyColunm",version.ref = "bottomDetectLazyColunmVersion" }
 chat                            = { group = "com.github.sarang628", name = "Chat",                  version.ref = "chatVersion" }
+torangGrid                      = { group = "com.github.sarang628", name = "TorangGrid",            version.ref = "torangGridVersion" }
 themes                          = { group = "com.github.bingley1",  name = "Themes",                version.ref = "themesVersion" }
 feature-delivery                = { group = "com.google.android.play", name = "feature-delivery",   version.ref = "featureDeliveryVersion"}
 # @formatter:on

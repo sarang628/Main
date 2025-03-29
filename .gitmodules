@@ -37,3 +37,6 @@
 [submodule "app/src/main/java/com/sarang/torang/di/bottomsheet_di"]
 	path = app/src/main/java/com/sarang/torang/di/bottomsheet_di
 	url = git@github.com:sarang628/bottomsheet_di.git
+[submodule "app/src/main/java/com/sarang/torang/di/feedgrid_di"]
+	path = app/src/main/java/com/sarang/torang/di/feedgrid_di
+	url = https://github.com/sarang628/feedgrid_di.git

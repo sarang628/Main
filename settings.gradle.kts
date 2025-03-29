@@ -11,10 +11,9 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven("https://jitpack.io")
-        maven("https://devrepo.kakao.com/nexus/content/groups/public/")
     }
 }
 
-rootProject.name = "Main"
-include(":app")
-include(":library")
+rootProject.name = "Main"        // 루트 프로젝트 정의
+include(":app")     // 하위 프로젝트 1
+include(":library") // 하위 프로젝트 2
