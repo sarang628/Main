@@ -73,10 +73,11 @@ class MainActivity : ComponentActivity() {
                                 rootNavController = rootNavController,
                                 navBackStackEntry = it,
                                 videoPlayer = { url, isPlaying, onVideoClick -> },
-                                commentBottomSheet = { reviewId, onHidden ->
+                                commentBottomSheet = { reviewId, onHidden, content ->
                                     provideCommentBottomDialogSheet(rootNavController).invoke(
                                         reviewId,
-                                        onHidden
+                                        onHidden,
+                                        content
                                     )
                                 }
                             )

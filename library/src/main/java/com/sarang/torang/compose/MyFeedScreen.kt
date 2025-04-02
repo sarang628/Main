@@ -25,11 +25,5 @@ fun MainMyFeedScreen(
         menuDialog = menuDialog,
         onEdit = onEdit,
         commentBottomSheet = commentBottomSheet
-    ) {
-        myFeedScreen.invoke(
-            { viewModel.onComment(it) },
-            { viewModel.onMenu(it) },
-            { viewModel.onShare(it) }
-        )
-    }
+    )
 }
