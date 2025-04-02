@@ -1,8 +1,10 @@
 package com.sarang.torang.compose
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sarang.torang.viewmodels.FeedDialogsViewModel
 import com.sarang.torang.viewmodels.MainViewModel
@@ -24,7 +26,10 @@ fun MainMyFeedScreen(
         reportDialog = reportDialog,
         menuDialog = menuDialog,
         onEdit = onEdit,
-        commentBottomSheet = commentBottomSheet
+        commentBottomSheet = { reivewId, contents ->
+            commentBottomSheet(reivewId)
+            contents.invoke(PaddingValues(0.dp))
+        }
     ) {
         myFeedScreen.invoke(
             { viewModel.onComment(it) },

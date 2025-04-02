@@ -2,6 +2,7 @@ package com.sarang.torang.compose
 
 import android.util.Log
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -30,11 +31,10 @@ fun MainDialogs(
     reportDialog: @Composable (Int, onReported: () -> Unit) -> Unit,
     menuDialog: @Composable (reviewId: Int, onClose: () -> Unit, onReport: (Int) -> Unit, onDelete: (Int) -> Unit, onEdit: (Int) -> Unit) -> Unit,
     shareDialog: @Composable (onClose: () -> Unit) -> Unit,
-    commentBottomSheet: @Composable (reviewId: Int?) -> Unit,
-    contents: @Composable () -> Unit,
+    commentBottomSheet: @Composable (reviewId: Int?, content: @Composable (PaddingValues) -> Unit) -> Unit,
+    contents: @Composable (PaddingValues) -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
-        contents.invoke()
 
         if (uiState.showShare) {
             shareDialog.invoke { uiState.mainDialogEvent.onCloseShare() }
@@ -72,6 +72,6 @@ fun MainDialogs(
         }
 
 
-        commentBottomSheet.invoke(uiState.showComment)
+        commentBottomSheet.invoke(uiState.showComment, contents)
     }
 }
