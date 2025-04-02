@@ -17,6 +17,7 @@ import com.google.samples.apps.sunflower.ui.TorangTheme
 import com.sarang.torang.compose.MainBottomNavigation
 import com.sarang.torang.compose.MainBottomNavigationAppBar
 import com.sarang.torang.di.main_di.ProvideMyFeedScreen
+import com.sarang.torang.di.main_di.provideCommentBottomDialogSheet
 import com.sarang.torang.di.main_di.provideMainScreen
 import com.sarang.torang.repository.LoginRepository
 import dagger.hilt.android.AndroidEntryPoint
@@ -66,11 +67,18 @@ class MainActivity : ComponentActivity() {
                             Text(text = "addReview")
                         }
                         composable("myFeed/{reviewId}") {
+                            val rootNavController = RootNavController()
                             ProvideMyFeedScreen(
                                 navController = navController,
-                                rootNavController = RootNavController(),
+                                rootNavController = rootNavController,
                                 navBackStackEntry = it,
-                                videoPlayer = { url, isPlaying, onVideoClick -> }
+                                videoPlayer = { url, isPlaying, onVideoClick -> },
+                                commentBottomSheet = { reviewId, onHidden ->
+                                    provideCommentBottomDialogSheet(rootNavController).invoke(
+                                        reviewId,
+                                        onHidden
+                                    )
+                                }
                             )
                         }
                     }
