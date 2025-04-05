@@ -3,9 +3,13 @@ package com.sarang.torang.compose
 import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -128,24 +132,7 @@ fun MainScreen(
             }
 
             MainScreenPager.MAIN -> {
-                Column {
-                    NavHost(
-                        navController = navController, startDestination = Feed,
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        composable<Feed> {
-                            feedScreen.invoke {
-                                coroutine.launch {
-                                    state.animateScrollToPage(3)
-                                }
-                            }
-                        }
-                        composable<Profile> { myProfileScreen.invoke() }
-                        composable<FeedGrid> { feedGrid.invoke() }
-                        composable<FindingMap> { findingMapScreen.invoke() }
-                        composable<Add> { }
-                        composable<Alarm> { alarm.invoke() }
-                    }
+                Scaffold(Modifier.fillMaxSize(), bottomBar = {
                     MainBottomNavigationAppBar(
                         navController = navController,
                         onBottomMenu = onBottomMenu,
@@ -155,6 +142,60 @@ fun MainScreen(
                             }
                         }
                     )
+                }) { padding ->
+                    NavHost(
+                        navController = navController, startDestination = Feed,
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        composable<Feed> {
+                            feedScreen.invoke {
+                                coroutine.launch {
+                                    state.animateScrollToPage(3)
+                                }
+                            }
+                        }
+                        composable<Profile> {
+                            Box(
+                                Modifier
+                                    .fillMaxSize()
+                                    .padding(padding)
+                            )
+                            {
+                                myProfileScreen.invoke()
+                            }
+                        }
+                        composable<FeedGrid> {
+                            Box(
+                                Modifier
+                                    .fillMaxSize()
+                                    .padding(padding)
+                            )
+                            {
+                                feedGrid.invoke()
+                            }
+                        }
+                        composable<FindingMap> {
+                            Box(
+                                Modifier
+                                    .fillMaxSize()
+                                    .padding(padding)
+                            )
+                            {
+                                findingMapScreen.invoke()
+                            }
+                        }
+                        composable<Add> { }
+                        composable<Alarm> {
+                            Box(
+                                Modifier
+                                    .fillMaxSize()
+                                    .padding(padding)
+                            )
+                            {
+                                alarm.invoke()
+                            }
+                        }
+                    }
                 }
             }
 

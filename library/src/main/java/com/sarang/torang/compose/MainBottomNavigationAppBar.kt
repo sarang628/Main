@@ -2,14 +2,9 @@ package com.sarang.torang.compose
 
 import android.util.Log
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.BottomAppBar
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -40,6 +35,7 @@ import com.sarang.torang.compose.main.mainNavigations
  */
 @Composable
 fun MainBottomNavigationAppBar(
+    modifier: Modifier = Modifier,
     navController: NavController,
     onBottomMenu: ((Any) -> Unit)? = null,
     onAddReview: () -> Unit,
@@ -48,6 +44,7 @@ fun MainBottomNavigationAppBar(
     val currentDestination = navBackStackEntry?.destination
 
     MainBottomNavigationAppBar(
+        modifier = modifier.height(80.dp),
         items = mainNavigations,
         route = currentDestination?.route,
         onBottomMenu = {
@@ -76,12 +73,13 @@ fun MainBottomNavigationAppBar(
 
 @Composable
 private fun MainBottomNavigationAppBar(
+    modifier: Modifier = Modifier,
     items: List<Any>,
     route: Any?,
     onBottomMenu: ((Any) -> Unit)? = null,
 ) {
     NavigationBar(
-        Modifier.height(50.dp),
+        modifier.navigationBarsPadding(), //edge-to-edge를 적용 했다면 navigationBarsPadding도 적용 필요
         containerColor = MaterialTheme.colorScheme.background,
     ) {
         items.forEachIndexed { index, screen ->
@@ -101,10 +99,9 @@ private fun MainBottomNavigationAppBar(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun MainBottomAppBarPreview() {
-
     val navController = rememberNavController()
     var currentDestination: Any by remember { mutableStateOf(Feed) }
 
