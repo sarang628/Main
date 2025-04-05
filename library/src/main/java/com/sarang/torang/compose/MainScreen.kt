@@ -21,9 +21,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.main.Add
 import com.sarang.torang.compose.main.Alarm
-import com.sarang.torang.compose.main.FindingMap
 import com.sarang.torang.compose.main.Feed
 import com.sarang.torang.compose.main.FeedGrid
+import com.sarang.torang.compose.main.FindingMap
 import com.sarang.torang.compose.main.Profile
 import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.launch
@@ -75,7 +75,6 @@ fun MainScreen(
     val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     var backPressHandled by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
-
 
 
     // 뒤로가기

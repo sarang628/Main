@@ -2,9 +2,14 @@ package com.sarang.torang.compose
 
 import android.util.Log
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -23,9 +28,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.main.Add
-import com.sarang.torang.compose.main.FindingMap
 import com.sarang.torang.compose.main.Feed
 import com.sarang.torang.compose.main.FeedGrid
+import com.sarang.torang.compose.main.FindingMap
 import com.sarang.torang.compose.main.Profile
 import com.sarang.torang.compose.main.icon
 import com.sarang.torang.compose.main.mainNavigations
@@ -75,26 +80,23 @@ private fun MainBottomNavigationAppBar(
     route: Any?,
     onBottomMenu: ((Any) -> Unit)? = null,
 ) {
-    Column {
-        NavigationBar(
-            Modifier.height(50.dp),
-            containerColor = MaterialTheme.colorScheme.background,
-        ) {
-            items.forEachIndexed { index, screen ->
-                NavigationBarItem(
-                    selected = route == screen.toString(),
-                    onClick = {
-                        Log.d("__MainBottomNavigation", "bottom menu click : ${screen}")
-                        if (onBottomMenu == null)
-                            Log.w("__MainBottomNavigation", "onBottomMenu isn't set")
+    NavigationBar(
+        Modifier.height(50.dp),
+        containerColor = MaterialTheme.colorScheme.background,
+    ) {
+        items.forEachIndexed { index, screen ->
+            NavigationBarItem(
+                selected = route == screen.toString(),
+                onClick = {
+                    if (onBottomMenu == null)
+                        Log.w("__MainBottomNavigation", "onBottomMenu isn't set")
 
-                        onBottomMenu?.invoke(screen)
-                    },
-                    icon = {
-                        Icon(imageVector = screen.icon, contentDescription = "")
-                    }
-                )
-            }
+                    onBottomMenu?.invoke(screen)
+                },
+                icon = {
+                    Icon(imageVector = screen.icon, contentDescription = "")
+                }
+            )
         }
     }
 }
