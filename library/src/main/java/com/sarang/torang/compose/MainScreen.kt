@@ -175,14 +175,7 @@ fun MainScreen(
                             }
                         }
                         composable<FindingMap> {
-                            Box(
-                                Modifier
-                                    .fillMaxSize()
-                                    .padding(padding)
-                            )
-                            {
-                                findingMapScreen.invoke()
-                            }
+                            findingMapScreen.invoke()
                         }
                         composable<Add> { }
                         composable<Alarm> {
