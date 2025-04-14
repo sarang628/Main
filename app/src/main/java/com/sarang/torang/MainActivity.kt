@@ -15,7 +15,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,7 +25,7 @@ import com.sarang.torang.compose.MainBottomNavigation
 import com.sarang.torang.compose.MainBottomNavigationAppBar
 import com.sarang.torang.di.main_di.ProvideMyFeedScreen
 import com.sarang.torang.di.main_di.provideCommentBottomDialogSheet
-import com.sarang.torang.di.main_di.provideMainScreen
+import com.sarang.torang.di.main_di.ProvideMainScreen
 import com.sarang.torang.repository.LoginRepository
 import com.sryang.torang.ui.TorangTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,6 +37,7 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var loginRepository: LoginRepository
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -64,7 +64,7 @@ fun MainNavigation() {
     val navController = rememberNavController()
     val rootNavController = RootNavController(navController)
     NavHost(navController = navController, startDestination = "main") {
-        composable("main") { provideMainScreen(rootNavController).invoke() }
+        composable("main") { ProvideMainScreen(rootNavController) }
         composable("modReview/{id}") { Text(text = "modReview ${it.arguments?.getString("id")}") }
         composable("profile/{id}") { Text(text = "profile ${it.arguments?.getString("id")}") }
         composable("restaurant/{id}") { Text(text = "restaurant ${it.arguments?.getString("id")}") }
