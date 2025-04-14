@@ -1,6 +1,8 @@
 package com.sarang.torang
 
-class RootNavController {
+import androidx.navigation.NavHostController
+
+class RootNavController(val navController: NavHostController) {
     fun modReview(): (Int) -> Unit = { }
 
     fun imagePager(reviewId: Int, position: Int) {
@@ -23,7 +25,7 @@ class RootNavController {
 
     }
 
-    fun like(id : Int) {
+    fun like(id: Int) {
 
     }
 
