@@ -37,6 +37,10 @@ class FeedDialogsViewModel @Inject constructor(
         _uiState.update { it.copy(showComment = null) }
     }
 
+    fun closeMenu() {
+        _uiState.update { it.copy(showMenu = null) }
+    }
+
     private fun mainDialogEvent(): MainDialogEvent {
         return MainDialogEvent(
             onCloseShare = {
