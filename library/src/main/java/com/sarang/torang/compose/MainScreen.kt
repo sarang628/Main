@@ -106,7 +106,7 @@ fun MainScreen(feedScreen: @Composable (onReview: () -> Unit) -> Unit, feedGrid:
                         composable<Feed> { feedScreen.invoke { coroutine.launch { state.animateScrollToPage(3) } } }
                         composable<Profile> { Box(Modifier.fillMaxSize().padding(padding)) { myProfileScreen.invoke() } }
                         composable<FeedGrid> { Box(Modifier.fillMaxSize().padding(padding)) { feedGrid.invoke() } }
-                        composable<FindingMap> { findingMapScreen.invoke() }
+                        composable<FindingMap> { Box(Modifier.fillMaxSize().padding(padding)){findingMapScreen.invoke()} }
                         composable<Add> { }
                         composable<Alarm> {
                             Box(Modifier.fillMaxSize().padding(padding))
