@@ -54,41 +54,18 @@ import kotlinx.coroutines.launch
  * @param alarm 알림 화면
  */
 @Composable
-fun MainScreen(
-    feedScreen: @Composable (onReview: () -> Unit) -> Unit,
-    feedGrid: @Composable () -> Unit,
-    findingMapScreen: @Composable () -> Unit,
-    myProfileScreen: @Composable () -> Unit,
-    addReview: @Composable (onClose: () -> Unit) -> Unit,
-    chat: @Composable () -> Unit,
-    onBottomMenu: ((Any) -> Unit)? = null,
-    swipeAblePager: Boolean = true,
-    goAlarm: Boolean = false,
-    consumeAlarm: () -> Unit,
-    alarm: @Composable () -> Unit,
-) {
-    val state = rememberPagerState(
-        initialPage = 1,
-        pageCount = { 3 },
-        initialPageOffsetFraction = 0f
-    )
+fun MainScreen(feedScreen: @Composable (onReview: () -> Unit) -> Unit, feedGrid: @Composable () -> Unit, findingMapScreen: @Composable () -> Unit, myProfileScreen: @Composable () -> Unit, addReview: @Composable (onClose: () -> Unit) -> Unit, chat: @Composable () -> Unit, onBottomMenu: ((Any) -> Unit)? = null, swipeAblePager: Boolean = true, goAlarm: Boolean = false, consumeAlarm: () -> Unit, alarm: @Composable () -> Unit) {
+    val state = rememberPagerState(initialPage = 1, pageCount = { 3 }, initialPageOffsetFraction = 0f)
     val navController = rememberNavController()
     val coroutine = rememberCoroutineScope()
     var isFeedPage by remember { mutableStateOf(true) }
-
     val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     var backPressHandled by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
 
-
-    // 뒤로가기
-    BackHandler(enabled = !backPressHandled) {
-        // 첫번째 페이지가 아니라면
-        if (state.currentPage != 1) {
-            //첫번째 페이지로 이동하기
-            coroutineScope.launch {
-                state.animateScrollToPage(1)
-            }
+    BackHandler(enabled = !backPressHandled) { // 뒤로가기
+        if (state.currentPage != 1) { // 첫번째 페이지가 아니라면
+            coroutineScope.launch { state.animateScrollToPage(1) } //첫번째 페이지로 이동하기
             return@BackHandler
         }
 
@@ -100,7 +77,6 @@ fun MainScreen(
         }
     }
 
-
     // 피드 화면에서만 좌우 스크롤 가능하게
     LaunchedEffect(key1 = navController.currentDestination) {
         navController.currentBackStackEntryFlow.collect {
@@ -110,95 +86,38 @@ fun MainScreen(
 
     // 알람 이동 체크
     LaunchedEffect(key1 = goAlarm) {
-        if (goAlarm) {
-            Log.d("__MainScreen", "goAlarm:$goAlarm")
-            navController.navigate(Alarm)
-            consumeAlarm.invoke()
-        }
+        if (goAlarm) { navController.navigate(Alarm); consumeAlarm.invoke(); }
     }
 
     // 메인 화면 페이저
-    HorizontalPager(
-        state = state,
-        userScrollEnabled = isFeedPage && swipeAblePager
-    ) {
+    HorizontalPager(state = state, userScrollEnabled = isFeedPage && swipeAblePager) {
         when (MainScreenPager.fromPage(it)) {
-            MainScreenPager.ADD_REVIEW -> {
-                addReview.invoke {
-                    coroutine.launch {
-                        state.animateScrollToPage(1)
-                    }
-                }
-            }
+            MainScreenPager.ADD_REVIEW -> { addReview.invoke { coroutine.launch { state.animateScrollToPage(1) } } }
 
             MainScreenPager.MAIN -> {
                 Scaffold(Modifier.fillMaxSize(), bottomBar = {
                     MainBottomNavigationAppBar(
                         navController = navController,
                         onBottomMenu = onBottomMenu,
-                        onAddReview = {
-                            coroutine.launch {
-                                state.animateScrollToPage(0)
-                            }
-                        }
+                        onAddReview = { coroutine.launch { state.animateScrollToPage(0) } }
                     )
                 }) { padding ->
-                    NavHost(
-                        navController = navController, startDestination = Feed,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        composable<Feed> {
-                            feedScreen.invoke {
-                                coroutine.launch {
-                                    state.animateScrollToPage(3)
-                                }
-                            }
-                        }
-                        composable<Profile> {
-                            Box(
-                                Modifier
-                                    .fillMaxSize()
-                                    .padding(padding)
-                            )
-                            {
-                                myProfileScreen.invoke()
-                            }
-                        }
-                        composable<FeedGrid> {
-                            Box(
-                                Modifier
-                                    .fillMaxSize()
-                                    .padding(padding)
-                            )
-                            {
-                                feedGrid.invoke()
-                            }
-                        }
-                        composable<FindingMap> {
-                            findingMapScreen.invoke()
-                        }
+                    NavHost(navController = navController, startDestination = Feed, modifier = Modifier.fillMaxSize()) {
+                        composable<Feed> { feedScreen.invoke { coroutine.launch { state.animateScrollToPage(3) } } }
+                        composable<Profile> { Box(Modifier.fillMaxSize().padding(padding)) { myProfileScreen.invoke() } }
+                        composable<FeedGrid> { Box(Modifier.fillMaxSize().padding(padding)) { feedGrid.invoke() } }
+                        composable<FindingMap> { findingMapScreen.invoke() }
                         composable<Add> { }
                         composable<Alarm> {
-                            Box(
-                                Modifier
-                                    .fillMaxSize()
-                                    .padding(padding)
-                            )
-                            {
-                                alarm.invoke()
-                            }
+                            Box(Modifier.fillMaxSize().padding(padding))
+                            { alarm.invoke() }
                         }
                     }
                 }
             }
 
-            MainScreenPager.CHAT -> {
-                chat.invoke()
-            }
-
-            else -> {
-                Text("화면을 불러오는데 실패하였습니다.")
-            }
+            MainScreenPager.CHAT -> { chat.invoke() }
+            else -> { Text("화면을 불러오는데 실패하였습니다.") }
         }
     }
 }
