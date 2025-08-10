@@ -12,6 +12,11 @@ dependencyResolutionManagement {
         mavenCentral()
         maven("https://jitpack.io")
     }
+    versionCatalogs {
+        create("libs") {
+            from(files("gradle/TorangToml/libs.versions.toml"))
+        }
+    }
 }
 
 rootProject.name = "Main"        // 루트 프로젝트 정의

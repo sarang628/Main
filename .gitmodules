@@ -46,3 +46,15 @@
 [submodule "app/src/main/java/com/sarang/torang/di/pinchzoom"]
 	path = app/src/main/java/com/sarang/torang/di/pinchzoom
 	url = https://github.com/sarang628/pinchzoom.git
+[submodule "app/src/main/java/com/sarang/torang/di/filter_di"]
+	path = app/src/main/java/com/sarang/torang/di/filter_di
+	url = https://github.com/sarang628/filter_di.git
+[submodule "app/src/main/java/com/sarang/torang/di/map_di"]
+	path = app/src/main/java/com/sarang/torang/di/map_di
+	url = https://github.com/sarang628/map_di.git
+[submodule "app/src/main/java/com/sarang/torang/di/cardinfo_di"]
+	path = app/src/main/java/com/sarang/torang/di/cardinfo_di
+	url = https://github.com/sarang628/cardinfo_di.git
+[submodule "app/src/main/java/com/sarang/torang/di/Instagramgallery_di"]
+	path = app/src/main/java/com/sarang/torang/di/Instagramgallery_di
+	url = https://github.com/sarang628/Instagramgallery_di.git

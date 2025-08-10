@@ -152,6 +152,11 @@ dependencies {
     implementation(libs.expandableText)
     implementation(libs.torangGrid)
     implementation(libs.bottomdetectlazycolunm)
+    implementation(libs.accompanist.permissions)
+    implementation(libs.play.services.location)
+    implementation(libs.kotlin.coroutines.play)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.composePermissionTest)
 
     implementation(project(":library"))
 }
