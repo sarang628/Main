@@ -137,6 +137,8 @@ dependencies {
     implementation(libs.finding)
     implementation(libs.myReview)
     implementation(libs.torangRepository)
+    implementation(libs.torangnetwork)
+    implementation(libs.torangdatabase)
     implementation(libs.basefeed)
     implementation(libs.cardInfo)
     implementation(libs.map)
@@ -157,6 +159,11 @@ dependencies {
     implementation(libs.kotlin.coroutines.play)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.composePermissionTest)
+
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.ui)
+    implementation("androidx.media3:media3-session:1.4.0")
+    implementation("androidx.media3:media3-exoplayer-hls:1.4.0")
 
     implementation(project(":library"))
 }
