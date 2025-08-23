@@ -2,6 +2,7 @@ package com.sarang.torang
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -15,9 +16,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -63,6 +68,15 @@ class MainActivity : ComponentActivity() {
 fun MainNavigation() {
     val navController = rememberNavController()
     val rootNavController = RootNavController(navController)
+    val currentState = navController.currentBackStackEntryFlow
+        .collectAsStateWithLifecycle(initialValue = null)
+
+    val current = currentState.value
+
+    LaunchedEffect(current) {
+        Log.d("__MainNavigation", "current destination: ${current?.destination?.route}")
+    }
+
     NavHost(navController = navController, startDestination = "main") {
         composable("main") { ProvideMainScreen(rootNavController) }
         composable("modReview/{id}") { Text(text = "modReview ${it.arguments?.getString("id")}") }
