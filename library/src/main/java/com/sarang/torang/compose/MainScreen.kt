@@ -18,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
@@ -81,6 +82,12 @@ fun MainScreen(feedScreen: @Composable (onReview: () -> Unit) -> Unit, feedGrid:
     LaunchedEffect(key1 = navController.currentDestination) {
         navController.currentBackStackEntryFlow.collect {
             isFeedPage = it.destination.route == Feed.toString()
+        }
+    }
+
+    LaunchedEffect(state) {
+        snapshotFlow { state.currentPage }.collect {
+            Log.d("__MainScreen", "currentPage : ${state.currentPage}")
         }
     }
 
