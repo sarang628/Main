@@ -55,3 +55,12 @@
 [submodule "app/src/main/java/com/sarang/torang/di/Instagramgallery_di"]
 	path = app/src/main/java/com/sarang/torang/di/Instagramgallery_di
 	url = https://github.com/sarang628/Instagramgallery_di.git
+[submodule "app/src/main/java/com/sarang/torang/di/alarm_di"]
+	path = app/src/main/java/com/sarang/torang/di/alarm_di
+	url = https://github.com/sarang628/alarm_di
+[submodule "app/src/main/java/com/sarang/torang/di/torang_network_di"]
+	path = app/src/main/java/com/sarang/torang/di/torang_network_di
+	url = https://github.com/sarang628/torang_network_di.git
+[submodule "app/src/main/java/com/sarang/torang/di/basefeed_di"]
+	path = app/src/main/java/com/sarang/torang/di/basefeed_di
+	url = https://github.com/sarang628/basefeed_di.git
