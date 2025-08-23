@@ -1,14 +1,14 @@
-[submodule "app/src/main/java/com/sryang/torang/di/report_di"]
-	path = app/src/main/java/com/sryang/torang/di/report_di
+[submodule "app/src/main/java/com/sarang/torang/di/report_di"]
+	path = app/src/main/java/com/sarang/torang/di/report_di
 	url = https://github.com/sarang628/report_di.git
-[submodule "app/src/main/java/com/sryang/torang/di/main_di"]
-	path = app/src/main/java/com/sryang/torang/di/main_di
+[submodule "app/src/main/java/com/sarang/torang/di/main_di"]
+	path = app/src/main/java/com/sarang/torang/di/main_di
 	url = https://github.com/sarang628/main_di.git
-[submodule "app/src/main/java/com/sryang/torang/di/alarm_di"]
-	path = app/src/main/java/com/sryang/torang/di/alarm_di
+[submodule "app/src/main/java/com/sarang/torang/di/alarm_di"]
+	path = app/src/main/java/com/sarang/torang/di/alarm_di
 	url = https://github.com/sarang628/alarm_di.git
-[submodule "app/src/main/java/com/sryang/torang/di/repository"]
-	path = app/src/main/java/com/sryang/torang/di/repository
+[submodule "app/src/main/java/com/sarang/torang/di/repository"]
+	path = app/src/main/java/com/sarang/torang/di/repository
 	url = https://github.com/sarang628/repository.git
 [submodule "app/src/main/java/com/sarang/torang/di/main_di"]
 	path = app/src/main/java/com/sarang/torang/di/main_di
