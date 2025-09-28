@@ -17,12 +17,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -30,7 +28,7 @@ import com.sarang.torang.compose.MainBottomNavigation
 import com.sarang.torang.compose.MainBottomNavigationAppBar
 import com.sarang.torang.di.main_di.ProvideMyFeedScreen
 import com.sarang.torang.di.main_di.provideCommentBottomDialogSheet
-import com.sarang.torang.di.main_di.ProvideMainScreen
+import com.sarang.torang.di.main_di.provideMainScreen
 import com.sarang.torang.repository.LoginRepository
 import com.sryang.torang.ui.TorangTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -78,7 +76,7 @@ fun MainNavigation() {
     }
 
     NavHost(navController = navController, startDestination = "main") {
-        composable("main") { ProvideMainScreen(rootNavController) }
+        composable("main") { provideMainScreen(rootNavController).invoke() }
         composable("modReview/{id}") { Text(text = "modReview ${it.arguments?.getString("id")}") }
         composable("profile/{id}") { Text(text = "profile ${it.arguments?.getString("id")}") }
         composable("restaurant/{id}") { Text(text = "restaurant ${it.arguments?.getString("id")}") }

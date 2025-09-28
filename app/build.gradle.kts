@@ -159,6 +159,7 @@ dependencies {
     implementation(libs.kotlin.coroutines.play)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.composePermissionTest)
+    implementation(libs.restaurantListBottomSheet)
 
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.ui)

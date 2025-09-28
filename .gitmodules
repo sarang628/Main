@@ -64,3 +64,12 @@
 [submodule "app/src/main/java/com/sarang/torang/di/basefeed_di"]
 	path = app/src/main/java/com/sarang/torang/di/basefeed_di
 	url = https://github.com/sarang628/basefeed_di.git
+[submodule "app/src/main/java/com/sarang/torang/di/pulltorefresh"]
+	path = app/src/main/java/com/sarang/torang/di/pulltorefresh
+	url = https://github.com/sarang628/pulltorefresh.git
+[submodule "app/src/main/java/com/sarang/torang/di/restaurant_list_bottom_sheet_di"]
+	path = app/src/main/java/com/sarang/torang/di/restaurant_list_bottom_sheet_di
+	url = https://github.com/sarang628/restaurant_list_bottom_sheet_di.git
+[submodule "app/src/main/java/com/sarang/torang/di/torang_database_di"]
+	path = app/src/main/java/com/sarang/torang/di/torang_database_di
+	url = https://github.com/sarang628/torang_database_di

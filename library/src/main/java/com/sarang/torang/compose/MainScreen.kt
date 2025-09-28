@@ -55,7 +55,20 @@ import kotlinx.coroutines.launch
  * @param alarm 알림 화면
  */
 @Composable
-fun MainScreen(feedScreen: @Composable (onReview: () -> Unit) -> Unit, feedGrid: @Composable () -> Unit, findingMapScreen: @Composable () -> Unit, myProfileScreen: @Composable () -> Unit, addReview: @Composable (onClose: () -> Unit) -> Unit, chat: @Composable () -> Unit, onBottomMenu: ((Any) -> Unit)? = null, swipeAblePager: Boolean = true, goAlarm: Boolean = false, consumeAlarm: () -> Unit, alarm: @Composable () -> Unit) {
+fun MainScreen(
+    feedScreen          : @Composable (onReview: () -> Unit) -> Unit    = {},
+    feedGrid            : @Composable () -> Unit                        = {},
+    findingMapScreen    : @Composable () -> Unit                        = {},
+    myProfileScreen     : @Composable () -> Unit                        = {},
+    addReview           : @Composable (onClose: () -> Unit) -> Unit     = {},
+    chat                : @Composable () -> Unit                        = {},
+    alarm               : @Composable () -> Unit                        = {},
+    onBottomMenu        : (Any) -> Unit                                 = {},
+    swipeAblePager      : Boolean                                       = true,
+    goAlarm             : Boolean                                       = false,
+    consumeAlarm        : () -> Unit                                    = {}
+)
+{
     val state = rememberPagerState(initialPage = 1, pageCount = { 3 }, initialPageOffsetFraction = 0f)
     val navController = rememberNavController()
     val coroutine = rememberCoroutineScope()
@@ -111,12 +124,20 @@ fun MainScreen(feedScreen: @Composable (onReview: () -> Unit) -> Unit, feedGrid:
                 }) { padding ->
                     NavHost(navController = navController, startDestination = Feed, modifier = Modifier.fillMaxSize()) {
                         composable<Feed> { feedScreen.invoke { coroutine.launch { state.animateScrollToPage(3) } } }
-                        composable<Profile> { Box(Modifier.fillMaxSize().padding(padding)) { myProfileScreen.invoke() } }
-                        composable<FeedGrid> { Box(Modifier.fillMaxSize().padding(padding)) { feedGrid.invoke() } }
-                        composable<FindingMap> { Box(Modifier.fillMaxSize().padding(padding)){findingMapScreen.invoke()} }
+                        composable<Profile> { Box(Modifier
+                            .fillMaxSize()
+                            .padding(padding)) { myProfileScreen.invoke() } }
+                        composable<FeedGrid> { Box(Modifier
+                            .fillMaxSize()
+                            .padding(padding)) { feedGrid.invoke() } }
+                        composable<FindingMap> { Box(Modifier
+                            .fillMaxSize()
+                            .padding(padding)){findingMapScreen.invoke()} }
                         composable<Add> { }
                         composable<Alarm> {
-                            Box(Modifier.fillMaxSize().padding(padding))
+                            Box(Modifier
+                                .fillMaxSize()
+                                .padding(padding))
                             { alarm.invoke() }
                         }
                     }
