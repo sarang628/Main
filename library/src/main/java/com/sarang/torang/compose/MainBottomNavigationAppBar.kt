@@ -37,8 +37,8 @@ import com.sarang.torang.compose.main.mainNavigations
 fun MainBottomNavigationAppBar(
     modifier: Modifier = Modifier,
     navController: NavController,
-    onBottomMenu: ((Any) -> Unit)? = null,
-    onAddReview: () -> Unit,
+    onBottomMenu: () -> Unit = { },
+    onAddReview: () -> Unit = { },
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
