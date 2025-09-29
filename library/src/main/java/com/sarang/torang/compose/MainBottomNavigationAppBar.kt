@@ -37,7 +37,7 @@ import com.sarang.torang.compose.main.mainNavigations
 fun MainBottomNavigationAppBar(
     modifier: Modifier = Modifier,
     navController: NavController,
-    onBottomMenu: () -> Unit = { },
+    onBottomMenu: (String) -> Unit = { },
     onAddReview: () -> Unit = { },
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -66,7 +66,7 @@ fun MainBottomNavigationAppBar(
                 // Restore state when reselecting a previously selected item
                 restoreState = true
             }
-            onBottomMenu?.invoke(it)
+            onBottomMenu.invoke(it.toString())
         })
 
 }
@@ -76,7 +76,7 @@ private fun MainBottomNavigationAppBar(
     modifier: Modifier = Modifier,
     items: List<Any>,
     route: Any?,
-    onBottomMenu: ((Any) -> Unit)? = null,
+    onBottomMenu: (Any) -> Unit = { },
 ) {
     NavigationBar(
         modifier.navigationBarsPadding(), //edge-to-edge를 적용 했다면 navigationBarsPadding도 적용 필요
@@ -86,10 +86,7 @@ private fun MainBottomNavigationAppBar(
             NavigationBarItem(
                 selected = route == screen.toString(),
                 onClick = {
-                    if (onBottomMenu == null)
-                        Log.w("__MainBottomNavigation", "onBottomMenu isn't set")
-
-                    onBottomMenu?.invoke(screen)
+                    onBottomMenu.invoke(screen)
                 },
                 icon = {
                     Icon(imageVector = screen.icon, contentDescription = "")

@@ -76,11 +76,11 @@ fun MainNavigation() {
     }
 
     NavHost(navController = navController, startDestination = "main") {
-        composable("main") { provideMainScreen(rootNavController).invoke() }
-        composable("modReview/{id}") { Text(text = "modReview ${it.arguments?.getString("id")}") }
-        composable("profile/{id}") { Text(text = "profile ${it.arguments?.getString("id")}") }
-        composable("restaurant/{id}") { Text(text = "restaurant ${it.arguments?.getString("id")}") }
-        composable("addReview") { Text(text = "addReview") }
+        composable("main")              { provideMainScreen(rootNavController).invoke() }
+        composable("modReview/{id}")    { Text(text = "modReview ${it.arguments?.getString("id")}") }
+        composable("profile/{id}")      { Text(text = "profile ${it.arguments?.getString("id")}") }
+        composable("restaurant/{id}")   { Text(text = "restaurant ${it.arguments?.getString("id")}") }
+        composable("addReview")         { Text(text = "addReview") }
         composable("myFeed/{reviewId}") {
             ProvideMyFeedScreen(
                 navController = navController,
