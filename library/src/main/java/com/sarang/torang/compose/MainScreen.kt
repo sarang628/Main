@@ -39,7 +39,7 @@ import kotlinx.coroutines.launch
  */
 @Composable
 fun MainScreen(
-    feedScreen          : @Composable (onReview: () -> Unit) -> Unit    = {},
+    feedScreen          : @Composable (onChat: () -> Unit) -> Unit    = {},
     state               : MainScreenState                               = rememberMainScreenState(),
     feedGrid            : @Composable () -> Unit                        = {},
     findingMapScreen    : @Composable () -> Unit                        = {},
@@ -47,7 +47,7 @@ fun MainScreen(
     addReview           : @Composable (onClose: () -> Unit) -> Unit     = {},
     chat                : @Composable () -> Unit                        = {},
     alarm               : @Composable () -> Unit                        = {},
-    onBottomMenu        : () -> Unit                                    = {},
+    onBottomMenu        : (String) -> Unit                              = {},
     swipeAblePager      : Boolean                                       = true,
 )
 {
