@@ -17,34 +17,42 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.main.Alarm
 import com.sarang.torang.compose.main.Feed
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.android.awaitFrame
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainScreenState(
     val pagerState: PagerState,
     val navController: NavHostController,
-    val isFeedPage : Boolean
+    val isFeedPage : Boolean,
+    val feedNavController: NavHostController,
+    var isSwipeEnabled : Boolean,
+    var latestDestination : Any
 ){
+    private var job: Job? = null
     val currentPage : Int get() = pagerState.currentPage
+    fun goAlarm(){ navController.navigate(Alarm); }
+    suspend fun animateScrollToPage(page : Int){ pagerState.animateScrollToPage(page) }
+    suspend fun goMain() { animateScrollToPage(1) }
+    suspend fun goAddReview() { animateScrollToPage(0) }
+    suspend fun goChat() { animateScrollToPage(3) }
 
-    suspend fun animateScrollToPage(page : Int){
-        pagerState.animateScrollToPage(page)
+    fun popToFeed() {
+        feedNavController.popBackStack("feed", inclusive = false) // 피드 화면안에서 다른화면 상태일 때 피드 버튼을 눌렀다면 피드 화면으로 이동
     }
 
-    fun goAlarm(){
-        navController.navigate(Alarm);
-    }
-
-    suspend fun goMain() {
-        animateScrollToPage(1)
-    }
-
-    suspend fun goAddReview() {
-        animateScrollToPage(0)
-    }
-
-    suspend fun goChat() {
-        animateScrollToPage(3)
+    fun swipeDisableForMillies(
+        millies: Long = 2000,
+        coroutineScope: CoroutineScope
+    ) {
+        job?.cancel() // 기존 Job 취소
+        job = coroutineScope.launch {
+            isSwipeEnabled = false
+            delay(millies)
+            isSwipeEnabled = true
+        }
     }
 }
 
@@ -58,10 +66,12 @@ fun rememberMainScreenState(): MainScreenState {
     var isFeedPage by remember { mutableStateOf(true) }
     val tag = "__rememberMainScreenState"
     val coroutineScope = rememberCoroutineScope()
-
+    val feedNavController = rememberNavController() // 메인 하단 홈버튼 클릭시 처리를 위해 여기에 설정
+    var isSwipeEnabled by remember { mutableStateOf(true) }
     val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     var backPressHandled by remember { mutableStateOf(false) }
-
+    var job: Job? by remember { mutableStateOf(null) }
+    var latestDestination: Any by remember { mutableStateOf(Feed) }
 
     LaunchedEffect(pagerState) { snapshotFlow { pagerState.currentPage }.collect { Log.d(tag, "currentPage : ${pagerState.currentPage}") } }
 
@@ -76,11 +86,18 @@ fun rememberMainScreenState(): MainScreenState {
         coroutineScope.launch { awaitFrame(); onBackPressedDispatcher?.onBackPressed() }
     }
 
+    LaunchedEffect("") {
+        job = launch { isSwipeEnabled = false; delay(5000); isSwipeEnabled = true }
+    }
+
     return remember {
         MainScreenState(
             pagerState = pagerState,
             navController = navController,
-            isFeedPage
+            isFeedPage,
+            feedNavController,
+            isSwipeEnabled,
+            latestDestination
         )
     }
 }
