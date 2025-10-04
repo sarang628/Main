@@ -1,5 +1,6 @@
 package com.sarang.torang.compose
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -9,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -66,7 +68,7 @@ fun MainScreen(
                     )
                 }) { padding ->
                     NavHost(navController = state.navController, startDestination = Feed, modifier = Modifier.fillMaxSize()) {
-                        composable<Feed>        { feedScreen.invoke { coroutineScope.launch { state.goChat() } } }
+                        composable<Feed>        { Box(Modifier.fillMaxSize().padding(padding).background(Color.LightGray)) { feedScreen.invoke { coroutineScope.launch { state.goChat() } } } }
                         composable<Profile>     { Box(Modifier.fillMaxSize().padding(padding)) { myProfileScreen.invoke() } }
                         composable<FeedGrid>    { Box(Modifier.fillMaxSize().padding(padding)) { feedGrid.invoke() } }
                         composable<FindingMap>  { Box(Modifier.fillMaxSize().padding(padding)) { findingMapScreen.invoke()} }
@@ -102,5 +104,8 @@ enum class MainScreenPager(val page: Int) {
 @Composable
 fun PreviewMainScreen() {
     MainScreen(/*Preview*/
+        feedScreen = {
+            Box(modifier = Modifier.fillMaxSize().background(color = Color.LightGray))
+        }
     )
 }
