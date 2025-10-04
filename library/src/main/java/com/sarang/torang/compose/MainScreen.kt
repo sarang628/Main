@@ -2,6 +2,7 @@ package com.sarang.torang.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
@@ -12,6 +13,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.sarang.torang.compose.main.Alarm
@@ -66,7 +68,9 @@ fun MainScreen(
                         onBottomMenu = onBottomMenu,
                         onAddReview = { coroutineScope.launch { state.goAddReview() } }
                     )
-                }) { padding ->
+                },
+                    contentWindowInsets = WindowInsets(0.dp)
+                ) { padding ->
                     NavHost(navController = state.navController, startDestination = Feed, modifier = Modifier.fillMaxSize()) {
                         composable<Feed>        { Box(Modifier.fillMaxSize().padding(padding).background(Color.LightGray)) { feedScreen.invoke { coroutineScope.launch { state.goChat() } } } }
                         composable<Profile>     { Box(Modifier.fillMaxSize().padding(padding)) { myProfileScreen.invoke() } }
