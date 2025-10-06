@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.sarang.torang.viewmodels.FeedDialogsViewModel
-import com.sarang.torang.viewmodels.MainViewModel
+import com.sarang.torang.viewmodel.FeedDialogsViewModel
+import com.sarang.torang.viewmodel.MainViewModel
 
 @Composable
 fun MainMyFeedScreen(

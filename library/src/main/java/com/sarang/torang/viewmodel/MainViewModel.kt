@@ -1,4 +1,4 @@
-package com.sarang.torang.viewmodels
+package com.sarang.torang.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
