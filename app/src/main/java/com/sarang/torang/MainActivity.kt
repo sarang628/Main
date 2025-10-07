@@ -69,12 +69,6 @@ fun MainNavigation() {
     val currentState = navController.currentBackStackEntryFlow
         .collectAsStateWithLifecycle(initialValue = null)
 
-    val current = currentState.value
-
-    LaunchedEffect(current) {
-        Log.d("__MainNavigation", "current destination: ${current?.destination?.route}")
-    }
-
     NavHost(navController = navController, startDestination = "main") {
         composable("main")              { provideMainScreen(rootNavController).invoke() }
         composable("modReview/{id}")    { Text(text = "modReview ${it.arguments?.getString("id")}") }
