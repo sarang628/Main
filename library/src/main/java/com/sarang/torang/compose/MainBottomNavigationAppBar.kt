@@ -37,7 +37,7 @@ import com.sarang.torang.compose.main.mainNavigations
 fun MainBottomNavigationAppBar(
     modifier: Modifier = Modifier,
     navController: NavController,
-    onBottomMenu: (String) -> Unit = { },
+    onBottomMenu: () -> Unit = { },
     onAddReview: () -> Unit = { },
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -66,7 +66,7 @@ fun MainBottomNavigationAppBar(
                 // Restore state when reselecting a previously selected item
                 restoreState = true
             }
-            onBottomMenu.invoke(it.toString())
+            onBottomMenu.invoke()
         })
 
 }
