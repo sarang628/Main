@@ -1,5 +1,6 @@
 package com.sarang.torang.compose
 
+import android.util.Log
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
@@ -51,7 +52,21 @@ class MainScreenState(
             isSwipeEnabled = true
         }
     }
+
+    fun updateLastDestination() {
+        //TODO::마지막 위치 bottom app bar에서 선택한 경로 저장하기
+        Log.d("__MainScreenState", "update latestDestination : $latestDestination")
+    }
 }
+
+val MainScreenState.currentScreen : MainScreenPager get() = when(this.currentPage){
+    0 ->{ MainScreenPager.ADD_REVIEW }
+    1 ->{ MainScreenPager.MAIN }
+    2 ->{ MainScreenPager.CHAT }
+    else -> { throw Exception("") }
+}
+
+val MainScreenState.isMain : Boolean get() = currentScreen == MainScreenPager.MAIN
 
 @Composable
 fun rememberMainScreenState(): MainScreenState {
@@ -86,7 +101,7 @@ fun rememberMainScreenState(): MainScreenState {
     }
 
     BackHandler {
-        if (state.currentPage != 1) {
+        if (!state.isMain) {
             coroutineScope.launch { state.goMain() }
         } else {
             coroutineScope.launch {
