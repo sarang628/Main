@@ -21,7 +21,6 @@ import com.sarang.torang.compose.main.Feed
 import com.sarang.torang.compose.main.FeedGrid
 import com.sarang.torang.compose.main.FindingMap
 import com.sarang.torang.compose.main.Profile
-import com.sarang.torang.compose.main.mainNavigations
 import kotlinx.coroutines.launch
 
 /**
@@ -52,7 +51,7 @@ fun MainScreen(
     addReview           : @Composable (onClose: () -> Unit) -> Unit     = {},
     chat                : @Composable () -> Unit                        = {},
     alarm               : @Composable () -> Unit                        = {},
-    onBottomMenu        : () -> Unit                                    = {},
+    onBottomMenu        : (Any) -> Unit                                 = { },
     swipeAble           : Boolean                                       = true,
 )
 {
@@ -63,13 +62,13 @@ fun MainScreen(
             MainScreenPager.ADD_REVIEW -> { addReview.invoke { coroutineScope.launch { state.goMain() } } }
 
             MainScreenPager.MAIN -> {
-                Scaffold(Modifier.fillMaxSize(), bottomBar = {
-                    MainBottomNavigationAppBar(
+                Scaffold(modifier = Modifier.fillMaxSize(),
+                    bottomBar = { MainBottomNavigationBar(
                         navController = state.navController,
-                        onBottomMenu = { onBottomMenu.invoke(); state.updateLastDestination() },
-                        onAddReview = { coroutineScope.launch { state.goAddReview() } }
-                    )
-                },
+                        onBottomMenu = onBottomMenu,
+                        onAddReview = { coroutineScope.launch { state.goAddReview() } },
+                        mainBottomNavigationState = state.mainBottomNavigationState
+                        ) },
                     contentWindowInsets = WindowInsets(0.dp)
                 ) { padding ->
                     NavHost(navController = state.navController, startDestination = Feed, modifier = Modifier.fillMaxSize()) {

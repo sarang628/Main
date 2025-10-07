@@ -34,23 +34,25 @@ import com.sarang.torang.compose.main.mainNavigations
  * @param onBottomMenu 하단 메뉴 선택 시 이벤트
  */
 @Composable
-fun MainBottomNavigationAppBar(
-    modifier: Modifier = Modifier,
-    navController: NavController,
-    onBottomMenu: () -> Unit = { },
-    onAddReview: () -> Unit = { },
+fun MainBottomNavigationBar(
+    modifier                    : Modifier                  = Modifier,
+    mainBottomNavigationState   : MainBottomNavigationState = rememberMainBottomNavigationState(),
+    navController               : NavController,
+    onBottomMenu                : (Any) -> Unit             = { },
+    onAddReview                 : () -> Unit                = { },
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    MainBottomNavigationAppBar(
+    MainBottomNavigationBar(
         modifier = modifier.height(80.dp),
         items = mainNavigations,
+        mainBottomNavigationState = mainBottomNavigationState,
         route = currentDestination?.route,
         onBottomMenu = {
             if (it == Add) {
                 onAddReview.invoke()
-                return@MainBottomNavigationAppBar
+                return@MainBottomNavigationBar
             }
 
             navController.navigate(it) {
@@ -66,17 +68,18 @@ fun MainBottomNavigationAppBar(
                 // Restore state when reselecting a previously selected item
                 restoreState = true
             }
-            onBottomMenu.invoke()
+            onBottomMenu.invoke(it)
         })
 
 }
 
 @Composable
-private fun MainBottomNavigationAppBar(
-    modifier: Modifier = Modifier,
-    items: List<Any>,
-    route: Any?,
-    onBottomMenu: (Any) -> Unit = { },
+private fun MainBottomNavigationBar(
+    modifier                    : Modifier                  = Modifier,
+    mainBottomNavigationState   : MainBottomNavigationState = rememberMainBottomNavigationState(),
+    items                       : List<Any>,
+    route                       : Any?,
+    onBottomMenu                : (Any) -> Unit             = { },
 ) {
     NavigationBar(
         modifier.navigationBarsPadding(), //edge-to-edge를 적용 했다면 navigationBarsPadding도 적용 필요
@@ -87,13 +90,22 @@ private fun MainBottomNavigationAppBar(
                 selected = route == screen.toString(),
                 onClick = {
                     onBottomMenu.invoke(screen)
+                    mainBottomNavigationState.lastDestination = screen
                 },
-                icon = {
-                    Icon(imageVector = screen.icon, contentDescription = "")
-                }
+                icon = { Icon(imageVector = screen.icon, contentDescription = null) },
             )
         }
     }
+}
+
+class MainBottomNavigationState {
+    var lastDestination : Any = mutableStateOf(Feed)
+}
+
+
+@Composable
+fun rememberMainBottomNavigationState() : MainBottomNavigationState {
+    return remember { MainBottomNavigationState() }
 }
 
 @Preview(showBackground = true)
@@ -113,7 +125,7 @@ fun MainBottomAppBarPreview() {
         }
     }
 
-    MainBottomNavigationAppBar(
+    MainBottomNavigationBar(/*preview*/
         items = mainNavigations,
         route = currentDestination,
         onBottomMenu = {

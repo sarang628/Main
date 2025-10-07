@@ -6,6 +6,7 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.BottomAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
@@ -28,12 +29,13 @@ import kotlinx.coroutines.launch
 class MainScreenState(
     val pagerState: PagerState,
     val navController: NavHostController,
-    val feedNavController: NavHostController
+    val feedNavController: NavHostController,
+    val mainBottomNavigationState: MainBottomNavigationState
 ) {
     private var job                 : Job?      = null
             var isFeedPage          : Boolean   by mutableStateOf(true); internal set
             var isSwipeEnabled      : Boolean   by mutableStateOf(true)
-            var latestDestination   : Any       by mutableStateOf(Feed)
+            var latestDestination   : Any       by mutableStateOf(Feed); internal set
             val currentPage         : Int       get() = pagerState.currentPage
             fun goAlarm()       { navController.navigate(Alarm) }
             fun popToFeed()     { feedNavController.popBackStack("feed", inclusive = false) }
@@ -53,9 +55,8 @@ class MainScreenState(
         }
     }
 
-    fun updateLastDestination() {
-        //TODO::마지막 위치 bottom app bar에서 선택한 경로 저장하기
-        Log.d("__MainScreenState", "update latestDestination : $latestDestination")
+    fun isFeedOnTop(it: Any) : Boolean {
+        return mainBottomNavigationState.lastDestination == it && it == Feed
     }
 }
 
@@ -70,12 +71,13 @@ val MainScreenState.isMain : Boolean get() = currentScreen == MainScreenPager.MA
 
 @Composable
 fun rememberMainScreenState(): MainScreenState {
-    val tag                     : String                    = "__rememberMainScreenState"
-    val coroutineScope          : CoroutineScope            = rememberCoroutineScope()
-    val pagerState              : PagerState                = rememberPagerState(initialPage = 1, pageCount = { 3 })
-    val navController           : NavHostController         = rememberNavController()
-    val feedNavController       : NavHostController         = rememberNavController()
-    val onBackPressedDispatcher : OnBackPressedDispatcher?  = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+    val tag                         : String                    = "__rememberMainScreenState"
+    val coroutineScope              : CoroutineScope            = rememberCoroutineScope()
+    val pagerState                  : PagerState                = rememberPagerState(initialPage = 1, pageCount = { 3 })
+    val navController               : NavHostController         = rememberNavController()
+    val feedNavController           : NavHostController         = rememberNavController()
+    val mainBottomNavigationState   : MainBottomNavigationState = rememberMainBottomNavigationState()
+    val onBackPressedDispatcher     : OnBackPressedDispatcher?  = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
 
     // 객체는 한 번 만들고, 내부 상태는 mutableStateOf로 반응형 관리
     val state = remember {
@@ -83,6 +85,7 @@ fun rememberMainScreenState(): MainScreenState {
             pagerState = pagerState,
             navController = navController,
             feedNavController = feedNavController,
+            mainBottomNavigationState = mainBottomNavigationState
         )
     }
 
