@@ -21,6 +21,7 @@ import com.sarang.torang.compose.main.Feed
 import com.sarang.torang.compose.main.FeedGrid
 import com.sarang.torang.compose.main.FindingMap
 import com.sarang.torang.compose.main.Profile
+import com.sarang.torang.compose.main.mainNavigations
 import kotlinx.coroutines.launch
 
 /**
@@ -38,7 +39,7 @@ import kotlinx.coroutines.launch
  * @param addReview 리뷰 추가 화면
  * @param chat 채팅 화면
  * @param onBottomMenu 하단바 클릭 리스너
- * @param swipeAblePager 페이지 좌우 스와이프 가능 여부
+ * @param swipeAble 좌우 스와이프 가능 여부
  * @param alarm 알림 화면
  */
 @Composable
@@ -51,13 +52,13 @@ fun MainScreen(
     addReview           : @Composable (onClose: () -> Unit) -> Unit     = {},
     chat                : @Composable () -> Unit                        = {},
     alarm               : @Composable () -> Unit                        = {},
-    onBottomMenu        : (String) -> Unit                              = {},
-    swipeAblePager      : Boolean                                       = true,
+    onBottomMenu        : () -> Unit                                    = {},
+    swipeAble           : Boolean                                       = true,
 )
 {
     val coroutineScope = rememberCoroutineScope()
 
-    HorizontalPager(state = state.pagerState, userScrollEnabled = state.isFeedPage && swipeAblePager) { // 메인 화면 페이저
+    HorizontalPager(state = state.pagerState, userScrollEnabled = state.isFeedPage && swipeAble) { // 메인 화면 페이저
         when (MainScreenPager.fromPage(it)) {
             MainScreenPager.ADD_REVIEW -> { addReview.invoke { coroutineScope.launch { state.goMain() } } }
 
@@ -65,7 +66,7 @@ fun MainScreen(
                 Scaffold(Modifier.fillMaxSize(), bottomBar = {
                     MainBottomNavigationAppBar(
                         navController = state.navController,
-                        onBottomMenu = onBottomMenu,
+                        onBottomMenu = { onBottomMenu.invoke(); state.updateLastDestination() },
                         onAddReview = { coroutineScope.launch { state.goAddReview() } }
                     )
                 },
