@@ -78,7 +78,7 @@ fun rememberMainScreenState(): MainScreenState {
     val feedNavController           : NavHostController         = rememberNavController()
     val mainBottomNavigationState   : MainBottomNavigationState = rememberMainBottomNavigationState()
     val onBackPressedDispatcher     : OnBackPressedDispatcher?  = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
-    var interceptBackPressedHandled : Boolean                   by remember { mutableStateOf(false) }
+    var interceptBackPressedHandled : Boolean                   by remember { mutableStateOf(true) }
 
     // 객체는 한 번 만들고, 내부 상태는 mutableStateOf로 반응형 관리
     val state = remember {
@@ -104,14 +104,19 @@ fun rememberMainScreenState(): MainScreenState {
         }
     }
 
+    Log.d(tag, "interceptBackPressedHandled : $interceptBackPressedHandled")
+
     BackHandler(interceptBackPressedHandled) {
         if (!state.isMain) {
+            Log.d(tag, "onBack goMain")
             coroutineScope.launch { state.goMain() }
         } else {
             interceptBackPressedHandled = false
             coroutineScope.launch {
+                Log.d(tag, "onBack")
                 awaitFrame()
                 onBackPressedDispatcher?.onBackPressed()
+                delay(100)
                 interceptBackPressedHandled = true
             }
         }
