@@ -35,8 +35,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var loginRepository: LoginRepository
+    @Inject lateinit var loginRepository: LoginRepository
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,14 +43,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TorangTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
+                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     MainNavigation()
-                    //LoginRepositoryTest(loginRepository = loginRepository)
-                    //MainBottomNavigationPreview()
-                    //MainBottomAppBarPreview()
                 }
             }
         }
@@ -86,39 +79,6 @@ fun MainNavigation() {
                         content
                     )
                 }
-            )
-        }
-    }
-}
-
-
-@Preview
-@Composable
-fun MainBottomNavigationPreview() {
-    TorangTheme {
-        MainBottomNavigation(navController = rememberNavController())
-    }
-}
-
-@Preview
-@Composable
-fun MainBottomAppBarPreview() {
-    Scaffold(
-        bottomBar = {
-            MainBottomNavigationBar(/*Preview*/
-                navController = rememberNavController(),
-                onAddReview = {})
-        }
-    ) {
-        Box(
-            Modifier
-                .fillMaxSize()
-                .padding(it)
-        ) {
-            Box(
-                Modifier
-                    .fillMaxSize()
-                    .background(Color.Blue)
             )
         }
     }
