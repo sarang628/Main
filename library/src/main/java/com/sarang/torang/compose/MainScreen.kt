@@ -41,6 +41,7 @@ import kotlinx.coroutines.launch
  * @param swipeAble 좌우 스와이프 가능 여부
  * @param alarm 알림 화면
  */
+@Preview
 @Composable
 fun MainScreen(
     feedScreen          : @Composable (onChat: () -> Unit) -> Unit    = {},
@@ -102,14 +103,4 @@ enum class MainScreenPager(val page: Int) {
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewMainScreen() {
-    MainScreen(/*Preview*/
-        feedScreen = {
-            Box(modifier = Modifier.fillMaxSize().background(color = Color.LightGray))
-        }
-    )
 }

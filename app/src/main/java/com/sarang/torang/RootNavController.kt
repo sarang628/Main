@@ -2,7 +2,7 @@ package com.sarang.torang
 
 import androidx.navigation.NavHostController
 
-class RootNavController(val navController: NavHostController) {
+class RootNavController(val navController: NavHostController? = null) {
     fun modReview(): (Int) -> Unit = { }
 
     fun imagePager(reviewId: Int, position: Int) {

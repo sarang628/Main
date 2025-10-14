@@ -6,15 +6,16 @@ data class MainDialogUiState(
     val deleteReview: Int? = null,
     val showMenu: Int? = null,
     val showComment: Int? = null,
-    val mainDialogEvent: MainDialogEvent
+    val showRestaurant: Int? = null,
+    val mainDialogEvent: MainDialogEvent = MainDialogEvent()
 )
 
 data class MainDialogEvent(
-    val onCloseShare: () -> Unit,
-    val closeReport: () -> Unit,
-    val onDismissRequest: () -> Unit,
-    val onDelete: () -> Unit,
-    val onCloseMenu: () -> Unit,
-    val onReport: (Int) -> Unit,
-    val onDeleteMenu: (Int) -> Unit,
+    val onCloseShare: () -> Unit = {},
+    val closeReport: () -> Unit = {},
+    val onDismissRequest: () -> Unit = {},
+    val onDelete: () -> Unit = {},
+    val onCloseMenu: () -> Unit = {},
+    val onReport: (Int) -> Unit = {},
+    val onDeleteMenu: (Int) -> Unit = {},
 )

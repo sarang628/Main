@@ -3,9 +3,7 @@ package com.sarang.torang.compose
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.sarang.torang.viewmodel.FeedDialogsViewModel
-import com.sarang.torang.viewmodel.MainViewModel
 
 @Composable
 fun MainMyFeedScreen(
@@ -20,9 +18,9 @@ fun MainMyFeedScreen(
     val uiState by viewModel.uiState.collectAsState()
     MainDialogs(
         uiState = uiState,
-        shareDialog = shareDialog,
-        reportDialog = reportDialog,
-        menuDialog = menuDialog,
+        shareBottomSheet = shareDialog,
+        reportBottomSheet = reportDialog,
+        menuBottomSheet = menuDialog,
         onEdit = onEdit,
         commentBottomSheet = commentBottomSheet
     )

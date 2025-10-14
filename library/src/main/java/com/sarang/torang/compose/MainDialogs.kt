@@ -2,14 +2,13 @@ package com.sarang.torang.compose
 
 import android.util.Log
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.sarang.torang.uistate.MainDialogUiState
 
@@ -19,30 +18,32 @@ import com.sarang.torang.uistate.MainDialogUiState
  * 리뷰 신고, 리뷰 메뉴, 리뷰 공유, 리뷰 댓글 보기/작성 다이얼로그 등
  * @param uiState 다이얼로그 상태
  * @param onEdit 리뷰 수정
- * @param reportDialog 리뷰 신고 다이얼로그
- * @param menuDialog 리뷰 메뉴 다이얼로그
- * @param shareDialog 리뷰 공유 다이얼로그
+ * @param reportBottomSheet 리뷰 신고 다이얼로그
+ * @param menuBottomSheet 리뷰 메뉴 다이얼로그
+ * @param shareBottomSheet 리뷰 공유 다이얼로그
  * @param commentBottomSheet 리뷰 댓글 보기/작성 다이얼로그
  * @param contents 화면
  */
+@Preview
 @Composable
 fun MainDialogs(
-    uiState: MainDialogUiState,
-    onEdit: (Int) -> Unit,
-    reportDialog: @Composable (Int, onReported: () -> Unit) -> Unit,
-    menuDialog: @Composable (reviewId: Int, onClose: () -> Unit, onReport: (Int) -> Unit, onDelete: (Int) -> Unit, onEdit: (Int) -> Unit) -> Unit,
-    shareDialog: @Composable (onClose: () -> Unit) -> Unit,
-    commentBottomSheet: @Composable (reviewId: Int?) -> Unit,
+    uiState                 : MainDialogUiState                                  = MainDialogUiState(),
+    onEdit                  : (Int) -> Unit                                      = {},
+    reportBottomSheet       : @Composable (Int, onReported: () -> Unit) -> Unit  = {_,_ ->},
+    shareBottomSheet        : @Composable (onClose: () -> Unit) -> Unit          = { },
+    commentBottomSheet      : @Composable (reviewId: Int?) -> Unit               = { },
+    restaurantBottomSheet   : @Composable ( @Composable () -> Unit ) -> Unit     = { },
+    menuBottomSheet         : @Composable (reviewId: Int, onClose: () -> Unit, onReport: (Int) -> Unit, onDelete: (Int) -> Unit, onEdit: (Int) -> Unit) -> Unit = {_,_,_,_,_ -> }
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
 
 
         if (uiState.showShare) {
-            shareDialog.invoke { uiState.mainDialogEvent.onCloseShare() }
+            shareBottomSheet.invoke { uiState.mainDialogEvent.onCloseShare() }
         }
 
         uiState.showReport?.let {
-            reportDialog(it, uiState.mainDialogEvent.closeReport)
+            reportBottomSheet(it, uiState.mainDialogEvent.closeReport)
         }
 
         uiState.deleteReview?.let {
@@ -65,14 +66,17 @@ fun MainDialogs(
 
         uiState.showMenu?.let {
             Log.d("__MainDialogs", "showMenu reviewId: $it")
-            menuDialog.invoke(
+            menuBottomSheet.invoke(
                 it, uiState.mainDialogEvent.onCloseMenu,
                 uiState.mainDialogEvent.onReport,
                 uiState.mainDialogEvent.onDeleteMenu, onEdit
             )
         }
 
-
-        commentBottomSheet.invoke(uiState.showComment)
+        restaurantBottomSheet.invoke(
+            {
+                commentBottomSheet.invoke(uiState.showComment)
+            }
+        )
     }
 }

@@ -6,30 +6,35 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sarang.torang.compose.MainBottomNavigation
-import com.sarang.torang.compose.MainBottomNavigationBar
+import com.sarang.torang.di.finding_di.findingWithPermission
+import com.sarang.torang.di.finding_di.rememberFindState
 import com.sarang.torang.di.main_di.ProvideMyFeedScreen
 import com.sarang.torang.di.main_di.provideCommentBottomDialogSheet
 import com.sarang.torang.di.main_di.provideMainScreen
+import com.sarang.torang.di.restaurant_list_bottom_sheet_di.CustomRestaurantItemImageLoader
 import com.sarang.torang.repository.LoginRepository
 import com.sryang.torang.ui.TorangTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -51,6 +56,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Preview
 @Composable
@@ -59,9 +65,32 @@ fun MainNavigation() {
     val rootNavController = RootNavController(navController)
     val currentState = navController.currentBackStackEntryFlow
         .collectAsStateWithLifecycle(initialValue = null)
+    val coroutineScope = rememberCoroutineScope()
+    val bottomSheetViewModel : RestaurantListBottomSheetViewModel = hiltViewModel()
+    val bottomSheetUiState by bottomSheetViewModel.uiState.collectAsState()
+
+    val findState = rememberFindState()
+
+    val restaurantBottomSheet : @Composable ( @Composable () -> Unit ) -> Unit = {
+        CompositionLocalProvider(LocalRestaurantItemImageLoader provides CustomRestaurantItemImageLoader) {
+            RestaurantListBottomSheet_ (
+                modifier                = Modifier,
+                uiState                 = bottomSheetUiState,
+                sheetPeekHeight         = 0.dp,
+                scaffoldState           = findState.bottomSheetState,
+                onClickRestaurantName   = { coroutineScope.launch { findState.bottomSheetState.bottomSheetState.partialExpand() } },
+                content                 = { it() }
+            )
+        }
+    }
 
     NavHost(navController = navController, startDestination = "main") {
-        composable("main")              { provideMainScreen(rootNavController).invoke() }
+        composable("main")              { provideMainScreen(
+            rootNavController = rootNavController,
+            findingMapScreen = { findingWithPermission(findState = findState).invoke() },
+            restaurantBottomSheet = restaurantBottomSheet
+        ).invoke()
+        }
         composable("modReview/{id}")    { Text(text = "modReview ${it.arguments?.getString("id")}") }
         composable("profile/{id}")      { Text(text = "profile ${it.arguments?.getString("id")}") }
         composable("restaurant/{id}")   { Text(text = "restaurant ${it.arguments?.getString("id")}") }
