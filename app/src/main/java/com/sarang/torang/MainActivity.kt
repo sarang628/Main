@@ -63,32 +63,14 @@ class MainActivity : ComponentActivity() {
 fun MainNavigation() {
     val navController = rememberNavController()
     val rootNavController = RootNavController(navController)
-    val currentState = navController.currentBackStackEntryFlow
-        .collectAsStateWithLifecycle(initialValue = null)
-    val coroutineScope = rememberCoroutineScope()
-    val bottomSheetViewModel : RestaurantListBottomSheetViewModel = hiltViewModel()
-    val bottomSheetUiState by bottomSheetViewModel.uiState.collectAsState()
 
     val findState = rememberFindState()
-
-    val restaurantBottomSheet : @Composable ( @Composable () -> Unit ) -> Unit = {
-        CompositionLocalProvider(LocalRestaurantItemImageLoader provides CustomRestaurantItemImageLoader) {
-            RestaurantListBottomSheet_ (
-                modifier                = Modifier,
-                uiState                 = bottomSheetUiState,
-                sheetPeekHeight         = 0.dp,
-                scaffoldState           = findState.bottomSheetState,
-                onClickRestaurantName   = { coroutineScope.launch { findState.bottomSheetState.bottomSheetState.partialExpand() } },
-                content                 = { it() }
-            )
-        }
-    }
 
     NavHost(navController = navController, startDestination = "main") {
         composable("main")              { provideMainScreen(
             rootNavController = rootNavController,
             findingMapScreen = { findingWithPermission(findState = findState).invoke() },
-            restaurantBottomSheet = restaurantBottomSheet
+            findState = findState
         ).invoke()
         }
         composable("modReview/{id}")    { Text(text = "modReview ${it.arguments?.getString("id")}") }
