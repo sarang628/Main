@@ -7,71 +7,31 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.graphics.vector.ImageVector
-import kotlinx.serialization.Serializable
+import com.sarang.torang.navigation.Add
+import com.sarang.torang.navigation.FeedGrid
+import com.sarang.torang.navigation.Find
+import com.sarang.torang.navigation.Profile
+import kotlin.reflect.KClass
 
-@Serializable
-object Feed {
-    override fun toString(): String {
-        return "com.sarang.torang.compose.main.Feed"
-    }
+enum class MainDestination(val icon: ImageVector, val route: KClass<*>) {
+    FEED(
+        icon = Icons.Filled.Home,
+        route = Find::class
+    ),
+    FEED_GRID(
+        icon = Icons.Filled.Search,
+        route = FeedGrid::class
+    ),
+    ADD(
+        icon = Icons.Filled.AddCircle,
+        route = Add::class
+    ),
+    FIND(
+        icon = Icons.Filled.LocationOn,
+        route = Find::class
+    ),
+    PROFILE(
+        icon = Icons.Filled.Face,
+        route = Profile::class
+    )
 }
-
-@Serializable
-object FeedGrid {
-    override fun toString(): String {
-        return "com.sarang.torang.compose.main.Finding"
-    }
-}
-
-@Serializable
-object Add {
-    override fun toString(): String {
-        return "com.sarang.torang.compose.main.Add"
-    }
-}
-
-@Serializable
-object FindingMap {
-    override fun toString(): String {
-        return "com.sarang.torang.compose.main.FindingMap"
-    }
-}
-
-@Serializable
-object Profile {
-    override fun toString(): String {
-        return "com.sarang.torang.compose.main.Profile"
-    }
-}
-
-/**
- * 알림 화면 내비게이션 Object
- */
-@Serializable
-object Alarm {
-    override fun toString(): String {
-        return "com.sarang.torang.compose.main.Alarm"
-    }
-}
-
-val mainNavigations = listOf(
-    Feed,
-    FeedGrid,
-    Add,
-    FindingMap,
-    Profile
-)
-
-
-val Any.icon: ImageVector
-    get() =
-        when (this) {
-            is Feed -> Icons.Filled.Home
-            is FeedGrid -> Icons.Filled.Search
-            is Add -> Icons.Filled.AddCircle
-            is FindingMap -> Icons.Filled.LocationOn
-            is Profile -> Icons.Filled.Face
-            else -> {
-                Icons.Filled.Home
-            }
-        }

@@ -17,22 +17,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavDestination
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.sarang.torang.compose.main.Add
-import com.sarang.torang.compose.main.Feed
-import com.sarang.torang.compose.main.FeedGrid
-import com.sarang.torang.compose.main.FindingMap
-import com.sarang.torang.compose.main.Profile
-import com.sarang.torang.compose.main.icon
-import com.sarang.torang.compose.main.mainNavigations
+import com.sarang.torang.compose.main.MainDestination
+import com.sarang.torang.navigation.Feed
+import com.sarang.torang.navigation.addScreen
+import com.sarang.torang.navigation.feedGridScreen
+import com.sarang.torang.navigation.feedScreen
+import com.sarang.torang.navigation.findScreen
+import com.sarang.torang.navigation.mainNavigationLogic
+import com.sarang.torang.navigation.profileScreen
+import kotlin.enums.EnumEntries
+import kotlin.enums.enumEntries
 
 /**
  * @param onBottomMenu 하단 메뉴 선택 시 이벤트
  */
+@OptIn(ExperimentalStdlibApi::class)
 @Composable
 fun MainBottomNavigationBar(
     modifier                    : Modifier                  = Modifier,
@@ -41,53 +43,41 @@ fun MainBottomNavigationBar(
     onBottomMenu                : (Any) -> Unit             = { },
     onAddReview                 : () -> Unit                = { },
 ) {
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
+
+    val currentDestination: NavDestination? = navController.currentDestination
 
     MainBottomNavigationBar(
-        modifier = modifier.height(80.dp),
-        items = mainNavigations,
-        mainBottomNavigationState = mainBottomNavigationState,
-        route = currentDestination?.route,
-        onBottomMenu = {
-            if (it == Add) {
-                onAddReview.invoke()
-                return@MainBottomNavigationBar
-            }
-
-            navController.navigate(it) {
-                // Pop up to the start destination of the graph to
-                // avoid building up a large stack of destinations
-                // on the back stack as users select items
-                popUpTo(navController.graph.findStartDestination().id) {
-                    saveState = true
-                }
-                // Avoid multiple copies of the same destination when
-                // reselecting the same item
-                launchSingleTop = true
-                // Restore state when reselecting a previously selected item
-                restoreState = true
-            }
-            onBottomMenu.invoke(it)
+        modifier                    = modifier.height(80.dp),
+        items                       = MainDestination.entries,
+        mainBottomNavigationState   = mainBottomNavigationState,
+        route                       = /*currentDestination*/MainDestination.FEED, //TODO::현재 경로 처리
+        onBottomMenu                = {
+            mainNavigationLogic(
+                destination = it,
+                onAddReview = onAddReview,
+                navController = navController,
+                onBottomMenu = onBottomMenu
+            )
         })
 
 }
 
+@OptIn(ExperimentalStdlibApi::class)
 @Composable
 private fun MainBottomNavigationBar(
-    modifier                    : Modifier                  = Modifier,
-    mainBottomNavigationState   : MainBottomNavigationState = rememberMainBottomNavigationState(),
-    items                       : List<Any>,
-    route                       : Any?,
-    onBottomMenu                : (Any) -> Unit             = { },
+    modifier                    : Modifier                      = Modifier,
+    mainBottomNavigationState   : MainBottomNavigationState     = rememberMainBottomNavigationState(),
+    items                       : EnumEntries<MainDestination>  = enumEntries<MainDestination>()   ,
+    route                       : MainDestination?              = null,
+    onBottomMenu                : (MainDestination) -> Unit     = { },
 ) {
     NavigationBar(
-        modifier.navigationBarsPadding(), //edge-to-edge를 적용 했다면 navigationBarsPadding도 적용 필요
+        modifier = modifier.navigationBarsPadding(), //edge-to-edge를 적용 했다면 navigationBarsPadding도 적용 필요
         containerColor = MaterialTheme.colorScheme.background,
     ) {
         items.forEachIndexed { index, screen ->
             NavigationBarItem(
-                selected = route == screen.toString(),
+                selected = route?.route == screen.route,
                 onClick = {
                     onBottomMenu.invoke(screen)
                     mainBottomNavigationState.lastDestination = screen
@@ -108,25 +98,26 @@ fun rememberMainBottomNavigationState() : MainBottomNavigationState {
     return remember { MainBottomNavigationState() }
 }
 
+@OptIn(ExperimentalStdlibApi::class)
 @Preview(showBackground = true)
 @Composable
 fun MainBottomAppBarPreview() {
     val navController = rememberNavController()
-    var currentDestination: Any by remember { mutableStateOf(Feed) }
-
+    var currentDestination: MainDestination by remember { mutableStateOf(MainDestination.FEED) }
+    val state = rememberMainScreenState()
 
     Box {
         NavHost(navController = navController, startDestination = currentDestination) {
-            composable<Feed> {}
-            composable<FeedGrid> {}
-            composable<FindingMap> {}
-            composable<Profile> {}
-            composable<Add> {}
+            feedScreen(state = state)/*preview*/
+            feedGridScreen()/*preview*/
+            findScreen()/*preview*/
+            profileScreen()/*preview*/
+            addScreen()/*preview*/
         }
     }
 
     MainBottomNavigationBar(/*preview*/
-        items = mainNavigations,
+        items = MainDestination.entries,
         route = currentDestination,
         onBottomMenu = {
             Log.d("__Preview", it.toString())

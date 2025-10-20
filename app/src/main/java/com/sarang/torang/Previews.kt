@@ -10,17 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.sarang.torang.compose.MainBottomNavigation
 import com.sarang.torang.compose.MainBottomNavigationBar
-import com.sryang.torang.ui.TorangTheme
-
-@Preview
-@Composable
-fun MainBottomNavigationPreview() {
-    TorangTheme {
-        MainBottomNavigation(navController = rememberNavController())
-    }
-}
 
 @Preview
 @Composable

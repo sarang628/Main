@@ -8,8 +8,6 @@
 
 <img src="screenshots/Screenshot_20220809_094527.png" width="500px"/>
 
-[![Video Label](https://i9.ytimg.com/vi/la73aBBfSik/mq2.jpg?sqp=CPT8xpcG&rs=AOn4CLDFKFPsgwJYXTxN7d3ewBDgfu8DTQ)](https://youtu.be/la73aBBfSik)
-
 ## 특징
 
 ### BottomNavigationView와 NavigationComponent 사용

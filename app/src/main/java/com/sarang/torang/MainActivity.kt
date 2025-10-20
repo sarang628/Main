@@ -57,11 +57,12 @@ fun MainNavigation() {
     val findState = rememberFindState()
 
     NavHost(navController = navController, startDestination = "main") {
-        composable("main")              { provideMainScreen(
-            rootNavController = rootNavController,
-            findingMapScreen = { findingWithPermission(findState = findState).invoke() },
-            findState = findState
-        ).invoke()
+        composable("main")              {
+            provideMainScreen(
+                rootNavController = rootNavController,
+                findingMapScreen = { findingWithPermission(findState = findState).invoke() },
+                findState = findState
+            ).invoke()
         }
         composable("modReview/{id}")    { Text(text = "modReview ${it.arguments?.getString("id")}") }
         composable("profile/{id}")      { Text(text = "profile ${it.arguments?.getString("id")}") }
