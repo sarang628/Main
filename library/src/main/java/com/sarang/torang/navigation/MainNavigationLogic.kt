@@ -15,7 +15,7 @@ fun mainNavigationLogic(
     navController   : NavController,
     destination     : MainDestination = MainDestination.FEED,
     onAddReview     : () -> Unit      = { },
-    onBottomMenu    : (Any) -> Unit   = { },
+    onBottomMenu    : (MainDestination) -> Unit   = { },
 ){
     if (destination == MainDestination.ADD) {
         onAddReview.invoke()

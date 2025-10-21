@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
+import com.sarang.torang.compose.main.MainDestination
 import com.sarang.torang.navigation.Feed
 import com.sarang.torang.navigation.alarmScreen
 import com.sarang.torang.navigation.feedGridScreen
@@ -49,7 +50,7 @@ fun MainScreen(
     profile             : @Composable () -> Unit                        = {},
     chat                : @Composable () -> Unit                        = {},
     alarm               : @Composable () -> Unit                        = {},
-    onBottomMenu        : (Any) -> Unit                                 = { },
+    onBottomMenu        : (MainDestination) -> Unit                     = {},
     swipeAble           : Boolean                                       = true,
 )
 {

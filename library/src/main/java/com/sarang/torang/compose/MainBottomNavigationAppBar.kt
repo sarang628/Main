@@ -37,11 +37,11 @@ import kotlin.enums.enumEntries
 @OptIn(ExperimentalStdlibApi::class)
 @Composable
 fun MainBottomNavigationBar(
-    modifier                    : Modifier                  = Modifier,
-    mainBottomNavigationState   : MainBottomNavigationState = rememberMainBottomNavigationState(),
-    navController               : NavController,
-    onBottomMenu                : (Any) -> Unit             = { },
-    onAddReview                 : () -> Unit                = { },
+    modifier                  : Modifier                  = Modifier,
+    mainBottomNavigationState : MainBottomNavigationState = rememberMainBottomNavigationState(),
+    navController             : NavController,
+    onBottomMenu              : (MainDestination) -> Unit = { },
+    onAddReview               : () -> Unit                = { },
 ) {
 
     val currentDestination: NavDestination? = navController.currentDestination

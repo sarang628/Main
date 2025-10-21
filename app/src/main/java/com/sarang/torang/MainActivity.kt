@@ -19,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.di.finding_di.findingWithPermission
 import com.sarang.torang.di.finding_di.rememberFindState
+import com.sarang.torang.di.main_di.CommentBottomDialogSheetData
 import com.sarang.torang.di.main_di.ProvideMyFeedScreen
 import com.sarang.torang.di.main_di.provideCommentBottomDialogSheet
 import com.sarang.torang.di.main_di.provideMainScreen
@@ -59,9 +60,9 @@ fun MainNavigation() {
     NavHost(navController = navController, startDestination = "main") {
         composable("main")              {
             provideMainScreen(
-                rootNavController = rootNavController,
-                findingMapScreen = { findingWithPermission(findState = findState).invoke() },
-                findState = findState
+                rootNavController   = rootNavController,
+                findingMapScreen    = { findingWithPermission(findState = findState).invoke() },
+                findState           = findState
             ).invoke()
         }
         composable("modReview/{id}")    { Text(text = "modReview ${it.arguments?.getString("id")}") }
@@ -70,17 +71,11 @@ fun MainNavigation() {
         composable("addReview")         { Text(text = "addReview") }
         composable("myFeed/{reviewId}") {
             ProvideMyFeedScreen(
-                navController = navController,
-                rootNavController = rootNavController,
-                navBackStackEntry = it,
-                videoPlayer = { url, isPlaying, onVideoClick -> },
-                commentBottomSheet = { reviewId, onHidden, content ->
-                    provideCommentBottomDialogSheet(rootNavController).invoke(
-                        reviewId,
-                        onHidden,
-                        content
-                    )
-                }
+                navController       = navController,
+                rootNavController   = rootNavController,
+                navBackStackEntry   = it,
+                videoPlayer         = { url, isPlaying, onVideoClick -> },
+                commentBottomSheet  = { provideCommentBottomDialogSheet(rootNavController).invoke(it) }
             )
         }
     }
