@@ -8,15 +8,20 @@ import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.sarang.torang.navigation.Add
+import com.sarang.torang.navigation.Feed
 import com.sarang.torang.navigation.FeedGrid
 import com.sarang.torang.navigation.Find
 import com.sarang.torang.navigation.Profile
 import kotlin.reflect.KClass
 
-enum class MainDestination(val icon: ImageVector, val route: KClass<*>) {
+enum class MainDestination(
+    val icon        : ImageVector,
+    val route       : KClass<*>,
+    val baseRoute   : KClass<*> = route
+) {
     FEED(
         icon = Icons.Filled.Home,
-        route = Find::class
+        route = Feed::class
     ),
     FEED_GRID(
         icon = Icons.Filled.Search,
