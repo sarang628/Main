@@ -18,7 +18,7 @@ https://developer.android.com/guide/navigation/backstack
 - suffix에 Destination을 붙인다.
 - enum 값 (목적지 명)은 대문자 snake case를 사용한다.
 - enum.entries를 사용하여 enum에서 정의한 순서로 내비게이션바에 항목들을 등록한다.
-
+- nia 예제에서는 목적지를 object로 생성하는데 왜 그렇게 만드는지 [참고](https://developer.android.com/guide/navigation/design#compose)
 
 ```
 enum class Destination(
@@ -148,6 +148,33 @@ fun NiaNavHost(
             onTopicClick = navController::navigateToInterests,
         )
         interestsListDetailScreen()
+    }
+}
+
+@Serializable
+data object Feed // route to Feed screen
+
+fun NavController.navigateToFeed(navOptions: NavOptions) = navigate(route = Feed, navOptions)
+
+fun NavGraphBuilder.feedScreen(
+    padding : PaddingValues                             = PaddingValues(0.dp),
+    feed    : @Composable (onChat: () -> Unit) -> Unit  = {},
+    state   : MainScreenState
+) {
+    composable<Feed> {
+        val coroutineScope = rememberCoroutineScope()
+        Box(
+            Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .background(Color.LightGray)
+        ) {
+            feed.invoke {
+                coroutineScope.launch {
+                    state.goChat()
+                }
+            }
+        }
     }
 }
 
