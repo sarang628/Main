@@ -9,17 +9,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.rememberNavController
-import com.sarang.torang.compose.MainBottomNavigationBar
 
 @Preview
 @Composable
 fun MainBottomAppBarPreview() {
     Scaffold(
         bottomBar = {
-            MainBottomNavigationBar(/*Preview*/
+            /*MainBottomNavigationBar1(*//*Preview*//*
                 navController = rememberNavController(),
-                onAddReview = {})
+                onAddReview = {}
+            )*/
         }
     ) {
         Box(
