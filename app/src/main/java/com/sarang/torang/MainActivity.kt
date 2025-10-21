@@ -19,7 +19,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.di.finding_di.findingWithPermission
 import com.sarang.torang.di.finding_di.rememberFindState
-import com.sarang.torang.di.main_di.CommentBottomDialogSheetData
 import com.sarang.torang.di.main_di.ProvideMyFeedScreen
 import com.sarang.torang.di.main_di.provideCommentBottomDialogSheet
 import com.sarang.torang.di.main_di.provideMainScreen
@@ -40,7 +39,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TorangTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    MainNavigation()
+                    MainNavHost()
                 }
             }
         }
@@ -51,10 +50,9 @@ class MainActivity : ComponentActivity() {
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Preview
 @Composable
-fun MainNavigation() {
+fun MainNavHost() {
     val navController = rememberNavController()
     val rootNavController = RootNavController(navController)
-
     val findState = rememberFindState()
 
     NavHost(navController = navController, startDestination = "main") {
