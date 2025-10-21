@@ -1,6 +1,5 @@
 package com.sarang.torang.compose
 
-import android.util.Log
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
@@ -14,8 +13,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.sarang.torang.compose.main.MainDestination
 import com.sarang.torang.navigation.Alarm
 import com.sarang.torang.navigation.Feed
 import kotlinx.coroutines.CoroutineScope
@@ -54,8 +55,9 @@ class MainScreenState(
         }
     }
 
-    fun isFeedOnTop(it: Any) : Boolean {
-        return mainBottomNavigationState.lastDestination == it && it == Feed
+    @Composable
+    fun isFeedOnTop(it: MainDestination) : Boolean {
+        return mainBottomNavigationState.isSelected(it) && mainBottomNavigationState.isSelected(MainDestination.FEED)
     }
 }
 
@@ -75,7 +77,7 @@ fun rememberMainScreenState(): MainScreenState {
     val pagerState                  : PagerState                = rememberPagerState(initialPage = 1, pageCount = { 3 })
     val navController               : NavHostController         = rememberNavController()
     val feedNavController           : NavHostController         = rememberNavController()
-    val mainBottomNavigationState   : MainBottomNavigationState = rememberMainBottomNavigationState()
+    val mainBottomNavigationState   : MainBottomNavigationState = rememberMainBottomNavigationState(navController)
     val onBackPressedDispatcher     : OnBackPressedDispatcher?  = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     var interceptBackPressedHandled : Boolean                   by remember { mutableStateOf(true) }
 
@@ -103,16 +105,12 @@ fun rememberMainScreenState(): MainScreenState {
         }
     }
 
-    Log.d(tag, "interceptBackPressedHandled : $interceptBackPressedHandled")
-
     BackHandler(interceptBackPressedHandled) {
         if (!state.isMain) {
-            Log.d(tag, "onBack goMain")
             coroutineScope.launch { state.goMain() }
         } else {
             interceptBackPressedHandled = false
             coroutineScope.launch {
-                Log.d(tag, "onBack")
                 awaitFrame()
                 onBackPressedDispatcher?.onBackPressed()
                 delay(100)
