@@ -65,10 +65,7 @@ fun MainScreen(
                     bottomBar = {
                         MainBottomNavigationBar(
                             onBottomMenu              = {
-                                                            mainNavigationLogic(
-                                                                destination = it,
-                                                                navController = state.navController,
-                                                            )
+                                                            state.navigate(destination = it)
                                                             onBottomMenu.invoke(it)
                                                         },
                             onAddReview               = { coroutineScope.launch { state.goAddReview() } },

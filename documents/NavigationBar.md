@@ -182,7 +182,70 @@ fun NavGraphBuilder.feedScreen(
 
 ## 목적지 선택 방법.
 
-@Serializable object [목적지] 을 route 로 등록하기
+- @Serializable object [목적지] 을 route 로 등록한 상태
+- 하지만 화면 이동은 enum으로 정의한 MainDestination 값으로 처리
+- when 절을 사용하여 enum에 맞는 화면을 다시 매칭 시킨다.
+
+```
+/**
+ * UI logic for navigating to a top level destination in the app. Top level destinations have
+ * only one copy of the destination of the back stack, and save and restore state whenever you
+ * navigate to and from it.
+ *
+ * @param topLevelDestination: The destination the app needs to navigate to.
+ */
+fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
+    trace("Navigation: ${topLevelDestination.name}") {
+        val topLevelNavOptions = navOptions {
+            // Pop up to the start destination of the graph to
+            // avoid building up a large stack of destinations
+            // on the back stack as users select items
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            // Avoid multiple copies of the same destination when
+            // reselecting the same item
+            launchSingleTop = true
+            // Restore state when reselecting a previously selected item
+            restoreState = true
+        }
+
+        when (topLevelDestination) {
+            FOR_YOU -> navController.navigateToForYou(topLevelNavOptions)
+            BOOKMARKS -> navController.navigateToBookmarks(topLevelNavOptions)
+            INTERESTS -> navController.navigateToInterests(null, topLevelNavOptions)
+        }
+    }
+}
+```
+
+```
+fun NavController.mainNavigationLogic(
+    destination     : MainDestination = MainDestination.FEED,
+){
+    val topLevelNavOptions = navOptions {
+        // Pop up to the start destination of the graph to
+        // avoid building up a large stack of destinations
+        // on the back stack as users select items
+        popUpTo(graph.findStartDestination().id) {
+            saveState = true
+        }
+        // Avoid multiple copies of the same destination when
+        // reselecting the same item
+        launchSingleTop = true
+        // Restore state when reselecting a previously selected item
+        restoreState = true
+    }
+
+    when (destination){
+        MainDestination.FEED        -> navigateToFeed(topLevelNavOptions)
+        MainDestination.FEED_GRID   -> navigateToFeedGrid(topLevelNavOptions)
+        MainDestination.ADD         -> {}
+        MainDestination.FIND        -> navigateToFind(topLevelNavOptions)
+        MainDestination.PROFILE     -> navigateToProfile(topLevelNavOptions)
+    }
+}
+```
 
 ## Now In Android 는 다른 Scaffold 사용
 Navigationd에서 아이콘을 클릭 했을 때, 화면을 이동하는 코드를 찾을 수 없어서
@@ -220,43 +283,15 @@ NiaNavigationSuiteScaffold(
     )
 ```
 
-## 화면 이동 방법
-
-```
-/**
- * UI logic for navigating to a top level destination in the app. Top level destinations have
- * only one copy of the destination of the back stack, and save and restore state whenever you
- * navigate to and from it.
- *
- * @param topLevelDestination: The destination the app needs to navigate to.
- */
-fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
-    trace("Navigation: ${topLevelDestination.name}") {
-        val topLevelNavOptions = navOptions {
-            // Pop up to the start destination of the graph to
-            // avoid building up a large stack of destinations
-            // on the back stack as users select items
-            popUpTo(navController.graph.findStartDestination().id) {
-                saveState = true
-            }
-            // Avoid multiple copies of the same destination when
-            // reselecting the same item
-            launchSingleTop = true
-            // Restore state when reselecting a previously selected item
-            restoreState = true
-        }
-
-        when (topLevelDestination) {
-            FOR_YOU -> navController.navigateToForYou(topLevelNavOptions)
-            BOOKMARKS -> navController.navigateToBookmarks(topLevelNavOptions)
-            INTERESTS -> navController.navigateToInterests(null, topLevelNavOptions)
-        }
-    }
-}
-```
-
 ## 현재 경로 관리는?
+
+- 이전 경로 값을 따로 추가해 관리. previousDestination 
+- navController.currentBackStackEntryFlow 으로 현재 경로를 수집한다.
+- 현재 경로 값이 null일 경우 이전 경로 값을 사용.
+- NavDestination hasRoute 함수를 이용해 object로 등록한 경로를 현재 선택된 경로를 구하는데 사용.
+
 ```
+private val previousDestination = mutableStateOf<NavDestination?>(null)
 val currentDestination: NavDestination?
     @Composable get() {
         // Collect the currentBackStackEntryFlow as a state
@@ -270,4 +305,15 @@ val currentDestination: NavDestination?
             }
         } ?: previousDestination.value
     }
+    
+@Composable
+fun isSelected(destination: MainDestination) : Boolean {
+    return currentDestination
+        .isRouteInHierarchy(destination.baseRoute)
+}
+
+private fun NavDestination?.isRouteInHierarchy(route: KClass<*>) =
+    this?.hierarchy?.any {
+        it.hasRoute(route)
+    } == true
 ```

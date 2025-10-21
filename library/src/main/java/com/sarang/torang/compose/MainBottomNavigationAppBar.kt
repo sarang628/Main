@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.main.MainDestination
-import com.sarang.torang.navigation.mainNavigationLogic
 
 /**
  * @param onBottomMenu 하단 메뉴 선택 시 이벤트
@@ -30,7 +29,7 @@ fun MainBottomNavigationBar(
     ) {
         MainDestination.entries.forEachIndexed { index, destination ->
             NavigationBarItem(
-                selected = mainBottomNavigationState.isSelected(destination),
+                selected = mainBottomNavigationState.isSelectedDestination(destination),
                 onClick = {
                     if (destination == MainDestination.ADD) {
                         onAddReview.invoke()

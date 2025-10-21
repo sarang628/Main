@@ -5,15 +5,14 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.navOptions
 import com.sarang.torang.compose.main.MainDestination
 
-fun mainNavigationLogic(
-    navController   : NavController,
+fun NavController.mainNavigationLogic(
     destination     : MainDestination = MainDestination.FEED,
 ){
     val topLevelNavOptions = navOptions {
         // Pop up to the start destination of the graph to
         // avoid building up a large stack of destinations
         // on the back stack as users select items
-        popUpTo(navController.graph.findStartDestination().id) {
+        popUpTo(graph.findStartDestination().id) {
             saveState = true
         }
         // Avoid multiple copies of the same destination when
@@ -24,10 +23,10 @@ fun mainNavigationLogic(
     }
 
     when (destination){
-        MainDestination.FEED        -> navController.navigateToFeed(topLevelNavOptions)
-        MainDestination.FEED_GRID   -> navController.navigateToFeedGrid(topLevelNavOptions)
+        MainDestination.FEED        -> navigateToFeed(topLevelNavOptions)
+        MainDestination.FEED_GRID   -> navigateToFeedGrid(topLevelNavOptions)
         MainDestination.ADD         -> {}
-        MainDestination.FIND        -> navController.navigateToFind(topLevelNavOptions)
-        MainDestination.PROFILE     -> navController.navigateToProfile(topLevelNavOptions)
+        MainDestination.FIND        -> navigateToFind(topLevelNavOptions)
+        MainDestination.PROFILE     -> navigateToProfile(topLevelNavOptions)
     }
 }

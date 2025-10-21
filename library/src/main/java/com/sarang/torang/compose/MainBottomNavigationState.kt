@@ -11,12 +11,6 @@ import com.sarang.torang.compose.main.MainDestination
 import kotlin.reflect.KClass
 
 class MainBottomNavigationState(private val navController: NavHostController) {
-    @Composable
-    fun isSelected(destination: MainDestination) : Boolean {
-        return currentDestination
-            .isRouteInHierarchy(destination.baseRoute)
-    }
-
     private val previousDestination = mutableStateOf<NavDestination?>(null)
     val currentDestination: NavDestination?
         @Composable get() {
@@ -31,6 +25,12 @@ class MainBottomNavigationState(private val navController: NavHostController) {
                 }
             } ?: previousDestination.value
         }
+
+    @Composable
+    fun isSelectedDestination(destination: MainDestination) : Boolean {
+        return currentDestination
+            .isRouteInHierarchy(destination.baseRoute)
+    }
 }
 
 

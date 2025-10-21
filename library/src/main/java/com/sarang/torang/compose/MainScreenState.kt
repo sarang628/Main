@@ -13,12 +13,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.main.MainDestination
 import com.sarang.torang.navigation.Alarm
 import com.sarang.torang.navigation.Feed
+import com.sarang.torang.navigation.mainNavigationLogic
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.android.awaitFrame
@@ -57,7 +57,11 @@ class MainScreenState(
 
     @Composable
     fun isFeedOnTop(it: MainDestination) : Boolean {
-        return mainBottomNavigationState.isSelected(it) && mainBottomNavigationState.isSelected(MainDestination.FEED)
+        return mainBottomNavigationState.isSelectedDestination(it) && mainBottomNavigationState.isSelectedDestination(MainDestination.FEED)
+    }
+
+    fun navigate(destination: MainDestination) {
+        navController.mainNavigationLogic(destination)
     }
 }
 
