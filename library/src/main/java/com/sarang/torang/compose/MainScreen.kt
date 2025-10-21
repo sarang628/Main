@@ -10,14 +10,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.NavHost
 import com.sarang.torang.compose.main.MainDestination
-import com.sarang.torang.navigation.Feed
-import com.sarang.torang.navigation.alarmScreen
-import com.sarang.torang.navigation.feedGridScreen
-import com.sarang.torang.navigation.feedScreen
-import com.sarang.torang.navigation.findScreen
-import com.sarang.torang.navigation.profileScreen
+import com.sarang.torang.navigation.mainNavigationLogic
 import kotlinx.coroutines.launch
 
 /**
@@ -57,8 +51,8 @@ fun MainScreen(
     val coroutineScope = rememberCoroutineScope()
 
     HorizontalPager(
-        state = state.pagerState,
-        userScrollEnabled = state.isFeedPage && swipeAble
+        state               = state.pagerState,
+        userScrollEnabled   = state.isFeedPage && swipeAble
     ) {
         when (MainScreenPager.fromPage(it)) {
             MainScreenPager.ADD_REVIEW -> {
@@ -67,29 +61,31 @@ fun MainScreen(
 
             MainScreenPager.MAIN -> {
                 Scaffold(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier  = Modifier.fillMaxSize(),
                     bottomBar = {
                         MainBottomNavigationBar(
-                            navController = state.navController,
-                            onBottomMenu = onBottomMenu,
-                            onAddReview = { coroutineScope.launch { state.goAddReview() } },
+                            onBottomMenu              = {
+                                                            mainNavigationLogic(
+                                                                destination = it,
+                                                                navController = state.navController,
+                                                            )
+                                                            onBottomMenu.invoke(it)
+                                                        },
+                            onAddReview               = { coroutineScope.launch { state.goAddReview() } },
                             mainBottomNavigationState = state.mainBottomNavigationState
                         )
                                 },
                     contentWindowInsets = WindowInsets(0.dp)
                 ) { padding ->
-                    NavHost(
-                        navController       = state.navController,
-                        startDestination    = Feed,
-                        modifier            = Modifier.fillMaxSize()
+                    MainNavHost(
+                        padding     = padding,
+                        state       = state,
+                        feed        = feed,
+                        feedGrid    = feedGrid,
+                        profile     = profile,
+                        alarm       = alarm,
+                        find        = find
                     )
-                    {
-                        feedScreen(padding, feed, state)
-                        feedGridScreen(padding, feedGrid)
-                        profileScreen(padding, profile)
-                        findScreen(padding, find)
-                        alarmScreen(padding, alarm)
-                    }
                 }
             }
 
