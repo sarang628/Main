@@ -5,8 +5,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.navOptions
 import com.sarang.torang.compose.main.MainDestination
 
-fun NavController.mainNavigationLogic(
-    destination     : MainDestination = MainDestination.FEED,
+fun NavController.navigateToMainDestination(
+    mainDestination     : MainDestination = MainDestination.FEED,
 ){
     val topLevelNavOptions = navOptions {
         // Pop up to the start destination of the graph to
@@ -22,7 +22,7 @@ fun NavController.mainNavigationLogic(
         restoreState = true
     }
 
-    when (destination){
+    when (mainDestination){
         MainDestination.FEED        -> navigateToFeed(topLevelNavOptions)
         MainDestination.FEED_GRID   -> navigateToFeedGrid(topLevelNavOptions)
         MainDestination.ADD         -> {}

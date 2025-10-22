@@ -18,7 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.main.MainDestination
 import com.sarang.torang.navigation.Alarm
 import com.sarang.torang.navigation.Feed
-import com.sarang.torang.navigation.mainNavigationLogic
+import com.sarang.torang.navigation.navigateToMainDestination
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.android.awaitFrame
@@ -61,7 +61,7 @@ class MainScreenState(
     }
 
     fun navigate(destination: MainDestination) {
-        navController.mainNavigationLogic(destination)
+        navController.navigateToMainDestination(destination)
     }
 }
 
