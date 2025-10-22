@@ -59,8 +59,9 @@ fun MainNavHost() {
         composable("main")              {
             provideMainScreen(
                 rootNavController   = rootNavController,
-                findingMapScreen    = { findingWithPermission(findState = findState).invoke() },
-                findState           = findState
+                find    = { findingWithPermission(findState = findState).invoke() },
+                findState           = findState,
+                showLog             = true
             ).invoke()
         }
         composable("modReview/{id}")    { Text(text = "modReview ${it.arguments?.getString("id")}") }
