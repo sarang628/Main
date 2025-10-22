@@ -10,7 +10,7 @@
 
 ## 특징
 
-### BottomNavigationView와 NavigationComponent 사용
+### [BottomNavigationView와 NavigationComponent 사용](./documents/NavigationBar.md)
 
 BottomNavigationView와 NavigationComponent를 연결하면 자동으로 최적의 탐색과 백스택 기능이 적용됩니다.
 위 기능을 구현하는데에는 설정해야하는 사항이 많으므로 충분히 여유를 가지고 하나씩 문서를 확인해야합니다.
