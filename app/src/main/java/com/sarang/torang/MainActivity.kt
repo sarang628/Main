@@ -21,6 +21,7 @@ import com.sarang.torang.di.finding_di.findingWithPermission
 import com.sarang.torang.di.finding_di.rememberFindState
 import com.sarang.torang.di.main_di.ProvideMyFeedScreen
 import com.sarang.torang.di.main_di.provideCommentBottomDialogSheet
+import com.sarang.torang.di.main_di.provideFeedGrid
 import com.sarang.torang.di.main_di.provideMainScreen
 import com.sarang.torang.repository.LoginRepository
 import com.sryang.torang.ui.TorangTheme
@@ -59,7 +60,8 @@ fun MainNavHost() {
         composable("main")              {
             provideMainScreen(
                 rootNavController   = rootNavController,
-                find    = { findingWithPermission(findState = findState).invoke() },
+                find                = { findingWithPermission(findState = findState).invoke() },
+                feedGrid            = provideFeedGrid(),
                 findState           = findState,
                 showLog             = true
             ).invoke()
