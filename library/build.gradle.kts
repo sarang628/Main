@@ -37,7 +37,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.0"
+        kotlinCompilerExtensionVersion = libs.versions.kotlinCompilerExtension.get()
     }
 }
 

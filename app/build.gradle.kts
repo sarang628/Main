@@ -45,7 +45,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.0"
+        kotlinCompilerExtensionVersion = libs.versions.kotlinCompilerExtension.get()
     }
 
     compileOptions {
@@ -61,6 +61,10 @@ android {
 dependencies {
     /** HILT */
     implementation(libs.hilt)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
     kapt(libs.hilt.compiler)
     implementation(libs.hilt.nav.compose) // hiltViewModel
 
