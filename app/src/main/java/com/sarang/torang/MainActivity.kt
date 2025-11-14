@@ -54,7 +54,6 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-@Preview
 @Composable
 fun MainNavHost() {
     val navController = rememberNavController()

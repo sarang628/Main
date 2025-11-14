@@ -1,15 +1,15 @@
-내비게이션 바는 목적지 화면들로 전환할 수 있는 기능을 제공한다.
+내비게이션 바는 목적지 화면으로 전환할 수 있는 기능 제공.
 
-작은 화면을 쉬운 전환으로 효율적으로 사용할 수 있다. 
+작은 화면을 쉬운 전환으로 효율적 사용. 
 
-이전 화면에 대한 상태관리를 잘 하는것이 중요하다.
+이전 화면 상태관리 중요하다.
 
 
 ## 목적지 정의
 
 - enum 클래스로 정의
 - enum에 속성을 정의하여 아이콘, 타이틀, 그외 내비게이션 시 참조할 만한 항목들을 정의
-- suffix에 Destination을 붙인다. ex)TopLevelDestination, MainDestination
+- enum 클래스 명의 suffix에 Destination을 붙인다. ex)TopLevelDestination, MainDestination
 - enum 값 (목적지 명)은 대문자 snake case를 사용한다. ex) FOR_YOU, SONGS
 - nia 예제에서는 목적지를 object로 생성하는데 왜 그렇게 만드는지 [참고](https://developer.android.com/guide/navigation/design#compose)
 

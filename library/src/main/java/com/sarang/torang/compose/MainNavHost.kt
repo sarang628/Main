@@ -26,8 +26,7 @@ fun MainNavHost(
         navController       = state.navController,
         startDestination    = Feed,
         modifier            = Modifier.fillMaxSize()
-    )
-    {
+    ) {
         feedScreen(padding, feed, state)
         feedGridScreen(padding, feedGrid)
         profileScreen(padding, profile)
