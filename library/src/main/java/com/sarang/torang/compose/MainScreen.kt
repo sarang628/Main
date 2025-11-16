@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.sarang.torang.compose.main.MainDestination
 import kotlinx.coroutines.launch
@@ -45,6 +46,8 @@ fun MainScreen(
     alarm               : @Composable () -> Unit                        = {},
     onBottomMenu        : (MainDestination) -> Unit                     = {},
     swipeAble           : Boolean                                       = true,
+    bottomNavBarHeight  : Dp                                            = 80.dp,
+    onAlreadyFeed       : () -> Unit                                    = {}
 )
 {
     val coroutineScope = rememberCoroutineScope()
@@ -63,12 +66,14 @@ fun MainScreen(
                     modifier  = Modifier.fillMaxSize(),
                     bottomBar = {
                         MainBottomNavigationBar(
+                            bottomNavBarHeight        = bottomNavBarHeight,
                             onBottomMenu              = {
                                                             state.navigate(destination = it)
                                                             onBottomMenu.invoke(it)
                                                         },
                             onAddReview               = { coroutineScope.launch { state.goAddReview() } },
-                            mainBottomNavigationState = state.mainBottomNavigationState
+                            mainBottomNavigationState = state.mainBottomNavigationState,
+                            onAlreadyFeed = onAlreadyFeed
                         )
                                 },
                     contentWindowInsets = WindowInsets(0.dp)

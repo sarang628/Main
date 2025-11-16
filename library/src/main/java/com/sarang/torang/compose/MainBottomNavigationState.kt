@@ -26,6 +26,8 @@ class MainBottomNavigationState(private val navController: NavHostController) {
             } ?: previousDestination.value
         }
 
+    var lastRoute : MainDestination = MainDestination.FEED
+
     @Composable
     fun isSelectedDestination(destination: MainDestination) : Boolean {
         return currentDestination
@@ -34,7 +36,10 @@ class MainBottomNavigationState(private val navController: NavHostController) {
 }
 
 
-private fun NavDestination?.isRouteInHierarchy(route: KClass<*>) =
+fun NavDestination?.isRouteInHierarchy(route: KClass<*>) =
     this?.hierarchy?.any {
         it.hasRoute(route)
     } == true
+
+fun NavDestination?.isRouteInCurrent(route: KClass<*>) =
+    this?.hierarchy?.firstOrNull()?.hasRoute(route) == true
