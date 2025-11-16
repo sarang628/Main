@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.sarang.torang.compose.type.LocalFeedGridScreenType
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -19,12 +20,11 @@ data object FeedGrid // route to FeedGrid screen
 fun NavController.navigateToFeedGrid(navOptions: NavOptions) = navigate(route = FeedGrid, navOptions)
 
 fun NavGraphBuilder.feedGridScreen(
-    padding: PaddingValues = PaddingValues(0.dp),
-    feedGrid: @Composable () -> Unit = {},
+    padding: PaddingValues = PaddingValues(0.dp)
 ) {
     composable<FeedGrid> {
         Box(Modifier
             .fillMaxSize()
-            .padding(padding)) { feedGrid.invoke() }
+            .padding(padding)) { LocalFeedGridScreenType.current.invoke() }
     }
 }

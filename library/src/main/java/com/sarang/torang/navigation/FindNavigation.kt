@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.sarang.torang.compose.type.LocalFindScreenType
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -20,11 +21,10 @@ fun NavController.navigateToFind(navOptions: NavOptions) = navigate(route = Find
 
 fun NavGraphBuilder.findScreen(
     padding: PaddingValues = PaddingValues(0.dp),
-    find: @Composable () -> Unit = {},
 ) {
     composable<Find> {
         Box(Modifier
             .fillMaxSize()
-            .padding(padding)) { find.invoke() }
+            .padding(padding)) { LocalFindScreenType.current.invoke() }
     }
 }

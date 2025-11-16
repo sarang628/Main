@@ -15,6 +15,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.sarang.torang.compose.MainScreenState
+import com.sarang.torang.compose.type.LocalFeedScreenType
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
@@ -25,7 +26,6 @@ fun NavController.navigateToFeed(navOptions: NavOptions) = navigate(route = Feed
 
 fun NavGraphBuilder.feedScreen(
     padding : PaddingValues                             = PaddingValues(0.dp),
-    feed    : @Composable (onChat: () -> Unit) -> Unit  = {},
     state   : MainScreenState
 ) {
     composable<Feed> {
@@ -36,7 +36,7 @@ fun NavGraphBuilder.feedScreen(
                 .padding(padding)
                 .background(Color.LightGray)
         ) {
-            feed.invoke {
+            LocalFeedScreenType.current.invoke {
                 coroutineScope.launch {
                     state.goChat()
                 }

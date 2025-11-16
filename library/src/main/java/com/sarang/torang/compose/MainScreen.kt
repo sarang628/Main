@@ -12,6 +12,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.sarang.torang.compose.main.MainDestination
+import com.sarang.torang.compose.type.LocalAddReviewScreenType
+import com.sarang.torang.compose.type.LocalChatScreenType
 import kotlinx.coroutines.launch
 
 /**
@@ -25,25 +27,13 @@ import kotlinx.coroutines.launch
  *
  * @param state         메인 화면 상태
  * @param feed          피드 화면
- * @param feedGrid      피드 그리드
- * @param profile       내 프로필 화면
- * @param addReview     리뷰 추가 화면
- * @param chat          채팅 화면
  * @param onBottomMenu  하단바 클릭 리스너
  * @param swipeAble     좌우 스와이프 가능 여부
- * @param alarm         알림 화면
  */
 @Preview
 @Composable
 fun MainScreen(
     state               : MainScreenState                               = rememberMainScreenState(),
-    feed                : @Composable (onChat: () -> Unit) -> Unit      = {},
-    feedGrid            : @Composable () -> Unit                        = {},
-    addReview           : @Composable (onClose: () -> Unit) -> Unit     = {},
-    find                : @Composable () -> Unit                        = {},
-    profile             : @Composable () -> Unit                        = {},
-    chat                : @Composable () -> Unit                        = {},
-    alarm               : @Composable () -> Unit                        = {},
     onBottomMenu        : (MainDestination) -> Unit                     = {},
     swipeAble           : Boolean                                       = true,
     bottomNavBarHeight  : Dp                                            = 80.dp,
@@ -58,40 +48,33 @@ fun MainScreen(
     ) {
         when (MainScreenPager.fromPage(it)) {
             MainScreenPager.ADD_REVIEW -> {
-                addReview.invoke { coroutineScope.launch { state.goMain() } }
+                LocalAddReviewScreenType.current.invoke { coroutineScope.launch { state.goMain() } }
             }
 
             MainScreenPager.MAIN -> {
                 Scaffold(
                     modifier  = Modifier.fillMaxSize(),
                     bottomBar = {
-                        MainBottomNavigationBar(
-                            bottomNavBarHeight        = bottomNavBarHeight,
-                            onBottomMenu              = {
-                                                            state.navigate(destination = it)
-                                                            onBottomMenu.invoke(it)
-                                                        },
-                            onAddReview               = { coroutineScope.launch { state.goAddReview() } },
-                            mainBottomNavigationState = state.mainBottomNavigationState,
-                            onAlreadyFeed = onAlreadyFeed
-                        )
+                                    MainBottomNavigationBar(
+                                        bottomNavBarHeight        = bottomNavBarHeight,
+                                        onAddReview               = { coroutineScope.launch { state.goAddReview() } },
+                                        mainBottomNavigationState = state.mainBottomNavigationState,
+                                        onAlreadyFeed             = onAlreadyFeed,
+                                        onBottomMenu              = { state.navigate(destination = it)
+                                                                      onBottomMenu.invoke(it) }
+                                    )
                                 },
                     contentWindowInsets = WindowInsets(0.dp)
                 ) { padding ->
                     MainNavHost(
                         padding     = padding,
                         state       = state,
-                        feed        = feed,
-                        feedGrid    = feedGrid,
-                        profile     = profile,
-                        alarm       = alarm,
-                        find        = find
                     )
                 }
             }
 
             MainScreenPager.CHAT -> {
-                chat.invoke()
+                LocalChatScreenType.current.invoke()
             }
 
             else -> {

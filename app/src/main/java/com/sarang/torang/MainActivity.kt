@@ -16,18 +16,22 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sarang.torang.di.finding_di.findingWithPermission
+import com.sarang.torang.compose.type.LocalAlarmScreenType
+import com.sarang.torang.compose.type.LocalFeedGridScreenType
+import com.sarang.torang.compose.type.LocalFindScreenType
 import com.sarang.torang.di.finding_di.rememberFindState
 import com.sarang.torang.di.main_di.ProvideMyFeedScreen
+import com.sarang.torang.di.main_di.provideAlarmScreen
 import com.sarang.torang.di.main_di.provideCommentBottomDialogSheet
-import com.sarang.torang.di.main_di.provideFeedGrid
+import com.sarang.torang.di.main_di.provideFeedGridScreenType
+import com.sarang.torang.di.main_di.provideFindScreenType
 import com.sarang.torang.di.main_di.provideMainScreen
 import com.sarang.torang.repository.LoginRepository
 import com.sryang.torang.ui.TorangTheme
@@ -81,8 +85,6 @@ fun MainNavHost() {
             ) {
                 provideMainScreen(
                     rootNavController   = rootNavController,
-                    find                = { findingWithPermission(findState = findState).invoke() },
-                    feedGrid            = provideFeedGrid(),
                     findState           = findState,
                     showLog             = true
                 ).invoke()

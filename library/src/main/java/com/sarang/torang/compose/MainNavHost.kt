@@ -15,22 +15,17 @@ import com.sarang.torang.navigation.profileScreen
 @Composable
 fun MainNavHost(
     padding             : PaddingValues,
-    state               : MainScreenState                               = rememberMainScreenState(),
-    feed                : @Composable (onChat: () -> Unit) -> Unit      = {},
-    feedGrid            : @Composable () -> Unit                        = {},
-    profile             : @Composable () -> Unit                        = {},
-    alarm               : @Composable () -> Unit                        = {},
-    find                : @Composable () -> Unit                        = {},
+    state               : MainScreenState                               = rememberMainScreenState()
 ) {
     NavHost(
         navController       = state.navController,
         startDestination    = Feed,
         modifier            = Modifier.fillMaxSize()
     ) {
-        feedScreen(padding, feed, state)
-        feedGridScreen(padding, feedGrid)
-        profileScreen(padding, profile)
-        findScreen(padding, find)
-        alarmScreen(padding, alarm)
+        feedScreen(padding, state)
+        feedGridScreen(padding)
+        profileScreen(padding)
+        findScreen(padding)
+        alarmScreen(padding)
     }
 }

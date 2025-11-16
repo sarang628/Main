@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.sarang.torang.compose.type.LocalMyProfileScreenType
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -19,12 +20,11 @@ data object Profile // route to Feed screen
 fun NavController.navigateToProfile(navOptions: NavOptions) = navigate(route = Profile, navOptions)
 
 fun NavGraphBuilder.profileScreen(
-    padding: PaddingValues = PaddingValues(0.dp),
-    profile: @Composable () -> Unit = {},
+    padding: PaddingValues = PaddingValues(0.dp)
 ) {
     composable<Profile> {
         Box(Modifier
             .fillMaxSize()
-            .padding(padding)) { profile.invoke() }
+            .padding(padding)) { LocalMyProfileScreenType.current.invoke() }
     }
 }
