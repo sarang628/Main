@@ -10,6 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import com.sarang.torang.compose.type.LocalCommentBottomSheet
+import com.sarang.torang.compose.type.LocalMenuBottomSheet
+import com.sarang.torang.compose.type.LocalReportBottomSheetType
+import com.sarang.torang.compose.type.LocalRestaurantBottomSheet
+import com.sarang.torang.compose.type.LocalShareBottomSheet
 import com.sarang.torang.uistate.MainDialogUiState
 
 /**
@@ -18,10 +23,6 @@ import com.sarang.torang.uistate.MainDialogUiState
  * 리뷰 신고, 리뷰 메뉴, 리뷰 공유, 리뷰 댓글 보기/작성 다이얼로그 등
  * @param uiState 다이얼로그 상태
  * @param onEdit 리뷰 수정
- * @param reportBottomSheet 리뷰 신고 다이얼로그
- * @param menuBottomSheet 리뷰 메뉴 다이얼로그
- * @param shareBottomSheet 리뷰 공유 다이얼로그
- * @param commentBottomSheet 리뷰 댓글 보기/작성 다이얼로그
  * @param contents 화면
  */
 @Preview
@@ -29,21 +30,16 @@ import com.sarang.torang.uistate.MainDialogUiState
 fun MainDialogs(
     uiState                 : MainDialogUiState                                  = MainDialogUiState(),
     onEdit                  : (Int) -> Unit                                      = {},
-    reportBottomSheet       : @Composable (Int, onReported: () -> Unit) -> Unit  = {_,_ ->},
-    shareBottomSheet        : @Composable (onClose: () -> Unit) -> Unit          = { },
-    commentBottomSheet      : @Composable (reviewId: Int?) -> Unit               = { },
-    restaurantBottomSheet   : @Composable ( @Composable () -> Unit ) -> Unit     = { },
-    menuBottomSheet         : @Composable (reviewId: Int, onClose: () -> Unit, onReport: (Int) -> Unit, onDelete: (Int) -> Unit, onEdit: (Int) -> Unit) -> Unit = {_,_,_,_,_ -> }
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
 
 
         if (uiState.showShare) {
-            shareBottomSheet.invoke { uiState.mainDialogEvent.onCloseShare() }
+            LocalShareBottomSheet.current.invoke { uiState.mainDialogEvent.onCloseShare() }
         }
 
         uiState.showReport?.let {
-            reportBottomSheet(it, uiState.mainDialogEvent.closeReport)
+            LocalReportBottomSheetType.current(it, uiState.mainDialogEvent.closeReport)
         }
 
         uiState.deleteReview?.let {
@@ -66,16 +62,16 @@ fun MainDialogs(
 
         uiState.showMenu?.let {
             Log.d("__MainDialogs", "showMenu reviewId: $it")
-            menuBottomSheet.invoke(
+            LocalMenuBottomSheet.current.invoke(
                 it, uiState.mainDialogEvent.onCloseMenu,
                 uiState.mainDialogEvent.onReport,
                 uiState.mainDialogEvent.onDeleteMenu, onEdit
             )
         }
 
-        restaurantBottomSheet.invoke(
+        LocalRestaurantBottomSheet.current.invoke(
             {
-                commentBottomSheet.invoke(uiState.showComment)
+                LocalCommentBottomSheet.current.invoke(uiState.showComment)
             }
         )
     }
