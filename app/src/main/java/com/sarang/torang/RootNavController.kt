@@ -64,4 +64,8 @@ class RootNavController(val navController: NavHostController? = null) {
     fun profile(it: Int) {
 
     }
+
+    fun goAlarm() {
+
+    }
 }

@@ -1,8 +1,14 @@
 package com.sarang.torang.compose
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import com.sarang.torang.compose.type.LocalCommentBottomSheet
+import com.sarang.torang.compose.type.LocalFeedScreenType
+import com.sarang.torang.compose.type.LocalMenuBottomSheet
+import com.sarang.torang.compose.type.LocalReportBottomSheetType
+import com.sarang.torang.compose.type.LocalShareBottomSheet
 import com.sarang.torang.viewmodel.FeedDialogsViewModel
 
 @Composable
@@ -16,12 +22,17 @@ fun MainMyFeedScreen(
     onEdit: (Int) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    MainDialogs(
-        uiState = uiState,
-        shareBottomSheet = shareDialog,
-        reportBottomSheet = reportDialog,
-        menuBottomSheet = menuDialog,
-        onEdit = onEdit,
-        commentBottomSheet = commentBottomSheet
-    )
+    CompositionLocalProvider(LocalShareBottomSheet provides shareDialog,
+        LocalReportBottomSheetType provides reportDialog,
+        LocalMenuBottomSheet provides menuDialog,
+        LocalCommentBottomSheet provides commentBottomSheet,
+        LocalFeedScreenType provides { it ->
+            myFeedScreen.invoke({}, {}, {})
+        }
+    ) {
+        MainDialogs(
+            uiState = uiState,
+            onEdit = onEdit,
+        )
+    }
 }
