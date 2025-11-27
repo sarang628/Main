@@ -76,3 +76,6 @@
 [submodule "app/src/main/java/com/sarang/torang/di/torang_security_di"]
 	path = app/src/main/java/com/sarang/torang/di/torang_security_di
 	url = https://github.com/sarang628/torang_security_di.git
+[submodule "app/src/main/java/com/sarang/torang/di/dialogsbox_di"]
+	path = app/src/main/java/com/sarang/torang/di/dialogsbox_di
+	url = https://github.com/sarang628/dialogsbox_di

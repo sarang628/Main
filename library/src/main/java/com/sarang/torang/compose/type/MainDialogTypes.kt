@@ -1,5 +1,6 @@
 package com.sarang.torang.compose.type
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
 
@@ -24,7 +25,7 @@ val LocalShareBottomSheet = compositionLocalOf<ShareBottomSheet>(){
 
 val LocalCommentBottomSheet = compositionLocalOf<CommentBottomSheet>(){
     @Composable {
-
+        Log.d("__LocalCommentBottomSheet","LocalCommentBottomSheet does not set")
     }
 }
 
