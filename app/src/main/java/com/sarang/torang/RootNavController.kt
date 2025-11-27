@@ -13,8 +13,8 @@ class RootNavController(val navController: NavHostController? = null) {
 
     }
 
-    fun restaurant(it: Int) {
-
+    fun restaurant(id: Int) {
+        navController?.navigate("restaurant/${id}")
     }
 
     fun settings() {
@@ -68,4 +68,6 @@ class RootNavController(val navController: NavHostController? = null) {
     fun goAlarm() {
 
     }
+
+    fun map(it: Int) {}
 }

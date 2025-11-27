@@ -79,3 +79,9 @@
 [submodule "app/src/main/java/com/sarang/torang/di/dialogsbox_di"]
 	path = app/src/main/java/com/sarang/torang/di/dialogsbox_di
 	url = https://github.com/sarang628/dialogsbox_di
+[submodule "app/src/main/java/com/sarang/torang/di/restaurant_overview_di"]
+	path = app/src/main/java/com/sarang/torang/di/restaurant_overview_di
+	url = https://github.com/sarang628/restaurant_overview_di.git
+[submodule "app/src/main/java/com/sarang/torang/di/restauarnt_info_di"]
+	path = app/src/main/java/com/sarang/torang/di/restauarnt_info_di
+	url = https://github.com/sarang628/restauarnt_info_di

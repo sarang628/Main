@@ -26,6 +26,7 @@ import com.sarang.torang.di.finding_di.rememberFindState
 import com.sarang.torang.di.main_di.ProvideMyFeedScreen
 import com.sarang.torang.di.comment_di.provideCommentBottomDialogSheet
 import com.sarang.torang.di.main_di.provideMainScreen
+import com.sarang.torang.di.restaurant_overview_di.ProvideRestaurantOverview
 import com.sarang.torang.repository.LoginRepository
 import com.sryang.torang.ui.TorangTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -78,7 +79,12 @@ fun MainNavHost() {
         }
         composable("modReview/{id}")    { Text(text = "modReview ${it.arguments?.getString("id")}") }
         composable("profile/{id}")      { Text(text = "profile ${it.arguments?.getString("id")}") }
-        composable("restaurant/{id}")   { Text(text = "restaurant ${it.arguments?.getString("id")}") }
+        composable("restaurant/{id}")   {
+            Text(text = "restaurant ${it.arguments?.getString("id")}")
+            it.arguments?.getString("id")?.toInt()?.let {
+                ProvideRestaurantOverview(it)
+            }
+        }
         composable("addReview")         { Text(text = "addReview") }
         composable("myFeed/{reviewId}") {
             ProvideMyFeedScreen(

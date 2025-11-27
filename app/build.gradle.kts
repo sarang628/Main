@@ -165,6 +165,8 @@ dependencies {
     implementation(libs.composePermissionTest)
     implementation(libs.restaurantListBottomSheet)
     implementation(libs.dialogsBox)
+    implementation(libs.restaurantOverView)
+    implementation(libs.restaurantInfo)
 
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.ui)
