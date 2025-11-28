@@ -26,6 +26,7 @@ import com.sarang.torang.di.finding_di.rememberFindState
 import com.sarang.torang.di.main_di.ProvideMyFeedScreen
 import com.sarang.torang.di.comment_di.provideCommentBottomDialogSheet
 import com.sarang.torang.di.main_di.provideMainScreen
+import com.sarang.torang.di.restaurant_detail_container_di.provideRestaurantDetailContainer
 import com.sarang.torang.di.restaurant_overview_di.ProvideRestaurantOverview
 import com.sarang.torang.repository.LoginRepository
 import com.sryang.torang.ui.TorangTheme
@@ -82,7 +83,8 @@ fun MainNavHost() {
         composable("restaurant/{id}")   {
             Text(text = "restaurant ${it.arguments?.getString("id")}")
             it.arguments?.getString("id")?.toInt()?.let {
-                ProvideRestaurantOverview(it)
+                provideRestaurantDetailContainer(rootNavController = rootNavController,
+                    restaurantId = it).invoke()
             }
         }
         composable("addReview")         { Text(text = "addReview") }
