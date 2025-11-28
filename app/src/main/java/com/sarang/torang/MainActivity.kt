@@ -83,8 +83,7 @@ fun MainNavHost() {
         composable("restaurant/{id}")   {
             Text(text = "restaurant ${it.arguments?.getString("id")}")
             it.arguments?.getString("id")?.toInt()?.let {
-                provideRestaurantDetailContainer(rootNavController = rootNavController,
-                    restaurantId = it).invoke()
+                provideRestaurantDetailContainer(rootNavController = rootNavController).invoke(it)
             }
         }
         composable("addReview")         { Text(text = "addReview") }
