@@ -167,6 +167,9 @@ dependencies {
     implementation(libs.dialogsBox)
     implementation(libs.restaurantOverView)
     implementation(libs.restaurantInfo)
+    implementation(libs.restaurantDetailContainer)
+    implementation(libs.restaurantGallery)
+    implementation(libs.restaurantMenus)
 
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.ui)

@@ -85,3 +85,12 @@
 [submodule "app/src/main/java/com/sarang/torang/di/restauarnt_info_di"]
 	path = app/src/main/java/com/sarang/torang/di/restauarnt_info_di
 	url = https://github.com/sarang628/restauarnt_info_di
+[submodule "app/src/main/java/com/sarang/torang/di/restaurant_detail_container_di"]
+	path = app/src/main/java/com/sarang/torang/di/restaurant_detail_container_di
+	url = https://github.com/sarang628/restaurant_detail_container_di.git
+[submodule "app/src/main/java/com/sarang/torang/di/restaurant_gallery_di"]
+	path = app/src/main/java/com/sarang/torang/di/restaurant_gallery_di
+	url = https://github.com/sarang628/restaurant_gallery_di.git
+[submodule "app/src/main/java/com/sarang/torang/di/restaurant_menu_di"]
+	path = app/src/main/java/com/sarang/torang/di/restaurant_menu_di
+	url = https://github.com/sarang628/restaurant_menu_di.git
