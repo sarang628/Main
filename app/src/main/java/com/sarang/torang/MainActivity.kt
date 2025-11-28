@@ -91,9 +91,7 @@ fun MainNavHost() {
             ProvideMyFeedScreen(
                 navController       = navController,
                 rootNavController   = rootNavController,
-                navBackStackEntry   = it,
-                videoPlayer         = { url, isPlaying, onVideoClick -> },
-                commentBottomSheet  = { provideCommentBottomDialogSheet(rootNavController).invoke(it) }
+                navBackStackEntry   = it
             )
         }
     }
