@@ -8,11 +8,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,13 +26,14 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.screen_finding.ui.Buttons
 import com.sarang.torang.di.finding_di.rememberFindState
 import com.sarang.torang.di.main_di.ProvideMyFeedScreen
-import com.sarang.torang.di.comment_di.provideCommentBottomDialogSheet
 import com.sarang.torang.di.main_di.provideMainScreen
+import com.sarang.torang.di.profile_di.MyProfileScreenNavHost
 import com.sarang.torang.di.restaurant_detail_container_di.provideRestaurantDetailContainer
-import com.sarang.torang.di.restaurant_overview_di.ProvideRestaurantOverview
 import com.sarang.torang.repository.LoginRepository
+import com.sarang.torang.repository.test.LoginRepositoryTest
 import com.sryang.torang.ui.TorangTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -45,7 +50,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TorangTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    MainNavHost()
+                    MainNavHost(loginRepository = loginRepository)
                 }
             }
         }
@@ -55,13 +60,22 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun MainNavHost() {
+fun MainNavHost(loginRepository: LoginRepository) {
     val navController = rememberNavController()
     val rootNavController = RootNavController(navController)
     val findState = rememberFindState()
     val context : Context = LocalContext.current
 
-    NavHost(navController = navController, startDestination = "main") {
+    NavHost(navController = navController, startDestination = "menu") {
+        composable("menu"){
+            Scaffold {
+                Column(Modifier.padding(it)) {
+                    Button({navController.navigate("main")}) { Text("Main") }
+                    Button({navController.navigate("LoginRepositoryTest")}) { Text("LoginRepositoryTest") }
+                }
+            }
+
+        }
         composable("main")              {
             BottomSheetScaffold(
                 sheetContent = {
@@ -74,7 +88,10 @@ fun MainNavHost() {
                 provideMainScreen(
                     rootNavController   = rootNavController,
                     findState           = findState,
-                    showLog             = true
+                    showLog             = true,
+                    myProfileScreen = {
+                        MyProfileScreenNavHost()
+                    }
                 ).invoke()
             }
         }
@@ -93,6 +110,9 @@ fun MainNavHost() {
                 rootNavController   = rootNavController,
                 navBackStackEntry   = it
             )
+        }
+        composable("LoginRepositoryTest"){
+            LoginRepositoryTest(loginRepository)
         }
     }
 }
