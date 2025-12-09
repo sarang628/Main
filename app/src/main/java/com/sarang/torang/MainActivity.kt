@@ -91,7 +91,11 @@ fun MainNavHost(loginRepository: LoginRepository) {
                     showLog             = true,
                     myProfileScreen = {
                         MyProfileScreenNavHost()
-                    }
+                    },
+                    findScreen = {},
+                    alarmScreen = {},
+                    chatScreen = {},
+                    addReviewScreenType = {}
                 ).invoke()
             }
         }
