@@ -70,4 +70,7 @@ class RootNavController(val navController: NavHostController? = null) {
     }
 
     fun map(it: Int) {}
+    fun myReview(it: Int) {
+
+    }
 }
