@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.screen_finding.ui.Buttons
 import com.sarang.torang.di.finding_di.rememberFindState
 import com.sarang.torang.di.main_di.ProvideMyFeedScreen
 import com.sarang.torang.di.main_di.provideMainScreen
@@ -90,7 +89,9 @@ fun MainNavHost(loginRepository: LoginRepository) {
                     findState           = findState,
                     showLog             = true,
                     myProfileScreen = {
-                        MyProfileScreenNavHost()
+                        MyProfileScreenNavHost(onReview = {
+                            navController.navigate("myFeed/${it}")
+                        })
                     },
                     findScreen = {},
                     alarmScreen = {},
