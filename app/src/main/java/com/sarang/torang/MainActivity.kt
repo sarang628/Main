@@ -110,11 +110,10 @@ fun MainNavHost(loginRepository: LoginRepository) {
         }
         composable("addReview")         { Text(text = "addReview") }
         composable("myFeed/{reviewId}") {
-            ProvideMyFeedScreen(
-                navController       = navController,
-                rootNavController   = rootNavController,
-                navBackStackEntry   = it
-            )
+            it.arguments?.getString("reviewId")?.let {
+                ProvideMyFeedScreen(rootNavController   = rootNavController,
+                                    reviewId            = it.toInt())
+            }
         }
         composable("LoginRepositoryTest"){
             LoginRepositoryTest(loginRepository)
