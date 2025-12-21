@@ -66,7 +66,7 @@ fun MainNavHost(loginRepository: LoginRepository) {
     val context : Context = LocalContext.current
 
     NavHost(navController = navController, startDestination = "menu") {
-        composable("menu"){
+        composable("menu")              {
             Scaffold {
                 Column(Modifier.padding(it)) {
                     Button({navController.navigate("main")}) { Text("Main") }
@@ -92,11 +92,7 @@ fun MainNavHost(loginRepository: LoginRepository) {
                         MyProfileScreenNavHost(onReview = {
                             navController.navigate("myFeed/${it}")
                         })
-                    },
-                    findScreen = {},
-                    alarmScreen = {},
-                    chatScreen = {},
-                    addReviewScreenType = {}
+                    }
                 ).invoke()
             }
         }
