@@ -1,6 +1,5 @@
 package com.sarang.torang.compose
 
-import android.util.Log
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material3.Icon
@@ -16,11 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.main.MainDestination
-import com.sarang.torang.navigation.Feed
 
-/**
- * @param onBottomMenu 하단 메뉴 선택 시 이벤트
- */
+private const val tag = "__MainBottomNavigationBar"
 @OptIn(ExperimentalStdlibApi::class)
 @Preview
 @Composable
@@ -30,9 +26,9 @@ fun MainBottomNavigationBar(
     mainBottomNavigationState : MainBottomNavigationState = rememberMainBottomNavigationState(),
     onBottomMenu              : (MainDestination) -> Unit = {},
     onAddReview               : () -> Unit                = {},
-    onAlreadyFeed             : () -> Unit                = {}
+    onAlreadyFeed             : () -> Unit                = {},
+    onAlreadyGridFeed         : () -> Unit                = {}
 ) {
-    val tag = "__MainBottomNavigationBar"
     val currentDestination = mainBottomNavigationState.currentDestination
     NavigationBar(
         modifier = modifier.height(bottomNavBarHeight).navigationBarsPadding(), //edge-to-edge를 적용 했다면 navigationBarsPadding도 적용 필요
@@ -45,6 +41,10 @@ fun MainBottomNavigationBar(
                     if(destination == MainDestination.FEED &&
                         mainBottomNavigationState.lastRoute == MainDestination.FEED){
                         onAlreadyFeed()
+                        return@NavigationBarItem
+                    }else if(destination == MainDestination.FEED_GRID &&
+                        mainBottomNavigationState.lastRoute == MainDestination.FEED_GRID){
+                        onAlreadyGridFeed()
                         return@NavigationBarItem
                     }
 

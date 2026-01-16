@@ -37,7 +37,8 @@ fun MainScreen(
     onBottomMenu        : (MainDestination) -> Unit                     = {},
     swipeAble           : Boolean                                       = true,
     bottomNavBarHeight  : Dp                                            = 80.dp,
-    onAlreadyFeed       : () -> Unit                                    = {}
+    onAlreadyFeed       : () -> Unit                                    = {},
+    onAlreadyGridFeed   : () -> Unit                                    = {}
 )
 {
     val coroutineScope = rememberCoroutineScope()
@@ -60,6 +61,7 @@ fun MainScreen(
                                         onAddReview               = { coroutineScope.launch { state.goAddReview() } },
                                         mainBottomNavigationState = state.mainBottomNavigationState,
                                         onAlreadyFeed             = onAlreadyFeed,
+                                        onAlreadyGridFeed         = onAlreadyGridFeed,
                                         onBottomMenu              = { state.navigate(destination = it)
                                                                       onBottomMenu.invoke(it) }
                                     )
