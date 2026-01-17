@@ -27,7 +27,8 @@ fun MainBottomNavigationBar(
     onBottomMenu              : (MainDestination) -> Unit = {},
     onAddReview               : () -> Unit                = {},
     onAlreadyFeed             : () -> Unit                = {},
-    onAlreadyGridFeed         : () -> Unit                = {}
+    onAlreadyGridFeed         : () -> Unit                = {},
+    onProfile                 : () -> Unit                = {}
 ) {
     val currentDestination = mainBottomNavigationState.currentDestination
     NavigationBar(
@@ -46,6 +47,8 @@ fun MainBottomNavigationBar(
                         mainBottomNavigationState.lastRoute == MainDestination.FEED_GRID){
                         onAlreadyGridFeed()
                         return@NavigationBarItem
+                    } else if(destination == MainDestination.PROFILE){
+                        onProfile()
                     }
 
                     if(currentDestination.isRouteInHierarchy(destination.baseRoute))

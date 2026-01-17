@@ -33,13 +33,13 @@ import kotlinx.coroutines.launch
 @Preview
 @Composable
 fun MainScreen(
-    state               : MainScreenState                               = rememberMainScreenState(),
-    onBottomMenu        : (MainDestination) -> Unit                     = {},
-    swipeAble           : Boolean                                       = true,
-    bottomNavBarHeight  : Dp                                            = 80.dp,
-    onAlreadyFeed       : () -> Unit                                    = {},
-    onAlreadyGridFeed   : () -> Unit                                    = {}
-)
+    state               : MainScreenState           = rememberMainScreenState(),
+    onBottomMenu        : (MainDestination) -> Unit = {},
+    swipeAble           : Boolean                   = true,
+    bottomNavBarHeight  : Dp                        = 80.dp,
+    onAlreadyFeed       : () -> Unit                = {},
+    onAlreadyGridFeed   : () -> Unit                = {},
+    onProfile           : () -> Unit                = {})
 {
     val coroutineScope = rememberCoroutineScope()
 
@@ -63,7 +63,8 @@ fun MainScreen(
                                         onAlreadyFeed             = onAlreadyFeed,
                                         onAlreadyGridFeed         = onAlreadyGridFeed,
                                         onBottomMenu              = { state.navigate(destination = it)
-                                                                      onBottomMenu.invoke(it) }
+                                                                      onBottomMenu.invoke(it) },
+                                        onProfile                 = onProfile
                                     )
                                 },
                     contentWindowInsets = WindowInsets(0.dp)
