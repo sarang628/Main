@@ -94,3 +94,6 @@
 [submodule "app/src/main/java/com/sarang/torang/di/restaurant_menu_di"]
 	path = app/src/main/java/com/sarang/torang/di/restaurant_menu_di
 	url = https://github.com/sarang628/restaurant_menu_di.git
+[submodule "app/src/main/java/com/sarang/torang/di/login_di"]
+	path = app/src/main/java/com/sarang/torang/di/login_di
+	url = https://github.com/sarang628/login_di.git

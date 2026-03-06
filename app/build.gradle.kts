@@ -170,6 +170,8 @@ dependencies {
     implementation(libs.restaurantDetailContainer)
     implementation(libs.restaurantGallery)
     implementation(libs.restaurantMenus)
+    implementation(libs.shortForm)
+    implementation(libs.login)
 
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.ui)
