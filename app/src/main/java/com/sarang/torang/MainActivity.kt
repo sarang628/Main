@@ -30,6 +30,7 @@ import com.sarang.torang.di.finding_di.rememberFindState
 import com.sarang.torang.di.main_di.ProvideMyFeedScreen
 import com.sarang.torang.di.main_di.provideMainScreen
 import com.sarang.torang.di.profile_di.MyProfileScreenNavHost
+import com.sarang.torang.di.restaurant_detail_container_di.ProvideRestaurantDetailColumn
 import com.sarang.torang.di.restaurant_detail_container_di.provideRestaurantDetailPager
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.repository.test.LoginRepositoryTest
@@ -100,7 +101,8 @@ fun MainNavHost(loginRepository: LoginRepository) {
         composable("restaurant/{id}")   {
             Text(text = "restaurant ${it.arguments?.getString("id")}")
             it.arguments?.getString("id")?.toInt()?.let {
-                provideRestaurantDetailPager(rootNavController = rootNavController).invoke(it)
+               //provideRestaurantDetailPager(rootNavController = rootNavController).invoke(it)
+                ProvideRestaurantDetailColumn(rootNavController = rootNavController).invoke(it)
             }
         }
         composable("addReview")         { Text(text = "addReview") }
